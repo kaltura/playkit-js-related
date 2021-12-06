@@ -1,0 +1,44 @@
+{
+  "name": "@playkit-js/playkit-js-related",
+  "version": "0.1.0",
+  "main": "dist/playkit-related.js",
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "prebuild": "npm run clean",
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --mode development",
+    "watch": "webpack --progress --colors --watch --mode development",
+    "test": "NODE_ENV=test karma start --color --mode development",
+    "release": "standard-version",
+    "pushTaggedRelease": "git push --follow-tags --no-verify origin master"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.1.2",
+    "web-vitals": "^1.0.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  },
+  "peerDependencies": {
+    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "related entries grid",
+    "kaltura",
+    "player",
+    "playkit-js",
+    "playkit-js-related",
+    "html5 player"
+  ],
+  "dependencies": {}
+}
