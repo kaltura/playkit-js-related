@@ -1,9 +1,11 @@
 import { RelatedEntriesSourceOptions } from "./related-entries-source-options";
 
-export interface RelatedConfig {
+interface RelatedConfig {
   autoContinue: boolean;
   autoContinueTime: number;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
   relatedEntriesSource: RelatedEntriesSourceOptions;
 }
+
+export default RelatedConfig;
