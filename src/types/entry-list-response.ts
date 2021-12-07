@@ -1,9 +1,9 @@
 interface EntryListResponse {
-  items: Array<EntryListItem>;
+  items: Array<EntryData>;
 }
 
-interface EntryListItem {
+interface EntryData {
   sources: KalturaPlayerTypes.Sources;
 }
 
-export { EntryListResponse, EntryListItem };
+export { EntryListResponse, EntryData };

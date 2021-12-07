@@ -2,7 +2,7 @@ import { h } from "preact";
 
 import RelatedConfig from "./types/config";
 import RelatedGrid from "./components/related-grid/related-grid";
-import { EntryListItem, EntryListResponse } from "./types/entry-list-response";
+import { EntryListResponse } from "./types/entry-list-response";
 
 const PRESETS = ["Playback", "Live", "Ads"];
 
@@ -20,10 +20,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     autoContinue: true,
     autoContinueTime: 5,
     showOnPlaybackDone: true,
-    showOnPlaybackPaused: false,
-    relatedEntriesSource: {
-      entryList: [],
-    },
+    showOnPlaybackPaused: false
   };
 
   /**
@@ -60,9 +57,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
   getEntriesByPlaylistId(playlistId: string): void {
     this.player.provider
       .getPlaylistConfig({ playlistId })
-      .then((playlistData: any) => {
-        console.log(playlistData);
-        //this.addControls();
+      .then((response: EntryListResponse) => {
+        if (response.items.length) {
+          const entries = response.items.map((entryData) => entryData.sources);
+          this.addControls(entries);
+        }
       })
       .catch(() => {
         //const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
@@ -76,12 +75,9 @@ class Related extends KalturaPlayer.core.BasePlugin {
     });
     this.player.provider
       .getEntryListConfig({ entries })
-      .then((entryListReponse: EntryListResponse) => {
-        console.log(entryListReponse);
-        if (entryListReponse.items.length) {
-          const entries = entryListReponse.items.map(
-            (entryListItem: EntryListItem) => entryListItem.sources
-          );
+      .then((response: EntryListResponse) => {
+        if (response.items.length) {
+          const entries = response.items.map((entryData) => entryData.sources);
           this.addControls(entries);
         }
       })
@@ -91,17 +87,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
       });
   }
 
-  addControls(items: Array<KalturaPlayerTypes.Sources>): void {
+  addControls(entries: Array<KalturaPlayerTypes.Sources>): void {
     this.player.ui.addComponent({
       label: "kaltura-related-grid",
       presets: PRESETS,
       container: "GuiArea",
-      get: () => <RelatedGrid items={items} />,
+      get: () => <RelatedGrid data={entries} />
     });
-  }
-
-  toggleGrid(): void {
-    // TODO show/hide grid
   }
 }
 
