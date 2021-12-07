@@ -20,7 +20,6 @@ module.exports = {
     path: __dirname + "/dist",
     filename: "[name].js",
     library: ["KalturaPlayer", "plugins", "related"]
-    //devtoolModuleFilenameTemplate: './dualscreen/[resource-path]'
   },
   devtool: "source-map",
   plugins: plugins,
@@ -41,8 +40,10 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true,
-              sourceMap: true
+              modules: {
+                localIdentName: "[name]__[local]___[hash:base64:5]",
+                namedExport: true
+              }
             }
           },
           {
@@ -51,15 +52,6 @@ module.exports = {
               sourceMap: true
             }
           }
-          // {
-          //   loader: 'css-loader',
-          //   options: {
-          //     modules: {
-          //       localIdentName: '[name]__[local]___[hash:base64:5]',
-          //       exportLocalsConvention: 'camelCase'
-          //     }
-          //   }
-          // },
         ]
       }
     ]

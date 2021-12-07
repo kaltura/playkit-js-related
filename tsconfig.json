@@ -17,5 +17,9 @@
     },
     "types": ["node"]
   },
-  "include": ["src/**/*.tsx", "src/**/*.ts", "custom.d.ts", "node_modules/kaltura-player-js/ts-typed"]
+  "include": [
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "node_modules/kaltura-player-js/ts-typed"
+  ]
 }
