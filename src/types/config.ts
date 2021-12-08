@@ -1,11 +1,15 @@
-//import { RelatedEntriesSourceOptions } from "./related-entries-source-options";
-
+export interface RelatedEntriesSourceOptions {
+  //useContext?: boolean;
+  playlistId?: string;
+  entryList?: Array<string>; // => ProviderMediaInfoObject
+  //sourcesList: Array<?>
+}
 interface RelatedConfig {
   autoContinue: boolean;
   autoContinueTime: number;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
-  // TODO decide if needed
+  // TODO use this
   //relatedEntriesSource: RelatedEntriesSourceOptions;
 }
 

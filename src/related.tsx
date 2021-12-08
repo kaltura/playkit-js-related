@@ -1,7 +1,7 @@
+import RelatedOverlay from "components/related-overlay/related-overlay";
 import { h } from "preact";
 
 import RelatedConfig from "./types/config";
-import RelatedGrid from "./components/related-grid/related-grid";
 import { EntryListResponse } from "./types/entry-list-response";
 
 const PRESETS = ["Playback", "Live", "Ads"];
@@ -92,7 +92,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: "kaltura-related-grid",
       presets: PRESETS,
       container: "GuiArea",
-      get: () => <RelatedGrid data={entries} />
+      get: () => <RelatedOverlay data={entries} />
     });
   }
 }

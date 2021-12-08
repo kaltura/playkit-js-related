@@ -12,9 +12,6 @@
     "moduleResolution": "Node",
     "baseUrl": "./src",
     "preserveSymlinks": true,
-    "paths": {
-      "*": ["../node_modules/*"]
-    },
     "types": ["node"]
   },
   "include": [

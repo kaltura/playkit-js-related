@@ -1,0 +1,42 @@
+.entry {
+  position: relative;
+  border-radius: 8px;
+  background-color: #222;
+}
+
+.duration {
+  position: absolute;
+  left: 4px;
+  top: 125px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 18px;
+  color: #fff;
+}
+
+.duration-text {
+  @extend .text;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.up-next-text {
+  @extend .text;
+  color: #ccc;
+}
+
+.title-text {
+  @extend .text;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 700;
+}
+
+.description-text {
+  @extend .text;
+}
