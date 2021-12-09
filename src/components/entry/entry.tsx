@@ -23,6 +23,7 @@ const Entry = ({
 }: EntryProps) => {
   const image = imageUrl ? (
     <img
+      className={styles.image}
       src={`${imageUrl}/width/${width}/height/${imageHeight}`}
       style={{ width, height: imageHeight }}
     />
@@ -38,7 +39,10 @@ const Entry = ({
     <div className={styles.entry} style={{ width }}>
       {image}
       {durationText}
-      <div class="entry-content" style={{ width, height: contentHeight }}>
+      <div
+        className={styles.entryContent}
+        style={{ width, height: contentHeight }}
+      >
         {children}
       </div>
     </div>

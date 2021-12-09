@@ -1,7 +1,9 @@
 .entry {
   position: relative;
-  border-radius: 8px;
-  background-color: #222;
+}
+
+.image {
+  border-radius: 8px 8px 0 0;
 }
 
 .duration {
@@ -13,10 +15,18 @@
   padding: 2px;
 }
 
+.entry-content {
+  padding: 8px 16px 16px;
+  background-color: #222;
+  border-radius: 0 0 8px 8px;
+}
+
 .text {
   font-size: 14px;
   line-height: 18px;
   color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .duration-text {
@@ -28,6 +38,7 @@
 .up-next-text {
   @extend .text;
   color: #ccc;
+  padding-bottom: 4px;
 }
 
 .title-text {
@@ -35,8 +46,11 @@
   font-size: 16px;
   line-height: 21px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .description-text {
   @extend .text;
+  padding-top: 4px;
+  max-height: 92px;
 }
