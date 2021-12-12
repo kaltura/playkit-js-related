@@ -10,17 +10,23 @@ interface NextEntryProps extends GridEntryProps {
 
 const NextEntry = (props: NextEntryProps) => {
   const description = props.description ? (
-    <MultilineText text={props.description} lineHeight={18} lines={5} />
+    <div className={styles.decription}>
+      <div className={styles.descriptionText}>
+        <MultilineText text={props.description} lineHeight={18} lines={2} />
+      </div>
+    </div>
   ) : undefined;
 
   return (
-    <Entry {...props}>
-      <div className={styles.nextEntry}>
-        <div className={styles.upNextText}>Up next</div>
+    <div className={styles.nextEntry}>
+      <Entry {...props}>
+        <div className={styles.upNext}>
+          <span className={styles.upNextText}>Up next</span>
+        </div>
         <div className={styles.titleText}>{props.title}</div>
-        <div className={styles.descriptionText}>{description}</div>
-      </div>
-    </Entry>
+        {description}
+      </Entry>
+    </div>
   );
 };
 

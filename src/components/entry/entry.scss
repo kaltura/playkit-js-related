@@ -1,30 +1,8 @@
-.entry {
-  position: relative;
-}
-
-.image {
-  border-radius: 8px 8px 0 0;
-}
-
-.duration {
-  position: absolute;
-  left: 4px;
-  top: 125px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 3px;
-  padding: 2px;
-}
-
-.entry-content {
-  padding: 8px 16px 16px;
-  background-color: #222;
-  border-radius: 0 0 8px 8px;
-}
-
+/* texts */
 .text {
+  color: #fff;
   font-size: 14px;
   line-height: 18px;
-  color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -38,19 +16,71 @@
 .up-next-text {
   @extend .text;
   color: #ccc;
-  padding-bottom: 4px;
 }
 
 .title-text {
   @extend .text;
   font-size: 16px;
-  line-height: 21px;
   font-weight: 700;
+  line-height: 21px;
   white-space: nowrap;
 }
 
 .description-text {
   @extend .text;
-  padding-top: 4px;
-  max-height: 92px;
+}
+
+/* entry */
+.entry {
+  position: relative;
+  cursor: pointer;
+}
+
+.entry-content {
+  background-color: #222;
+  border-radius: 0 0 8px 8px;
+  padding: 8px 16px 16px;
+
+  &:hover {
+    background-color: #000;
+  }
+}
+
+.image {
+  border-radius: 8px 8px 0 0;
+}
+
+.duration {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+  left: 4px;
+  padding: 2px;
+  position: absolute;
+}
+
+/* specific entries */
+.next-entry {
+  .duration {
+    top: 125px;
+  }
+
+  .up-next {
+    padding-bottom: 4px;
+  }
+
+  .description {
+    max-height: 92px;
+    padding-top: 4px;
+  }
+}
+
+.grid-entry {
+  .duration {
+    top: 76px;
+  }
+
+  .description {
+    max-height: 33px;
+    padding-top: 4px;
+  }
 }

@@ -1,3 +1,4 @@
+import MultilineText from "components/multiline-text/multiline-text";
 import { h } from "preact";
 import { Entry, EntryProps } from "./entry";
 import * as styles from "./entry.scss";
@@ -8,10 +9,19 @@ interface GridEntryProps extends EntryProps {
 
 const GridEntry = (props: GridEntryProps) => {
   const { title, ...otherProps } = props;
+
+  const entryTitle = title ? (
+    <div className={styles.decription}>
+      <div className={styles.descriptionText}>
+        <MultilineText text={title} lineHeight={18} lines={2} />
+      </div>
+    </div>
+  ) : undefined;
+
   return (
-    <Entry {...otherProps}>
-      <div className={styles.titleText}>{{ title }}</div>
-    </Entry>
+    <div className={styles.gridEntry}>
+      <Entry {...otherProps}>{entryTitle}</Entry>
+    </div>
   );
 };
 

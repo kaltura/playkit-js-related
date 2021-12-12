@@ -1,4 +1,5 @@
 import NextEntry from "components/entry/next-entry";
+import RelatedGrid from "components/related-grid/related-grid";
 import { h } from "preact";
 import * as styles from "./related-overlay.scss";
 
@@ -7,49 +8,25 @@ interface EntryOverlayProps {
 }
 
 const RelatedOverlay = ({ data }: EntryOverlayProps) => {
-  // const items = [];
-  // items.push(
-  //   <Entry
-  //     key={data[0].id}
-  //     thumbnailUrl={data[0].poster}
-  //     width={260}
-  //     imageHeight={147}
-  //     descriptionHeight={163}
-  //     duration={data[0].duration}
-  //     name={data[0].metadata?.name}
-  //   />
-  // );
-  // for (let i = 1; i < data.length; ++i) {
-  //   const item = data[i];
-  //   items.push(
-  //     <div key={item.id}>
-  //       <RelatedGridItem
-  //         thumbnailUrl={item.poster}
-  //         duration={item.duration}
-  //         description={item.metadata?.description}
-  //       />
-  //     </div>
-  //   );
-  // }
-  const [firstItem, ...otherItems] = data;
-  console.log(otherItems);
-
-  // const relatedGrid = <RelatedGrid/>
-
+  const [nextEntryData, ...otherEntries] = data;
   const nextEntry = (
     <NextEntry
-      key={firstItem.id}
-      duration={firstItem.duration}
-      imageUrl={firstItem.poster}
+      key={nextEntryData.id}
+      duration={nextEntryData.duration}
+      imageUrl={nextEntryData.poster}
       width={260}
       imageHeight={147}
       contentHeight={163}
-      title={firstItem.metadata?.name}
-      description={firstItem.metadata?.description}
+      title={nextEntryData.metadata?.name}
+      description={nextEntryData.metadata?.description}
     />
   );
-
-  return <div className={styles.relatedOverlay}>{nextEntry}</div>;
+  return (
+    <div className={styles.relatedOverlay}>
+      {nextEntry}
+      <RelatedGrid data={otherEntries} />
+    </div>
+  );
 };
 
 //EntryGrid.displayName = "RelatedGrid";

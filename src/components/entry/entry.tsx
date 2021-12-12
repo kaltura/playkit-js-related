@@ -29,16 +29,16 @@ const Entry = ({
     />
   ) : undefined;
 
-  const durationText = duration ? (
+  const entryDuration = duration ? (
     <div className={styles.duration}>
-      <div className={styles.durationText}>{toHHMMSS(duration)}</div>
+      <span className={styles.durationText}>{toHHMMSS(duration)}</span>
     </div>
   ) : undefined;
 
   return (
     <div className={styles.entry} style={{ width }}>
       {image}
-      {durationText}
+      {entryDuration}
       <div
         className={styles.entryContent}
         style={{ width, height: contentHeight }}
