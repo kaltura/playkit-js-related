@@ -7,7 +7,7 @@ const IMAGE_HEIGHT = 98;
 const CONTENT_HEIGHT = 49;
 const ENTRIES_PER_PAGE = 6;
 interface RelatedGridProps {
-  data: Array<KalturaPlayerTypes.Sources>;
+  data: KalturaPlayerTypes.Sources[];
 }
 
 const RelatedGrid = ({ data }: RelatedGridProps) => {

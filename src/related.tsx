@@ -1,8 +1,7 @@
-import RelatedOverlay from "components/related-overlay/related-overlay";
 import { h } from "preact";
-
+import EntryService from "services/entry-service";
 import RelatedConfig from "./types/config";
-import { EntryListResponse } from "./types/entry-list-response";
+import { RelatedOverlayWrapper } from "components/related-overlay/related-overlay";
 
 const PRESETS = ["Playback", "Live", "Ads"];
 
@@ -22,6 +21,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     showOnPlaybackDone: true,
     showOnPlaybackPaused: false
   };
+
+  _entryService: EntryService;
 
   /**
    * @static
@@ -44,56 +45,36 @@ class Related extends KalturaPlayer.core.BasePlugin {
     config: RelatedConfig
   ) {
     super(name, player, config);
+    this._entryService = new EntryService(player);
+    this.init();
+  }
 
-    // get entries by playlist id
+  async init() {
     const { playlistId, entryList } = this.config;
+    let entries: KalturaPlayerTypes.Sources[] = [];
+
     if (playlistId) {
-      this.getEntriesByPlaylistId(playlistId);
+      entries = await this._entryService.getByPlaylistId(playlistId);
     } else if (entryList?.length) {
-      this.getEntries(entryList);
+      entries = await this._entryService.getByEntryIds(entryList);
     }
-  }
 
-  getEntriesByPlaylistId(playlistId: string): void {
-    this.player.provider
-      .getPlaylistConfig({ playlistId })
-      .then((response: EntryListResponse) => {
-        if (response.items.length) {
-          const entries = response.items.map((entryData) => entryData.sources);
-          this.addControls(entries);
+    if (entries.length) {
+      this.player.ui.addComponent({
+        label: "kaltura-related-grid",
+        presets: PRESETS,
+        container: "GuiArea",
+        // eslint-disable-next-line react/display-name
+        get: () => {
+          const props = {
+            player: this.player,
+            data: entries,
+            toggleOnPlayPause: this.config.showOnPlaybackPaused
+          };
+          return <RelatedOverlayWrapper {...props} />;
         }
-      })
-      .catch(() => {
-        //const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
-        //this._localPlayer.dispatchEvent(new FakeEvent(CoreEventType.ERROR, error));
       });
-  }
-
-  getEntries(entryList: Array<string>): void {
-    const entries = entryList.map((entryId) => {
-      return { entryId };
-    });
-    this.player.provider
-      .getEntryListConfig({ entries })
-      .then((response: EntryListResponse) => {
-        if (response.items.length) {
-          const entries = response.items.map((entryData) => entryData.sources);
-          this.addControls(entries);
-        }
-      })
-      .catch(() => {
-        //const error = new Error(Error.Severity.CRITICAL, Error.Category.PLAYER, Error.Code.LOAD_FAILED, e);
-        //this._localPlayer.dispatchEvent(new FakeEvent(CoreEventType.ERROR, error));
-      });
-  }
-
-  addControls(entries: Array<KalturaPlayerTypes.Sources>): void {
-    this.player.ui.addComponent({
-      label: "kaltura-related-grid",
-      presets: PRESETS,
-      container: "GuiArea",
-      get: () => <RelatedOverlay data={entries} />
-    });
+    }
   }
 }
 
