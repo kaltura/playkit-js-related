@@ -3,37 +3,37 @@ import RelatedGrid from "components/related-grid/related-grid";
 import { h } from "preact";
 import { useState } from "preact/hooks";
 import * as styles from "./related-overlay.scss";
-interface EntryOverlayWrapperProps {
+interface RelatedOverlayProps {
   player: KalturaPlayerTypes.Player;
-  toggleOnPlayPause: boolean;
+  showOnPlaybackDone: boolean;
+  showOnPlaybackPaused: boolean;
   data: KalturaPlayerTypes.Sources[];
 }
 
-interface EntryOverlayProps {
-  data: KalturaPlayerTypes.Sources[];
-}
-
-const RelatedOverlayWrapper = ({
+const RelatedOverlay = ({
   player,
-  toggleOnPlayPause,
+  showOnPlaybackDone,
+  showOnPlaybackPaused,
   data
-}: EntryOverlayWrapperProps) => {
+}: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  if (toggleOnPlayPause) {
-    player.addEventListener(KalturaPlayer.core.EventType.PAUSE, () =>
+  player.addEventListener(KalturaPlayer.core.EventType.PLAY, () =>
+    setIsVisible(false)
+  );
+
+  if (showOnPlaybackDone) {
+    player.addEventListener(KalturaPlayer.core.EventType.PLAYBACK_ENDED, () =>
       setIsVisible(true)
-    );
-    player.addEventListener(KalturaPlayer.core.EventType.PLAY, () =>
-      setIsVisible(false)
     );
   }
 
-  const relatedOverlay = isVisible ? <RelatedOverlay data={data} /> : undefined;
-  return <div className={styles.relatedOverlayWrapper}>{relatedOverlay}</div>;
-};
+  if (showOnPlaybackPaused) {
+    player.addEventListener(KalturaPlayer.core.EventType.PAUSE, () =>
+      setIsVisible(true)
+    );
+  }
 
-const RelatedOverlay = ({ data }: EntryOverlayProps) => {
   const [nextEntryData, ...otherEntries] = data;
   const nextEntry = (
     <NextEntry
@@ -48,11 +48,15 @@ const RelatedOverlay = ({ data }: EntryOverlayProps) => {
     />
   );
   return (
-    <div className={styles.relatedOverlay}>
-      {nextEntry}
-      <RelatedGrid data={otherEntries} />
+    <div
+      className={`${styles.relatedOverlay} ${isVisible ? "" : styles.hidden}`}
+    >
+      <div className={styles.content}>
+        {nextEntry}
+        <RelatedGrid data={otherEntries} />
+      </div>
     </div>
   );
 };
 
-export { RelatedOverlay, RelatedOverlayWrapper };
+export default RelatedOverlay;

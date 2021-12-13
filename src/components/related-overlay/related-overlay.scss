@@ -1,8 +1,18 @@
-.related-overlay-wrapper {
-}
-
 .related-overlay {
-  margin: 133px 97px;
-  display: flex;
-  gap: 16px;
+  backdrop-filter: blur(16px);
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 576px;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  width: 1024px;
+
+  .content {
+    display: flex;
+    gap: 16px;
+    margin: 133px 97px;
+  }
+
+  &.hidden {
+    opacity: 0;
+  }
 }

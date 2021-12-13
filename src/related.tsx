@@ -1,7 +1,7 @@
 import { h } from "preact";
 import EntryService from "services/entry-service";
 import RelatedConfig from "./types/config";
-import { RelatedOverlayWrapper } from "components/related-overlay/related-overlay";
+import RelatedOverlay from "components/related-overlay/related-overlay";
 
 const PRESETS = ["Playback", "Live", "Ads"];
 
@@ -69,9 +69,10 @@ class Related extends KalturaPlayer.core.BasePlugin {
           const props = {
             player: this.player,
             data: entries,
-            toggleOnPlayPause: this.config.showOnPlaybackPaused
+            showOnPlaybackDone: this.config.showOnPlaybackDone,
+            showOnPlaybackPaused: this.config.showOnPlaybackPaused
           };
-          return <RelatedOverlayWrapper {...props} />;
+          return <RelatedOverlay {...props} />;
         }
       });
     }
