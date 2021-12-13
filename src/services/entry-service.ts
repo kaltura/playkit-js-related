@@ -14,7 +14,7 @@ class EntryService {
   }
 
   async getByEntryIds(entryIds: string[]) {
-    const entries = entryIds.map((entry) => ({ entry }));
+    const entries = entryIds.map((entryId) => ({ entryId }));
     const response: EntryListResponse =
       await this._player.provider.getEntryListConfig({ entries });
     return processResponse(response);
