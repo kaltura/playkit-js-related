@@ -1,6 +1,5 @@
 import NextEntry from "components/entry/next-entry";
 import RelatedGrid from "components/related-grid/related-grid";
-import { h } from "preact";
 import { useState } from "preact/hooks";
 import * as styles from "./related-overlay.scss";
 interface RelatedOverlayProps {
@@ -53,7 +52,7 @@ const RelatedOverlay = ({
     >
       <div className={styles.content}>
         {nextEntry}
-        <RelatedGrid data={otherEntries} />
+        <RelatedGrid onClick={() => undefined} data={otherEntries} />
       </div>
     </div>
   );

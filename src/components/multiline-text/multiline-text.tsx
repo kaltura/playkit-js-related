@@ -1,4 +1,3 @@
-import { h } from "preact";
 import { useState, useRef, useLayoutEffect } from "preact/hooks";
 
 interface MultilineTextProps {

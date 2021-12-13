@@ -1,5 +1,4 @@
 import MultilineText from "components/multiline-text/multiline-text";
-import { h } from "preact";
 import { Entry, EntryProps } from "./entry";
 import * as styles from "./entry.scss";
 

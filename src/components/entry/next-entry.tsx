@@ -1,4 +1,3 @@
-import { h } from "preact";
 import { Entry } from "./entry";
 import { GridEntryProps } from "./grid-entry";
 import * as styles from "./entry.scss";

@@ -1,4 +1,3 @@
-import { h } from "preact";
 import EntryService from "services/entry-service";
 import RelatedConfig from "./types/config";
 import RelatedOverlay from "components/related-overlay/related-overlay";
