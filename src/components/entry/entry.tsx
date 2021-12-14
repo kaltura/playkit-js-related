@@ -1,8 +1,9 @@
-import { h, ComponentChildren } from "preact";
+import { ComponentChildren } from "preact";
 import { toHHMMSS } from "utils";
 import * as styles from "./entry.scss";
 
 interface EntryProps {
+  id: string;
   children?: ComponentChildren;
   duration?: number;
   isLive?: boolean;
@@ -10,16 +11,20 @@ interface EntryProps {
   width: number;
   imageHeight: number;
   contentHeight: number;
+  // eslint-disable-next-line no-unused-vars
+  onClick?: (id: string) => void;
 }
 
 const Entry = ({
+  id,
   children,
   duration,
-  //isLive = false,
+  //isLive = false,x
   imageUrl,
   width,
   imageHeight,
-  contentHeight
+  contentHeight,
+  onClick = () => undefined
 }: EntryProps) => {
   const image = imageUrl ? (
     <img
@@ -36,7 +41,14 @@ const Entry = ({
   ) : undefined;
 
   return (
-    <div className={styles.entry} style={{ width }}>
+    <div
+      className={styles.entry}
+      style={{ width }}
+      onClick={() => {
+        onClick(id);
+        return undefined;
+      }}
+    >
       {image}
       {entryDuration}
       <div

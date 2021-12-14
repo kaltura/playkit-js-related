@@ -1,5 +1,4 @@
 import { GridEntry } from "components/entry/grid-entry";
-import { h } from "preact";
 import * as styles from "./related-grid.scss";
 
 const WIDTH = 174;
@@ -8,14 +7,17 @@ const CONTENT_HEIGHT = 49;
 const ENTRIES_PER_PAGE = 6;
 interface RelatedGridProps {
   data: KalturaPlayerTypes.Sources[];
+  // eslint-disable-next-line no-unused-vars
+  onClick: (id: string) => void;
 }
 
-const RelatedGrid = ({ data }: RelatedGridProps) => {
+const RelatedGrid = ({ data, onClick }: RelatedGridProps) => {
   const entries = [];
   for (let i = 0; i < ENTRIES_PER_PAGE; ++i) {
     const entryData = data[i];
     const entry = entryData ? (
       <GridEntry
+        id={entryData.id}
         key={entryData.id}
         duration={entryData.duration}
         imageUrl={entryData.poster}
@@ -23,6 +25,7 @@ const RelatedGrid = ({ data }: RelatedGridProps) => {
         imageHeight={IMAGE_HEIGHT}
         contentHeight={CONTENT_HEIGHT}
         title={entryData.metadata?.name}
+        onClick={onClick}
       />
     ) : undefined;
     entries.push(<div className={styles[`entry${i + 1}`]}>{entry}</div>);
