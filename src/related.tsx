@@ -1,5 +1,5 @@
-import EntryService from "services/entry-service";
 import RelatedConfig from "./types/config";
+import RelatedManager from "related-manager";
 import RelatedOverlay from "components/related-overlay/related-overlay";
 
 const PRESETS = ["Playback", "Live", "Ads"];
@@ -21,7 +21,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     showOnPlaybackPaused: false
   };
 
-  _entryService: EntryService;
+  private relatedManager: RelatedManager;
 
   /**
    * @static
@@ -44,20 +44,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
     config: RelatedConfig
   ) {
     super(name, player, config);
-    this._entryService = new EntryService(player);
+    this.relatedManager = new RelatedManager(player, config);
     this.init();
   }
 
   async init() {
-    const { playlistId, entryList } = this.config;
-    let entries: KalturaPlayerTypes.Sources[] = [];
-
-    if (playlistId) {
-      entries = await this._entryService.getByPlaylistId(playlistId);
-    } else if (entryList?.length) {
-      entries = await this._entryService.getByEntryIds(entryList);
-    }
-
+    const entries = await this.relatedManager.load();
     if (entries.length) {
       this.player.ui.addComponent({
         label: "kaltura-related-grid",
@@ -66,7 +58,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
         // eslint-disable-next-line react/display-name
         get: () => {
           const props = {
-            player: this.player,
+            relatedManager: this.relatedManager,
             data: entries,
             showOnPlaybackDone: this.config.showOnPlaybackDone,
             showOnPlaybackPaused: this.config.showOnPlaybackPaused

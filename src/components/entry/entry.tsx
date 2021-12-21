@@ -1,4 +1,6 @@
+import RelatedContext from "components/related-context/related-context";
 import { ComponentChildren } from "preact";
+import { useContext } from "preact/hooks";
 import { toHHMMSS } from "utils";
 import * as styles from "./entry.scss";
 
@@ -11,8 +13,6 @@ interface EntryProps {
   width: number;
   imageHeight: number;
   contentHeight: number;
-  // eslint-disable-next-line no-unused-vars
-  onClick?: (id: string) => void;
 }
 
 const Entry = ({
@@ -23,9 +23,10 @@ const Entry = ({
   imageUrl,
   width,
   imageHeight,
-  contentHeight,
-  onClick = () => undefined
+  contentHeight
 }: EntryProps) => {
+  const { relatedManager } = useContext(RelatedContext);
+
   const image = imageUrl ? (
     <img
       className={styles.image}
@@ -45,8 +46,7 @@ const Entry = ({
       className={styles.entry}
       style={{ width }}
       onClick={() => {
-        onClick(id);
-        return undefined;
+        relatedManager?.play(id);
       }}
     >
       {image}

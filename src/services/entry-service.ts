@@ -7,13 +7,13 @@ class EntryService {
     this._player = player;
   }
 
-  async getByPlaylistId(playlistId: string) {
+  async getEntriesByPlaylistId(playlistId: string) {
     const response: EntryListResponse =
       await this._player.provider.getPlaylistConfig({ playlistId });
     return processResponse(response);
   }
 
-  async getByEntryIds(entryIds: string[]) {
+  async getEntriesByEntryIds(entryIds: string[]) {
     const entries = entryIds.map((entryId) => ({ entryId }));
     const response: EntryListResponse =
       await this._player.provider.getEntryListConfig({ entries });

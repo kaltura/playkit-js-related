@@ -7,11 +7,9 @@ const CONTENT_HEIGHT = 49;
 const ENTRIES_PER_PAGE = 6;
 interface RelatedGridProps {
   data: KalturaPlayerTypes.Sources[];
-  // eslint-disable-next-line no-unused-vars
-  onClick: (id: string) => void;
 }
 
-const RelatedGrid = ({ data, onClick }: RelatedGridProps) => {
+const RelatedGrid = ({ data }: RelatedGridProps) => {
   const entries = [];
   for (let i = 0; i < ENTRIES_PER_PAGE; ++i) {
     const entryData = data[i];
@@ -25,7 +23,6 @@ const RelatedGrid = ({ data, onClick }: RelatedGridProps) => {
         imageHeight={IMAGE_HEIGHT}
         contentHeight={CONTENT_HEIGHT}
         title={entryData.metadata?.name}
-        onClick={onClick}
       />
     ) : undefined;
     entries.push(<div className={styles[`entry${i + 1}`]}>{entry}</div>);

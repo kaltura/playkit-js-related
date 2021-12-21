@@ -9,7 +9,9 @@ interface RelatedConfig {
   autoContinueTime: number;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
-  // TODO use this
+  playlistId?: string;
+  entryList?: Array<string>; // => ProviderMediaInfoObject
+  // TODO use this instead ?
   //relatedEntriesSource: RelatedEntriesSourceOptions;
 }
 

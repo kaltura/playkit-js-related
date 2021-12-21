@@ -1,47 +1,38 @@
 import NextEntry from "components/entry/next-entry";
+import RelatedContext from "components/related-context/related-context";
 import RelatedGrid from "components/related-grid/related-grid";
 import { useState } from "preact/hooks";
+import RelatedManager from "related-manager";
 import * as styles from "./related-overlay.scss";
+
 interface RelatedOverlayProps {
-  player: KalturaPlayerTypes.Player;
+  relatedManager: RelatedManager;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
   data: KalturaPlayerTypes.Sources[];
+  isPaused: boolean;
+  isPlaybackEnded: boolean;
 }
 
+const { connect } = KalturaPlayer.ui.redux;
+const mapStateToProps = (state: any) => {
+  return {
+    isPaused: state.engine.isPaused,
+    isPlaybackEnded: state.engine.isPlaybackEnded
+  };
+};
+
 const RelatedOverlay = ({
-  player,
-  showOnPlaybackDone,
-  showOnPlaybackPaused,
-  data
+  relatedManager,
+  data,
+  isPaused,
+  isPlaybackEnded
 }: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const entriesById = new Map();
-  for (const entryData of data) {
-    entriesById.set(entryData.id, entryData);
-  }
-
-  player.addEventListener(KalturaPlayer.core.EventType.PLAY, () =>
-    setIsVisible(false)
-  );
-
-  if (showOnPlaybackDone) {
-    player.addEventListener(KalturaPlayer.core.EventType.PLAYBACK_ENDED, () =>
-      setIsVisible(true)
-    );
-  }
-
-  if (showOnPlaybackPaused) {
-    player.addEventListener(KalturaPlayer.core.EventType.PAUSE, () =>
-      setIsVisible(true)
-    );
-  }
-
-  const onClick = (entryId: string) => {
-    player.loadMedia({ entryId });
-    // TODO add to signature ?
-    //player.setMedia({ sources: entriesById.get(id) });
-  };
+  const showGrid =
+    (isPaused && relatedManager.showOnPlaybackPaused) ||
+    (isPlaybackEnded && relatedManager.showOnPlaybackDone);
+  setIsVisible(showGrid);
 
   const [nextEntryData, ...otherEntries] = data;
   const nextEntry = (
@@ -55,19 +46,22 @@ const RelatedOverlay = ({
       contentHeight={163}
       title={nextEntryData.metadata?.name}
       description={nextEntryData.metadata?.description}
-      onClick={onClick}
     />
   );
   return (
     <div
       className={`${styles.relatedOverlay} ${isVisible ? "" : styles.hidden}`}
     >
-      <div className={styles.content}>
-        {nextEntry}
-        <RelatedGrid onClick={onClick} data={otherEntries} />
-      </div>
+      <RelatedContext.Provider value={{ relatedManager }}>
+        <div className={styles.content}>
+          {nextEntry}
+          <RelatedGrid data={otherEntries} />
+        </div>
+      </RelatedContext.Provider>
     </div>
   );
 };
 
-export default RelatedOverlay;
+const RelatedOverlayWrapper = connect(mapStateToProps)(RelatedOverlay);
+
+export default RelatedOverlayWrapper;
