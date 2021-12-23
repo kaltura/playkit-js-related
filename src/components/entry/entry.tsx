@@ -46,7 +46,7 @@ const Entry = ({
       className={styles.entry}
       style={{ width }}
       onClick={() => {
-        relatedManager?.play(id);
+        relatedManager?.playSelected(id);
       }}
     >
       {image}

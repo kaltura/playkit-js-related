@@ -11,6 +11,31 @@ class RelatedManager {
     this.player = player;
     this.config = config;
     this.entryService = new EntryService(player);
+    this.playNext = this.playNext.bind(this);
+  }
+
+  private notifyNextItemChanged() {
+    this.player.dispatchEvent(
+      new KalturaPlayer.core.FakeEvent(
+        this.player.Event.Related.RELATED_ITEM_CHANGED,
+        {
+          playNext: this.playNext,
+          next: { sources: this.entries[0] }
+        }
+      )
+    );
+  }
+
+  private cycleEntries(lastPlayedIndex: number) {
+    const lastPlayedEntry = this.entries[lastPlayedIndex];
+    this.entries.splice(lastPlayedIndex, 1);
+    this.entries.push(lastPlayedEntry);
+  }
+
+  private async playByIndex(index: number) {
+    this.player.loadMedia({ entryId: this.entries[index].id });
+    this.cycleEntries(index);
+    this.notifyNextItemChanged();
   }
 
   async load() {
@@ -20,19 +45,16 @@ class RelatedManager {
     } else if (entryList?.length) {
       this.entries = await this.entryService.getEntriesByEntryIds(entryList);
     }
+    this.notifyNextItemChanged();
     return Promise.resolve(this.entries);
   }
 
-  play(entryId: string) {
-    this.player.loadMedia({ entryId });
-  }
-
   playNext() {
-    // TODO
+    this.playByIndex(0);
   }
 
-  destroy() {
-    // TODO
+  playSelected(entryId: string) {
+    this.playByIndex(this.entries.findIndex(({ id }) => id === entryId));
   }
 
   get showOnPlaybackDone() {
