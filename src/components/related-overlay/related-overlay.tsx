@@ -7,7 +7,6 @@ import * as styles from "./related-overlay.scss";
 
 interface RelatedOverlayProps {
   relatedManager: RelatedManager;
-  data: KalturaPlayerTypes.Sources[];
   isPaused: boolean;
   isPlaybackEnded: boolean;
 }
@@ -22,7 +21,6 @@ const mapStateToProps = (state: any) => {
 
 const RelatedOverlay = ({
   relatedManager,
-  data,
   isPaused,
   isPlaybackEnded
 }: RelatedOverlayProps) => {
@@ -32,7 +30,7 @@ const RelatedOverlay = ({
     (isPlaybackEnded && relatedManager.showOnPlaybackDone);
   setIsVisible(showGrid);
 
-  const [nextEntryData, ...otherEntries] = data;
+  const [nextEntryData, ...otherEntries] = relatedManager.entries;
   const nextEntry = (
     <NextEntry
       id={nextEntryData.id}

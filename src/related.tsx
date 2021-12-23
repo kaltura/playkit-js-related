@@ -49,8 +49,9 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   async init() {
-    const entries = await this.relatedManager.load();
-    if (entries.length) {
+    const entriesLoaded = await this.relatedManager.load();
+    if (entriesLoaded) {
+      this.relatedManager.init();
       this.player.ui.addComponent({
         label: "kaltura-related-grid",
         presets: PRESETS,
@@ -58,8 +59,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
         // eslint-disable-next-line react/display-name
         get: () => {
           const props = {
-            relatedManager: this.relatedManager,
-            data: entries
+            relatedManager: this.relatedManager
           };
           return <RelatedOverlay {...props} />;
         }

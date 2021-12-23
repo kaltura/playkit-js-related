@@ -4,8 +4,8 @@ import RelatedConfig from "types/config";
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
   private config: RelatedConfig;
-  private entries: KalturaPlayerTypes.Sources[] = [];
   private entryService: EntryService;
+  private _entries: KalturaPlayerTypes.Sources[] = [];
 
   constructor(player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     this.player = player;
@@ -20,20 +20,20 @@ class RelatedManager {
         this.player.Event.Related.RELATED_ITEM_CHANGED,
         {
           playNext: this.playNext,
-          next: { sources: this.entries[0] }
+          next: { sources: this._entries[0] }
         }
       )
     );
   }
 
   private cycleEntries(lastPlayedIndex: number) {
-    const lastPlayedEntry = this.entries[lastPlayedIndex];
-    this.entries.splice(lastPlayedIndex, 1);
-    this.entries.push(lastPlayedEntry);
+    const lastPlayedEntry = this._entries[lastPlayedIndex];
+    this._entries.splice(lastPlayedIndex, 1);
+    this._entries.push(lastPlayedEntry);
   }
 
   private async playByIndex(index: number) {
-    this.player.loadMedia({ entryId: this.entries[index].id });
+    this.player.loadMedia({ entryId: this._entries[index].id });
     this.cycleEntries(index);
     this.notifyNextItemChanged();
   }
@@ -41,12 +41,17 @@ class RelatedManager {
   async load() {
     const { playlistId, entryList } = this.config;
     if (playlistId) {
-      this.entries = await this.entryService.getEntriesByPlaylistId(playlistId);
+      this._entries = await this.entryService.getEntriesByPlaylistId(
+        playlistId
+      );
     } else if (entryList?.length) {
-      this.entries = await this.entryService.getEntriesByEntryIds(entryList);
+      this._entries = await this.entryService.getEntriesByEntryIds(entryList);
     }
+    return Promise.resolve(this._entries.length);
+  }
+
+  init() {
     this.notifyNextItemChanged();
-    return Promise.resolve(this.entries);
   }
 
   playNext() {
@@ -54,7 +59,7 @@ class RelatedManager {
   }
 
   playSelected(entryId: string) {
-    this.playByIndex(this.entries.findIndex(({ id }) => id === entryId));
+    this.playByIndex(this._entries.findIndex(({ id }) => id === entryId));
   }
 
   get showOnPlaybackDone() {
@@ -63,6 +68,10 @@ class RelatedManager {
 
   get showOnPlaybackPaused() {
     return this.config.showOnPlaybackPaused;
+  }
+
+  get entries(): KalturaPlayerTypes.Sources[] {
+    return this._entries;
   }
 }
 
