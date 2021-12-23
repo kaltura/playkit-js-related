@@ -59,9 +59,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
         get: () => {
           const props = {
             relatedManager: this.relatedManager,
-            data: entries,
-            showOnPlaybackDone: this.config.showOnPlaybackDone,
-            showOnPlaybackPaused: this.config.showOnPlaybackPaused
+            data: entries
           };
           return <RelatedOverlay {...props} />;
         }

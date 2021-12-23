@@ -7,8 +7,6 @@ import * as styles from "./related-overlay.scss";
 
 interface RelatedOverlayProps {
   relatedManager: RelatedManager;
-  showOnPlaybackDone: boolean;
-  showOnPlaybackPaused: boolean;
   data: KalturaPlayerTypes.Sources[];
   isPaused: boolean;
   isPlaybackEnded: boolean;
