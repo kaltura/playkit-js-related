@@ -44,7 +44,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
     config: RelatedConfig
   ) {
     super(name, player, config);
-    this.relatedManager = new RelatedManager(player, config);
+    this.relatedManager = new RelatedManager(
+      player,
+      this.eventManager,
+      this.config
+    );
     this.init();
   }
 
@@ -65,6 +69,10 @@ class Related extends KalturaPlayer.core.BasePlugin {
         }
       });
     }
+  }
+
+  destroy() {
+    this.eventManager.destroy();
   }
 }
 

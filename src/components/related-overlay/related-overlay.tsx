@@ -25,10 +25,15 @@ const RelatedOverlay = ({
   isPlaybackEnded
 }: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const showGrid =
-    (isPaused && relatedManager.showOnPlaybackPaused) ||
-    (isPlaybackEnded && relatedManager.showOnPlaybackDone);
-  setIsVisible(showGrid);
+  const [countdown, setCountdown] = useState(-1);
+
+  if (isPlaybackEnded && relatedManager.showOnPlaybackDone) {
+    setIsVisible(true);
+    setCountdown(relatedManager.countdownTime);
+  } else {
+    setIsVisible(isPaused && relatedManager.showOnPlaybackPaused);
+    setCountdown(-1);
+  }
 
   const [nextEntryData, ...otherEntries] = relatedManager.entries;
   const nextEntry = (
@@ -42,6 +47,7 @@ const RelatedOverlay = ({
       contentHeight={163}
       title={nextEntryData.metadata?.name}
       description={nextEntryData.metadata?.description}
+      countdown={countdown}
     />
   );
   return (

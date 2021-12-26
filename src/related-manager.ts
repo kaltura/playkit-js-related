@@ -3,15 +3,45 @@ import RelatedConfig from "types/config";
 
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
+  private eventManager: KalturaPlayerTypes.EventManager;
   private config: RelatedConfig;
   private entryService: EntryService;
   private _entries: KalturaPlayerTypes.Sources[] = [];
 
-  constructor(player: KalturaPlayerTypes.Player, config: RelatedConfig) {
+  constructor(
+    player: KalturaPlayerTypes.Player,
+    eventManager: KalturaPlayerTypes.EventManager,
+    config: RelatedConfig
+  ) {
     this.player = player;
+    this.eventManager = eventManager;
     this.config = config;
     this.entryService = new EntryService(player);
     this.playNext = this.playNext.bind(this);
+    this.addBindings();
+  }
+
+  private addBindings() {
+    if (this.countdownTime > 0) {
+      let timeout: any = null;
+      this.eventManager.listen(
+        this.player,
+        KalturaPlayer.core.EventType.PLAYBACK_ENDED,
+        () => {
+          timeout = setTimeout(() => {
+            this.playNext();
+            clearTimeout(timeout);
+          }, this.countdownTime * 1000);
+        }
+      );
+      this.eventManager.listen(
+        this.player,
+        KalturaPlayer.core.EventType.PLAY,
+        () => {
+          clearTimeout(timeout);
+        }
+      );
+    }
   }
 
   private notifyNextItemChanged() {
@@ -68,6 +98,16 @@ class RelatedManager {
 
   get showOnPlaybackPaused() {
     return this.config.showOnPlaybackPaused;
+  }
+
+  get countdownTime() {
+    if (
+      this.config.autoContinue &&
+      !Number.isNaN(this.config.autoContinueTime)
+    ) {
+      return Math.floor(this.config.autoContinueTime);
+    }
+    return -1;
   }
 
   get entries(): KalturaPlayerTypes.Sources[] {
