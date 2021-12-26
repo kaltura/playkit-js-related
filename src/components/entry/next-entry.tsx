@@ -3,6 +3,7 @@ import { GridEntryProps } from "./grid-entry";
 import * as styles from "./entry.scss";
 import MultilineText from "components/multiline-text/multiline-text";
 import CountdownText from "components/countdown/countdown-text";
+import Timer from "components/countdown/timer";
 
 interface NextEntryProps extends GridEntryProps {
   description?: string;
@@ -11,12 +12,14 @@ interface NextEntryProps extends GridEntryProps {
 
 const NextEntry = (props: NextEntryProps) => {
   let upNext = <span>Up Next</span>;
+  let timer;
   if (props.countdown > 0) {
     upNext = (
       <span>
         Up Next In <CountdownText seconds={props.countdown} />
       </span>
     );
+    timer = <Timer seconds={props.countdown} />;
   }
 
   const description = props.description ? (
@@ -30,6 +33,7 @@ const NextEntry = (props: NextEntryProps) => {
   return (
     <div className={styles.nextEntry}>
       <Entry {...props}>
+        <div className={styles.timer}>{timer}</div>
         <div className={styles.upNext}>
           <span className={styles.upNextText}>{upNext}</span>
         </div>
