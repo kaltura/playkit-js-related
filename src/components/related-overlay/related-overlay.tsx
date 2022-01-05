@@ -64,6 +64,4 @@ const RelatedOverlay = ({
   );
 };
 
-const RelatedOverlayWrapper = connect(mapStateToProps)(RelatedOverlay);
-
-export default RelatedOverlayWrapper;
+export default connect(mapStateToProps)(RelatedOverlay);

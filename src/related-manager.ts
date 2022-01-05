@@ -44,18 +44,6 @@ class RelatedManager {
     }
   }
 
-  private notifyNextItemChanged() {
-    this.player.dispatchEvent(
-      new KalturaPlayer.core.FakeEvent(
-        this.player.Event.Related.RELATED_ITEM_CHANGED,
-        {
-          playNext: this.playNext,
-          next: { sources: this._entries[0] }
-        }
-      )
-    );
-  }
-
   private cycleEntries(lastPlayedIndex: number) {
     const lastPlayedEntry = this._entries[lastPlayedIndex];
     this._entries.splice(lastPlayedIndex, 1);
@@ -65,7 +53,6 @@ class RelatedManager {
   private async playByIndex(index: number) {
     this.player.loadMedia({ entryId: this._entries[index].id });
     this.cycleEntries(index);
-    this.notifyNextItemChanged();
   }
 
   async load() {
@@ -78,10 +65,6 @@ class RelatedManager {
       this._entries = await this.entryService.getEntriesByEntryIds(entryList);
     }
     return Promise.resolve(this._entries.length);
-  }
-
-  init() {
-    this.notifyNextItemChanged();
   }
 
   playNext() {
@@ -101,16 +84,12 @@ class RelatedManager {
   }
 
   get countdownTime() {
-    if (
-      this.config.autoContinue &&
-      !Number.isNaN(this.config.autoContinueTime)
-    ) {
-      return Math.floor(this.config.autoContinueTime);
-    }
-    return -1;
+    return Number.isInteger(this.config.autoContinueTime)
+      ? this.config.autoContinueTime
+      : -1;
   }
 
-  get entries(): KalturaPlayerTypes.Sources[] {
+  get entries() {
     return this._entries;
   }
 }

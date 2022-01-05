@@ -1,6 +1,7 @@
 import RelatedConfig from "./types/config";
 import RelatedManager from "related-manager";
 import RelatedOverlay from "components/related-overlay/related-overlay";
+import PrePlaybackPlayOverlayWrapper from "components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper";
 
 const PRESETS = ["Playback", "Live", "Ads"];
 
@@ -52,15 +53,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.init();
   }
 
-  async init() {
+  private async init() {
     const entriesLoaded = await this.relatedManager.load();
     if (entriesLoaded) {
-      this.relatedManager.init();
       this.player.ui.addComponent({
         label: "kaltura-related-grid",
         presets: PRESETS,
         container: "GuiArea",
-        // eslint-disable-next-line react/display-name
         get: () => {
           const props = {
             relatedManager: this.relatedManager
@@ -68,11 +67,56 @@ class Related extends KalturaPlayer.core.BasePlugin {
           return <RelatedOverlay {...props} />;
         }
       });
+
+      this.player.ui.addComponent({
+        label: "kaltura-related-pre-playback-play-overlay",
+        presets: PRESETS,
+        container: "GuiArea",
+        get: () => {
+          return <PrePlaybackPlayOverlayWrapper />;
+        },
+        replaceComponent:
+          KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
+      });
+
+      const { PrevNext } = KalturaPlayer.ui.components;
+      const item = {
+        relatedManager: this.relatedManager,
+        get sources() {
+          return this.relatedManager.entries[0];
+        }
+      };
+      const prevNext = (
+        <PrevNext
+          type={"next"}
+          item={item}
+          onClick={() => {
+            this.relatedManager.playNext();
+          }}
+        />
+      );
+      this.player.ui.addComponent({
+        label: "kaltura-relayed-overlay-next",
+        presets: PRESETS,
+        container: "OverlayPlaybackControls",
+        get: () => {
+          return prevNext;
+        }
+      });
+      this.player.ui.addComponent({
+        label: "kaltura-related-bottom-bar-next",
+        presets: PRESETS,
+        container: "BottomBarPlaybackControls",
+        get: () => {
+          return prevNext;
+        }
+      });
     }
   }
 
   destroy() {
-    this.eventManager.destroy();
+    // destroy event manager
+    super.destroy();
   }
 }
 
