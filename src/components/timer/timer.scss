@@ -1,6 +1,6 @@
 $square-side-length: 60;
 $circle-border-width: 4;
-$circle-radius: ($square-side-length - $circle-border-width) / 2;
+$circle-radius: calc(($square-side-length - $circle-border-width) / 2);
 $circle-circumferance: $circle-radius * 2 * 3.14159;
 
 .timer {
