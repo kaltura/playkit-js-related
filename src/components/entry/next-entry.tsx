@@ -1,9 +1,9 @@
 import { Entry } from "./entry";
 import { GridEntryProps } from "./grid-entry";
 import * as styles from "./entry.scss";
-import MultilineText from "components/multiline-text/multiline-text";
-import CountdownText from "components/countdown/countdown-text";
-import Timer from "components/timer/timer";
+import { MultilineText } from "components/multiline-text/multiline-text";
+import { CountdownText } from "components/countdown/countdown-text";
+import { Timer } from "components/timer/timer";
 
 interface NextEntryProps extends GridEntryProps {
   description?: string;
@@ -44,4 +44,4 @@ const NextEntry = (props: NextEntryProps) => {
   );
 };
 
-export default NextEntry;
+export { NextEntry };

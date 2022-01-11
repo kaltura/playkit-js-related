@@ -24,4 +24,4 @@ const Timer = ({ seconds }: { seconds: number }) => {
   );
 };
 
-export default Timer;
+export { Timer };

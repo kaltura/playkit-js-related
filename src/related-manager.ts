@@ -1,5 +1,5 @@
-import EntryService from "services/entry-service";
-import RelatedConfig from "types/config";
+import { EntryService } from "services/entry-service";
+import { RelatedConfig } from "types/config";
 
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
@@ -94,4 +94,4 @@ class RelatedManager {
   }
 }
 
-export default RelatedManager;
+export { RelatedManager };

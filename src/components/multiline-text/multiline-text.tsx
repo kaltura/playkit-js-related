@@ -56,4 +56,4 @@ const MultilineText = ({ text, lineHeight, lines }: MultilineTextProps) => {
   );
 };
 
-export default MultilineText;
+export { MultilineText };

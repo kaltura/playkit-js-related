@@ -1,5 +1,5 @@
 import { createContext } from "preact";
-import RelatedManager from "related-manager";
+import { RelatedManager } from "related-manager";
 
 interface ContextData {
   relatedManager?: RelatedManager;
@@ -8,4 +8,4 @@ interface ContextData {
 const contextData: ContextData = {};
 const RelatedContext = createContext(contextData);
 
-export default RelatedContext;
+export { RelatedContext };

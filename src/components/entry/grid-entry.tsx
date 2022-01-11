@@ -1,4 +1,4 @@
-import MultilineText from "components/multiline-text/multiline-text";
+import { MultilineText } from "components/multiline-text/multiline-text";
 import { Entry, EntryProps } from "./entry";
 import * as styles from "./entry.scss";
 

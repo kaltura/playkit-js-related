@@ -1,4 +1,4 @@
-const { PrePlaybackPlayOverlay, Remove } = KalturaPlayer.ui.components;
+const { PrePlaybackPlayOverlay } = KalturaPlayer.ui.components;
 const { connect } = KalturaPlayer.ui.redux;
 
 const mapStateToProps = (state: any) => {
@@ -6,12 +6,11 @@ const mapStateToProps = (state: any) => {
     isPlaybackEnded: state.engine.isPlaybackEnded
   };
 };
-const PrePlaybackPlayOverlayWrapper = ({
-  isPlaybackEnded
-}: {
-  isPlaybackEnded: boolean;
-}) => {
-  return isPlaybackEnded ? <Remove /> : <PrePlaybackPlayOverlay />;
-};
 
-export default connect(mapStateToProps)(PrePlaybackPlayOverlayWrapper);
+const PrePlaybackPlayOverlayWrapper = connect(mapStateToProps)(
+  ({ isPlaybackEnded }: { isPlaybackEnded: boolean }) => {
+    return isPlaybackEnded ? undefined : <PrePlaybackPlayOverlay />;
+  }
+);
+
+export { PrePlaybackPlayOverlayWrapper };

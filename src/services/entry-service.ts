@@ -29,4 +29,4 @@ const processResponse = (response: EntryListResponse) => {
   );
 };
 
-export default EntryService;
+export { EntryService };

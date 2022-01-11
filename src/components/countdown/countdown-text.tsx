@@ -18,4 +18,4 @@ const CountdownText = ({ seconds }: { seconds: number }) => {
   return <span>{timeLeft}</span>;
 };
 
-export default CountdownText;
+export { CountdownText };
