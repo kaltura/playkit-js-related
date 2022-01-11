@@ -1,8 +1,9 @@
-import RelatedContext from "components/related-context/related-context";
+import { RelatedContext } from "components/related-context/related-context";
 import { ComponentChildren } from "preact";
 import { useContext } from "preact/hooks";
-import { toHHMMSS } from "utils";
 import * as styles from "./entry.scss";
+
+const { toHHMMSS } = KalturaPlayer.ui.utils;
 
 interface EntryProps {
   id: string;
