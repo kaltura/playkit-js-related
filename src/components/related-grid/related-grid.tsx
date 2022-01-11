@@ -1,17 +1,20 @@
 import { GridEntry } from "components/entry/grid-entry";
 import * as styles from "./related-grid.scss";
 
-const WIDTH = 174;
 const IMAGE_HEIGHT = 98;
 const CONTENT_HEIGHT = 49;
-const ENTRIES_PER_PAGE = 6;
 interface RelatedGridProps {
   data: KalturaPlayerTypes.Sources[];
+  isExpanded: boolean;
 }
 
-const RelatedGrid = ({ data }: RelatedGridProps) => {
+const RelatedGrid = ({ data, isExpanded }: RelatedGridProps) => {
   const entries = [];
-  for (let i = 0; i < ENTRIES_PER_PAGE; ++i) {
+
+  const entriesPerPage = isExpanded ? 8 : 6;
+  const width = isExpanded ? 195.5 : 174;
+
+  for (let i = 0; i < entriesPerPage; ++i) {
     const entryData = data[i];
     const entry = entryData ? (
       <GridEntry
@@ -19,16 +22,24 @@ const RelatedGrid = ({ data }: RelatedGridProps) => {
         key={entryData.id}
         duration={entryData.duration}
         imageUrl={entryData.poster}
-        width={WIDTH}
+        width={width}
         imageHeight={IMAGE_HEIGHT}
         contentHeight={CONTENT_HEIGHT}
         title={entryData.metadata?.name}
       />
     ) : undefined;
-    entries.push(<div className={styles[`entry${i + 1}`]}>{entry}</div>);
+
+    const row = i % 2;
+    const col = (i - row) / 2;
+
+    entries.push(
+      <div className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>
+        {entry}
+      </div>
+    );
   }
 
   return <div className={styles.relatedGrid}>{entries}</div>;
 };
 
-export default RelatedGrid;
+export { RelatedGrid };

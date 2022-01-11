@@ -1,0 +1,11 @@
+.pagination-arrow {
+  color: #fff;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  margin: 4px;
+
+  &.disabled {
+    cursor: auto;
+  }
+}

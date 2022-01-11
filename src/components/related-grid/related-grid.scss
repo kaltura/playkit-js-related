@@ -1,36 +1,23 @@
+$num-rows: 2;
+$row-height: 147px;
+$num-columns: 4;
+$column-width: minmax(174px, 195.5px);
+
 .related-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: [col-left] 174px [col-mid] 174px [col-right] 174px;
-  grid-template-rows: [row-top] 147px [row-bottom] 147px;
+  grid-template-columns: [col0] $column-width [col1] $column-width [col2] $column-width [col3] $column-width;
+  grid-template-rows: [row0] $row-height [row1] $row-height;
 }
 
-.entry-1 {
-  grid-column-start: col-left;
-  grid-row-start: row-top;
+@for $i from 0 through $num-rows - 1 {
+  .row-#{$i} {
+    grid-row-start: row#{$i};
+  }
 }
 
-.entry-2 {
-  grid-column-start: col-left;
-  grid-row-start: row-bottom;
-}
-
-.entry-3 {
-  grid-column-start: col-mid;
-  grid-row-start: row-top;
-}
-
-.entry-4 {
-  grid-row-start: row-bottom;
-  grid-column-start: col-mid;
-}
-
-.entry-5 {
-  grid-column-start: col-right;
-  grid-row-start: row-top;
-}
-
-.entry-6 {
-  grid-column-start: col-right;
-  grid-row-start: row-bottom;
+@for $j from 0 through $num-columns - 1 {
+  .col-#{$j} {
+    grid-column-start: col#{$j};
+  }
 }

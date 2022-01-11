@@ -1,9 +1,9 @@
-import RelatedConfig from "./types/config";
-import RelatedManager from "related-manager";
-import RelatedOverlay from "components/related-overlay/related-overlay";
-import PrePlaybackPlayOverlayWrapper from "components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper";
+import { RelatedConfig } from "./types/config";
+import { RelatedManager } from "related-manager";
+import { RelatedOverlay } from "components/related-overlay/related-overlay";
+import { PrePlaybackPlayOverlayWrapper } from "components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper";
 
-const PRESETS = ["Playback", "Live", "Ads"];
+const PRESETS = ["Playback", "Live"];
 
 /**
  * Related class.
@@ -59,7 +59,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       this.player.ui.addComponent({
         label: "kaltura-related-grid",
         presets: PRESETS,
-        container: "GuiArea",
+        area: "GuiArea",
         get: () => {
           const props = {
             relatedManager: this.relatedManager
@@ -71,7 +71,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       this.player.ui.addComponent({
         label: "kaltura-related-pre-playback-play-overlay",
         presets: PRESETS,
-        container: "GuiArea",
+        area: "GuiArea",
         get: () => {
           return <PrePlaybackPlayOverlayWrapper />;
         },
@@ -98,7 +98,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       this.player.ui.addComponent({
         label: "kaltura-relayed-overlay-next",
         presets: PRESETS,
-        container: "OverlayPlaybackControls",
+        area: "OverlayPlaybackControls",
         get: () => {
           return prevNext;
         }
@@ -106,7 +106,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       this.player.ui.addComponent({
         label: "kaltura-related-bottom-bar-next",
         presets: PRESETS,
-        container: "BottomBarPlaybackControls",
+        area: "BottomBarPlaybackControls",
         get: () => {
           return prevNext;
         }
@@ -114,9 +114,9 @@ class Related extends KalturaPlayer.core.BasePlugin {
     }
   }
 
-  destroy() {
-    // destroy event manager
-    super.destroy();
+  reset() {
+    this.destroy();
+    this.init();
   }
 }
 
