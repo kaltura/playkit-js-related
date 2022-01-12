@@ -1,4 +1,4 @@
-import {useState, useRef, useLayoutEffect} from 'preact/hooks';
+import {useState, useRef, useLayoutEffect, useMemo} from 'preact/hooks';
 
 interface MultilineTextProps {
   text: string;
@@ -19,7 +19,9 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   const ref = useRef<any>(null);
   const cutoffHeight = lineHeight * lines;
 
-  const getCurrentLength = () => Math.floor((minLength + maxLength) / 2);
+  const currentLength = useMemo(() => {
+    return Math.floor((minLength + maxLength) / 2);
+  }, [minLength, maxLength]);
 
   useLayoutEffect(() => {
     if (isTextFinalized) return;
@@ -28,23 +30,23 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
 
     // test again with a shorter text
     if (clientHeight > cutoffHeight) {
-      setMaxLength(getCurrentLength() - 1);
+      setMaxLength(currentLength - 1);
     } else if (minLength === text.length) {
       // no need to truncate
       setIsTextFinalized(true);
     } else if (minLength >= maxLength) {
       // this is the longest text that can fit within the line limit
-      setFinalizedText(`${text.slice(0, maxLength - 4)}...`);
+      setFinalizedText(`${text.slice(0, maxLength - 5)}...`);
       setIsTextFinalized(true);
     } else {
       // test again with a longer text
-      setMinLength(getCurrentLength() + 1);
+      setMinLength(currentLength + 1);
     }
-  });
+  }, [isTextFinalized, cutoffHeight, minLength, text, maxLength, currentLength]);
 
   return (
     <div>
-      <div ref={ref}>{isTextFinalized ? finalizedText : text.slice(0, getCurrentLength())}</div>
+      <div ref={ref}>{isTextFinalized ? finalizedText : text.slice(0, currentLength)}</div>
     </div>
   );
 };

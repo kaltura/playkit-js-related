@@ -26,10 +26,6 @@
   white-space: nowrap;
 }
 
-.description-text {
-  @extend .text;
-}
-
 /* entry */
 .entry {
   position: relative;
@@ -45,7 +41,6 @@
 .entry-content {
   background-color: #222;
   border-radius: 0 0 8px 8px;
-  padding: 8px 16px 16px;
 }
 
 .image {
@@ -69,23 +64,27 @@
 .next-entry {
   position: relative;
 
-  .duration {
-    top: 125px;
-  }
-
-  .up-next {
-    padding-bottom: 4px;
-  }
-
-  .description {
-    max-height: 92px;
-    padding-top: 4px;
-  }
-
   .timer {
     position: absolute;
     top: 44px;
     left: 100px;
+  }
+
+  .duration {
+    top: 125px;
+  }
+
+  .entry-content {
+    padding: 8px 16px 16px;
+
+    .up-next {
+      padding-bottom: 4px;
+    }
+
+    .entry-text {
+      max-height: 92px;
+      padding-top: 4px;
+    }
   }
 }
 
@@ -94,8 +93,8 @@
     top: 76px;
   }
 
-  .description {
+  .entry-text {
     max-height: 33px;
-    padding-top: 4px;
+    margin: 8px 16px;
   }
 }
