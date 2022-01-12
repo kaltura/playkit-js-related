@@ -3,7 +3,7 @@ import {
   ArrowRight
 } from "components/pagination-arrow/pagination-arrow";
 import { RelatedContext } from "components/related-context/related-context";
-import { useState, useReducer, useLayoutEffect } from "preact/hooks";
+import { useState, useReducer, useEffect } from "preact/hooks";
 import { RelatedManager } from "related-manager";
 import { GridPages } from "./grid-pages";
 import { PageAction } from "./page-action";
@@ -52,7 +52,7 @@ const RelatedOverlay = connect(mapStateToProps)(
       nextPage: 1
     });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
       if (pageAction !== PageAction.NOTHING) {
         setPageAnimation(
           pageAction === PageAction.NEXT ? styles.slideLeft : styles.slideRight
