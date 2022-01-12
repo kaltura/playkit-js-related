@@ -14,22 +14,6 @@ class RelatedManager {
     this.config = config;
     this.entryService = new EntryService(player);
     this.playNext = this.playNext.bind(this);
-    this.addBindings();
-  }
-
-  private addBindings() {
-    if (this.countdownTime > 0) {
-      let timeout: any = null;
-      this.eventManager.listen(this.player, KalturaPlayer.core.EventType.PLAYBACK_ENDED, () => {
-        timeout = setTimeout(() => {
-          this.playNext();
-          clearTimeout(timeout);
-        }, this.countdownTime * 1000);
-      });
-      this.eventManager.listen(this.player, KalturaPlayer.core.EventType.PLAY, () => {
-        clearTimeout(timeout);
-      });
-    }
   }
 
   private cycleEntries(lastPlayedIndex: number) {

@@ -2,8 +2,10 @@ import {Entry} from './entry';
 import {GridEntryProps} from './grid-entry';
 import * as styles from './entry.scss';
 import {MultilineText} from 'components/multiline-text/multiline-text';
-import {CountdownText} from 'components/countdown/countdown-text';
+import {Countdown} from 'components/countdown/countdown';
 import {Timer} from 'components/timer/timer';
+import {RelatedContext} from 'components/related-context/related-context';
+import {useContext} from 'preact/hooks';
 
 interface NextEntryProps extends GridEntryProps {
   description?: string;
@@ -11,12 +13,14 @@ interface NextEntryProps extends GridEntryProps {
 }
 
 const NextEntry = (props: NextEntryProps) => {
+  const {relatedManager} = useContext(RelatedContext);
+
   let upNext = <span>Up Next</span>;
   let timer;
   if (props.countdown > 0) {
     upNext = (
       <span>
-        Up Next In <CountdownText seconds={props.countdown} />
+        Up Next In <Countdown seconds={props.countdown} onDone={() => relatedManager?.playNext()} />
       </span>
     );
     timer = <Timer seconds={props.countdown} />;
