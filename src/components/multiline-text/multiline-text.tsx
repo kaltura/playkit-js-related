@@ -16,7 +16,7 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   const [finalizedText, setFinalizedText] = useState(text);
   const [isTextFinalized, setIsTextFinalized] = useState(false);
 
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   const cutoffHeight = lineHeight * lines;
 
   const getCurrentLength = () => Math.floor((minLength + maxLength) / 2);
@@ -24,26 +24,21 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   useLayoutEffect(() => {
     if (isTextFinalized) return;
 
-    // @ts-ignore
     const clientHeight = ref.current.clientHeight;
 
     // test again with a shorter text
     if (clientHeight > cutoffHeight) {
       setMaxLength(getCurrentLength() - 1);
-    } else {
+    } else if (minLength === text.length) {
       // no need to truncate
-      if (minLength === text.length) {
-        setIsTextFinalized(true);
-      }
+      setIsTextFinalized(true);
+    } else if (minLength >= maxLength) {
       // this is the longest text that can fit within the line limit
-      else if (minLength >= maxLength) {
-        setFinalizedText(`${text.slice(0, maxLength - 4)}...`);
-        setIsTextFinalized(true);
-      }
+      setFinalizedText(`${text.slice(0, maxLength - 4)}...`);
+      setIsTextFinalized(true);
+    } else {
       // test again with a longer text
-      else {
-        setMinLength(getCurrentLength() + 1);
-      }
+      setMinLength(getCurrentLength() + 1);
     }
   });
 

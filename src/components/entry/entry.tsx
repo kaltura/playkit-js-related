@@ -48,8 +48,7 @@ const Entry = ({id, children, duration, imageUrl, width, imageHeight, contentHei
       style={{width}}
       onClick={() => {
         relatedManager?.playSelected(id);
-      }}
-    >
+      }}>
       {image}
       {entryDuration}
       <div className={styles.entryContent} style={{width, height: contentHeight}}>
