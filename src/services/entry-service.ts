@@ -8,16 +8,26 @@ class EntryService {
   }
 
   async getEntriesByPlaylistId(playlistId: string) {
-    const response: EntryListResponse =
-      await this._player.provider.getPlaylistConfig({ playlistId });
-    return processResponse(response);
+    try {
+      const response: EntryListResponse =
+        await this._player.provider.getPlaylistConfig({ playlistId });
+      return processResponse(response);
+    } catch (e) {
+      return [];
+    }
   }
 
   async getEntriesByEntryIds(entryIds: string[]) {
     const entries = entryIds.map((entryId) => ({ entryId }));
-    const response: EntryListResponse =
-      await this._player.provider.getEntryListConfig({ entries });
-    return processResponse(response);
+
+    if (entries.length) {
+      try {
+        const response: EntryListResponse =
+          await this._player.provider.getEntryListConfig({ entries });
+        return processResponse(response);
+      } catch (e) {}
+    }
+    return [];
   }
 }
 

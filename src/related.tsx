@@ -19,7 +19,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     autoContinue: true,
     autoContinueTime: 5,
     showOnPlaybackDone: true,
-    showOnPlaybackPaused: false
+    showOnPlaybackPaused: false,
+    entryList: []
   };
 
   private relatedManager: RelatedManager;
@@ -112,11 +113,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
         }
       });
     }
-  }
-
-  reset() {
-    this.destroy();
-    this.init();
   }
 }
 
