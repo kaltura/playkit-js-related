@@ -2,11 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "preact"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "preact"],
   "globals": {
     "KalturaPlayer": true,
     "KalturaPlayerTypes": true

@@ -1,5 +1,5 @@
-import { GridEntry } from "components/entry/grid-entry";
-import * as styles from "./related-grid.scss";
+import {GridEntry} from 'components/entry/grid-entry';
+import * as styles from './related-grid.scss';
 
 const IMAGE_HEIGHT = 98;
 const CONTENT_HEIGHT = 49;
@@ -8,7 +8,7 @@ interface RelatedGridProps {
   isExpanded: boolean;
 }
 
-const RelatedGrid = ({ data, isExpanded }: RelatedGridProps) => {
+const RelatedGrid = ({data, isExpanded}: RelatedGridProps) => {
   const entries = [];
 
   const entriesPerPage = isExpanded ? 8 : 6;
@@ -32,14 +32,10 @@ const RelatedGrid = ({ data, isExpanded }: RelatedGridProps) => {
     const row = i % 2;
     const col = (i - row) / 2;
 
-    entries.push(
-      <div className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>
-        {entry}
-      </div>
-    );
+    entries.push(<div className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>{entry}</div>);
   }
 
   return <div className={styles.relatedGrid}>{entries}</div>;
 };
 
-export { RelatedGrid };
+export {RelatedGrid};

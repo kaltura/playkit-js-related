@@ -6,4 +6,4 @@ interface EntryData {
   sources: KalturaPlayerTypes.Sources;
 }
 
-export { EntryListResponse, EntryData };
+export {EntryListResponse, EntryData};

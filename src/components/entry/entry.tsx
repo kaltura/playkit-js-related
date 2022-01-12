@@ -1,9 +1,9 @@
-import { RelatedContext } from "components/related-context/related-context";
-import { ComponentChildren } from "preact";
-import { useContext, useState } from "preact/hooks";
-import * as styles from "./entry.scss";
+import {RelatedContext} from 'components/related-context/related-context';
+import {ComponentChildren} from 'preact';
+import {useContext, useState} from 'preact/hooks';
+import * as styles from './entry.scss';
 
-const { toHHMMSS } = KalturaPlayer.ui.utils;
+const {toHHMMSS} = KalturaPlayer.ui.utils;
 
 interface EntryProps {
   id: string;
@@ -16,16 +16,8 @@ interface EntryProps {
   contentHeight: number;
 }
 
-const Entry = ({
-  id,
-  children,
-  duration,
-  imageUrl,
-  width,
-  imageHeight,
-  contentHeight
-}: EntryProps) => {
-  const { relatedManager } = useContext(RelatedContext);
+const Entry = ({id, children, duration, imageUrl, width, imageHeight, contentHeight}: EntryProps) => {
+  const {relatedManager} = useContext(RelatedContext);
   const [showImage, setShowImage] = useState(true);
 
   let image;
@@ -34,16 +26,14 @@ const Entry = ({
       <img
         className={styles.image}
         src={`${imageUrl}/width/${width}/height/${imageHeight}`}
-        style={{ width, height: imageHeight }}
+        style={{width, height: imageHeight}}
         onError={() => {
           setShowImage(false);
         }}
       />
     );
   } else {
-    image = (
-      <div className={styles.noImage} style={{ width, height: imageHeight }} />
-    );
+    image = <div className={styles.noImage} style={{width, height: imageHeight}} />;
   }
 
   const entryDuration = duration ? (
@@ -55,21 +45,18 @@ const Entry = ({
   return (
     <div
       className={styles.entry}
-      style={{ width }}
+      style={{width}}
       onClick={() => {
         relatedManager?.playSelected(id);
       }}
     >
       {image}
       {entryDuration}
-      <div
-        className={styles.entryContent}
-        style={{ width, height: contentHeight }}
-      >
+      <div className={styles.entryContent} style={{width, height: contentHeight}}>
         {children}
       </div>
     </div>
   );
 };
 
-export { Entry, EntryProps };
+export {Entry, EntryProps};

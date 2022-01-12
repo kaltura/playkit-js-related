@@ -1,13 +1,13 @@
-import { MultilineText } from "components/multiline-text/multiline-text";
-import { Entry, EntryProps } from "./entry";
-import * as styles from "./entry.scss";
+import {MultilineText} from 'components/multiline-text/multiline-text';
+import {Entry, EntryProps} from './entry';
+import * as styles from './entry.scss';
 
 interface GridEntryProps extends EntryProps {
   title?: string;
 }
 
 const GridEntry = (props: GridEntryProps) => {
-  const { title, ...otherProps } = props;
+  const {title, ...otherProps} = props;
 
   const entryTitle = title ? (
     <div className={styles.decription}>
@@ -24,4 +24,4 @@ const GridEntry = (props: GridEntryProps) => {
   );
 };
 
-export { GridEntry, GridEntryProps };
+export {GridEntry, GridEntryProps};

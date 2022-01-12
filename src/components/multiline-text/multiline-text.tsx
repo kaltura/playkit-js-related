@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "preact/hooks";
+import {useState, useRef, useLayoutEffect} from 'preact/hooks';
 
 interface MultilineTextProps {
   text: string;
@@ -10,7 +10,7 @@ interface MultilineTextProps {
  * Text container with multiline ellipsis.
  * Workaround for line-clamp property which isn't supported by IE11.
  */
-const MultilineText = ({ text, lineHeight, lines }: MultilineTextProps) => {
+const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   const [minLength, setMinLength] = useState(0);
   const [maxLength, setMaxLength] = useState(text.length);
   const [finalizedText, setFinalizedText] = useState(text);
@@ -49,11 +49,9 @@ const MultilineText = ({ text, lineHeight, lines }: MultilineTextProps) => {
 
   return (
     <div>
-      <div ref={ref}>
-        {isTextFinalized ? finalizedText : text.slice(0, getCurrentLength())}
-      </div>
+      <div ref={ref}>{isTextFinalized ? finalizedText : text.slice(0, getCurrentLength())}</div>
     </div>
   );
 };
 
-export { MultilineText };
+export {MultilineText};

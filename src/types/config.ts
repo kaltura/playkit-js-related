@@ -7,4 +7,4 @@ interface RelatedConfig {
   entryList?: Array<string>;
 }
 
-export { RelatedConfig };
+export {RelatedConfig};

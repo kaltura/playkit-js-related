@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import {useEffect, useState} from 'preact/hooks';
 
 const useCountDown = (start: number) => {
   const [counter, setCounter] = useState(start);
@@ -13,9 +13,9 @@ const useCountDown = (start: number) => {
   return counter;
 };
 
-const CountdownText = ({ seconds }: { seconds: number }) => {
+const CountdownText = ({seconds}: {seconds: number}) => {
   const timeLeft = useCountDown(seconds);
   return <span>{timeLeft}</span>;
 };
 
-export { CountdownText };
+export {CountdownText};

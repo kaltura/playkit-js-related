@@ -5,4 +5,4 @@ enum PageAction {
   NOTHING
 }
 
-export { PageAction };
+export {PageAction};

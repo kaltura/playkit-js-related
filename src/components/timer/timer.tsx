@@ -1,8 +1,8 @@
-import * as styles from "./timer.scss";
+import * as styles from './timer.scss';
 
-const { Icon, IconType } = KalturaPlayer.ui.components;
+const {Icon, IconType} = KalturaPlayer.ui.components;
 
-const Timer = ({ seconds }: { seconds: number }) => {
+const Timer = ({seconds}: {seconds: number}) => {
   return (
     <div className={styles.timer}>
       <style>{`
@@ -15,7 +15,7 @@ const Timer = ({ seconds }: { seconds: number }) => {
           cy="30"
           cx="30"
           style={{
-            "animation-duration": `${seconds}s`
+            'animation-duration': `${seconds}s`
           }}
         />
       </svg>
@@ -24,4 +24,4 @@ const Timer = ({ seconds }: { seconds: number }) => {
   );
 };
 
-export { Timer };
+export {Timer};

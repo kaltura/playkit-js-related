@@ -1,7 +1,7 @@
-import { RelatedGrid } from "components/related-grid/related-grid";
-import { NextEntry } from "components/entry/next-entry";
+import {RelatedGrid} from 'components/related-grid/related-grid';
+import {NextEntry} from 'components/entry/next-entry';
 
-import * as styles from "./related-overlay.scss";
+import * as styles from './related-overlay.scss';
 
 const GridPages = ({
   data,
@@ -102,4 +102,4 @@ const GridPages = ({
   );
 };
 
-export { GridPages };
+export {GridPages};

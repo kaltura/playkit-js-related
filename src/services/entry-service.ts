@@ -1,4 +1,4 @@
-import { EntryListResponse } from "types/entry-list-response";
+import {EntryListResponse} from 'types/entry-list-response';
 
 class EntryService {
   _player: KalturaPlayerTypes.Player;
@@ -9,8 +9,7 @@ class EntryService {
 
   async getEntriesByPlaylistId(playlistId: string) {
     try {
-      const response: EntryListResponse =
-        await this._player.provider.getPlaylistConfig({ playlistId });
+      const response: EntryListResponse = await this._player.provider.getPlaylistConfig({playlistId});
       return processResponse(response);
     } catch (e) {
       return [];
@@ -18,12 +17,11 @@ class EntryService {
   }
 
   async getEntriesByEntryIds(entryIds: string[]) {
-    const entries = entryIds.map((entryId) => ({ entryId }));
+    const entries = entryIds.map(entryId => ({entryId}));
 
     if (entries.length) {
       try {
-        const response: EntryListResponse =
-          await this._player.provider.getEntryListConfig({ entries });
+        const response: EntryListResponse = await this._player.provider.getEntryListConfig({entries});
         return processResponse(response);
       } catch (e) {}
     }
@@ -32,11 +30,7 @@ class EntryService {
 }
 
 const processResponse = (response: EntryListResponse) => {
-  return Promise.resolve(
-    response.items.length
-      ? response.items.map((entryData) => entryData.sources)
-      : []
-  );
+  return Promise.resolve(response.items.length ? response.items.map(entryData => entryData.sources) : []);
 };
 
-export { EntryService };
+export {EntryService};

@@ -1,5 +1,5 @@
-import { EntryService } from "services/entry-service";
-import { RelatedConfig } from "types/config";
+import {EntryService} from 'services/entry-service';
+import {RelatedConfig} from 'types/config';
 
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
@@ -8,11 +8,7 @@ class RelatedManager {
   private entryService: EntryService;
   private _entries: KalturaPlayerTypes.Sources[] = [];
 
-  constructor(
-    player: KalturaPlayerTypes.Player,
-    eventManager: KalturaPlayerTypes.EventManager,
-    config: RelatedConfig
-  ) {
+  constructor(player: KalturaPlayerTypes.Player, eventManager: KalturaPlayerTypes.EventManager, config: RelatedConfig) {
     this.player = player;
     this.eventManager = eventManager;
     this.config = config;
@@ -24,23 +20,15 @@ class RelatedManager {
   private addBindings() {
     if (this.countdownTime > 0) {
       let timeout: any = null;
-      this.eventManager.listen(
-        this.player,
-        KalturaPlayer.core.EventType.PLAYBACK_ENDED,
-        () => {
-          timeout = setTimeout(() => {
-            this.playNext();
-            clearTimeout(timeout);
-          }, this.countdownTime * 1000);
-        }
-      );
-      this.eventManager.listen(
-        this.player,
-        KalturaPlayer.core.EventType.PLAY,
-        () => {
+      this.eventManager.listen(this.player, KalturaPlayer.core.EventType.PLAYBACK_ENDED, () => {
+        timeout = setTimeout(() => {
+          this.playNext();
           clearTimeout(timeout);
-        }
-      );
+        }, this.countdownTime * 1000);
+      });
+      this.eventManager.listen(this.player, KalturaPlayer.core.EventType.PLAY, () => {
+        clearTimeout(timeout);
+      });
     }
   }
 
@@ -51,16 +39,14 @@ class RelatedManager {
   }
 
   private async playByIndex(index: number) {
-    this.player.loadMedia({ entryId: this._entries[index].id });
+    this.player.loadMedia({entryId: this._entries[index].id});
     this.cycleEntries(index);
   }
 
   async load() {
-    const { playlistId, entryList } = this.config;
+    const {playlistId, entryList} = this.config;
     if (playlistId) {
-      this._entries = await this.entryService.getEntriesByPlaylistId(
-        playlistId
-      );
+      this._entries = await this.entryService.getEntriesByPlaylistId(playlistId);
     } else if (entryList?.length) {
       this._entries = await this.entryService.getEntriesByEntryIds(entryList);
     }
@@ -72,7 +58,7 @@ class RelatedManager {
   }
 
   playSelected(entryId: string) {
-    this.playByIndex(this._entries.findIndex(({ id }) => id === entryId));
+    this.playByIndex(this._entries.findIndex(({id}) => id === entryId));
   }
 
   get showOnPlaybackDone() {
@@ -84,9 +70,7 @@ class RelatedManager {
   }
 
   get countdownTime() {
-    return Number.isInteger(this.config.autoContinueTime)
-      ? this.config.autoContinueTime
-      : -1;
+    return Number.isInteger(this.config.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
   get entries() {
@@ -94,4 +78,4 @@ class RelatedManager {
   }
 }
 
-export { RelatedManager };
+export {RelatedManager};
