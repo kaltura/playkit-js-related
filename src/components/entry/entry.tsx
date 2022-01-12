@@ -35,8 +35,7 @@ const Entry = ({
         className={styles.image}
         src={`${imageUrl}/width/${width}/height/${imageHeight}`}
         style={{ width, height: imageHeight }}
-        onError={({ currentTarget }) => {
-          currentTarget.onerror = null;
+        onError={() => {
           setShowImage(false);
         }}
       />
