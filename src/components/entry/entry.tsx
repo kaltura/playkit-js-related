@@ -1,6 +1,6 @@
 import { RelatedContext } from "components/related-context/related-context";
 import { ComponentChildren } from "preact";
-import { useContext } from "preact/hooks";
+import { useContext, useState } from "preact/hooks";
 import * as styles from "./entry.scss";
 
 const { toHHMMSS } = KalturaPlayer.ui.utils;
@@ -20,21 +20,32 @@ const Entry = ({
   id,
   children,
   duration,
-  //isLive = false,x
   imageUrl,
   width,
   imageHeight,
   contentHeight
 }: EntryProps) => {
   const { relatedManager } = useContext(RelatedContext);
+  const [showImage, setShowImage] = useState(true);
 
-  const image = imageUrl ? (
-    <img
-      className={styles.image}
-      src={`${imageUrl}/width/${width}/height/${imageHeight}`}
-      style={{ width, height: imageHeight }}
-    />
-  ) : undefined;
+  let image;
+  if (showImage && imageUrl) {
+    image = (
+      <img
+        className={styles.image}
+        src={`${imageUrl}/width/${width}/height/${imageHeight}`}
+        style={{ width, height: imageHeight }}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          setShowImage(false);
+        }}
+      />
+    );
+  } else {
+    image = (
+      <div className={styles.noImage} style={{ width, height: imageHeight }} />
+    );
+  }
 
   const entryDuration = duration ? (
     <div className={styles.duration}>
