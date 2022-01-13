@@ -8,12 +8,8 @@ import * as styles from './related-overlay.scss';
 
 const {connect} = KalturaPlayer.ui.redux;
 
-const mapStateToProps = (state: any) => {
-  return {
-    isPaused: state.engine.isPaused,
-    isPlaybackEnded: state.engine.isPlaybackEnded
-  };
-};
+const FIRST_PAGE_ENTRIES_NUM = 7;
+const PAGE_ENTRIES_NUM = 8;
 
 const pageReducer = (state: {prevPage: number; currPage: number; nextPage: number}, action: PageAction) => {
   const {prevPage, currPage, nextPage} = state;
@@ -22,6 +18,13 @@ const pageReducer = (state: {prevPage: number; currPage: number; nextPage: numbe
     prevPage: prevPage + offset,
     currPage: currPage + offset,
     nextPage: nextPage + offset
+  };
+};
+
+const mapStateToProps = (state: any) => {
+  return {
+    isPaused: state.engine.isPaused,
+    isPlaybackEnded: state.engine.isPlaybackEnded
   };
 };
 
@@ -62,7 +65,7 @@ const RelatedOverlay = connect(mapStateToProps)(
 
     const {entries} = relatedManager;
 
-    const showPagination = relatedManager.entries.length > 7;
+    const showPagination = relatedManager.entries.length > FIRST_PAGE_ENTRIES_NUM;
     const {prevPage, currPage, nextPage} = pageState;
 
     return (
@@ -75,7 +78,10 @@ const RelatedOverlay = connect(mapStateToProps)(
                   <ArrowRight onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
                 </div>
                 <div className={styles.arrowLeft}>
-                  <ArrowLeft onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && entries.length <= nextPage * 8} />
+                  <ArrowLeft
+                    onClick={() => setPageAction(PageAction.NEXT)}
+                    disabled={currPage > 0 && entries.length <= nextPage * PAGE_ENTRIES_NUM}
+                  />
                 </div>
               </>
             ) : undefined}

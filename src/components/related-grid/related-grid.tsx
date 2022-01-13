@@ -8,10 +8,13 @@ interface RelatedGridProps {
   isExpanded: boolean;
 }
 
+const ENTRIES_NUM = 6;
+const ENTRIES_EXPANDED_NUM = 8;
+
 const RelatedGrid = ({data, isExpanded}: RelatedGridProps) => {
   const entries = [];
 
-  const entriesPerPage = isExpanded ? 8 : 6;
+  const entriesPerPage = isExpanded ? ENTRIES_EXPANDED_NUM : ENTRIES_NUM;
   const width = isExpanded ? 195.5 : 174;
 
   for (let i = 0; i < entriesPerPage; ++i) {
