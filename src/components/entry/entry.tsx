@@ -4,7 +4,6 @@ import {useContext, useState} from 'preact/hooks';
 import * as styles from './entry.scss';
 
 const {toHHMMSS} = KalturaPlayer.ui.utils;
-
 interface EntryProps {
   id: string;
   children?: ComponentChildren;
@@ -36,6 +35,7 @@ const Entry = ({id, children, duration, imageUrl, width, imageHeight, contentHei
     image = <div className={styles.noImage} style={{width, height: imageHeight}} />;
   }
 
+  const color = KalturaPlayer.ui.style.white;
   const entryDuration = duration ? (
     <div className={styles.duration}>
       <span className={styles.durationText}>{toHHMMSS(duration)}</span>
@@ -45,7 +45,7 @@ const Entry = ({id, children, duration, imageUrl, width, imageHeight, contentHei
   return (
     <div
       className={styles.entry}
-      style={{width}}
+      style={{width, color}}
       onClick={() => {
         relatedManager?.playSelected(id);
       }}>

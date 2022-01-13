@@ -11,7 +11,14 @@ const ARROW_RIGHT_PATH =
 const PaginationArrow = ({onClick, disabled, id, path}: {onClick: () => void; disabled: boolean; id: string; path: string}) => {
   return (
     <div onClick={disabled ? undefined : onClick} className={`${styles.paginationArrow} ${disabled ? styles.disabled : ''}`}>
-      <Icon activeColor={'#FFF'} color={'#888'} id={id} path={path} state={disabled ? IconState.INACTIVE : IconState.ACTIVE} viewBox={`0 0 32 32`} />
+      <Icon
+        activeColor={KalturaPlayer.ui.style.white}
+        color={'#888'}
+        id={id}
+        path={path}
+        state={disabled ? IconState.INACTIVE : IconState.ACTIVE}
+        viewBox={`0 0 32 32`}
+      />
     </div>
   );
 };
