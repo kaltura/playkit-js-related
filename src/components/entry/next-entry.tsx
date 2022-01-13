@@ -7,20 +7,26 @@ import {RelatedContext} from 'components/related-context/related-context';
 import {useContext} from 'preact/hooks';
 import {EntryText} from './entry-text';
 
+const {withText, Text} = KalturaPlayer.ui.preacti18n;
+
 interface NextEntryProps extends GridEntryProps {
   description?: string;
   countdown: number;
+  upNext: string;
 }
 
-const NextEntry = (props: NextEntryProps) => {
+const NextEntry = withText({
+  upNext: 'playlist.up_next'
+})((props: NextEntryProps) => {
   const {relatedManager} = useContext(RelatedContext);
 
-  let upNext = <span>Up Next</span>;
+  let upNext = <span>{props.upNext}</span>;
   let timer;
   if (props.countdown > 0) {
     upNext = (
       <span>
-        Up Next In <Countdown seconds={props.countdown} onDone={() => relatedManager?.playNext()} />
+        <Text id="related.upNextIn">{'Up Next In '}</Text>
+        <Countdown seconds={props.countdown} onDone={() => relatedManager?.playNext()} />
       </span>
     );
     timer = <Timer seconds={props.countdown} />;
@@ -40,6 +46,6 @@ const NextEntry = (props: NextEntryProps) => {
       </Entry>
     </div>
   );
-};
+});
 
 export {NextEntry};
