@@ -6,7 +6,11 @@ $column-width: minmax(174px, 195.5px);
 .related-grid {
   display: grid;
   gap: 16px;
+
+  -ms-grid-columns: [col0] $column-width [col1] $column-width [col2] $column-width [col3] $column-width;
   grid-template-columns: [col0] $column-width [col1] $column-width [col2] $column-width [col3] $column-width;
+
+  -ms-grid-rows: [row0] $row-height [row1] $row-height;
   grid-template-rows: [row0] $row-height [row1] $row-height;
 }
 
