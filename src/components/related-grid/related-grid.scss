@@ -16,12 +16,14 @@ $column-width: minmax(174px, 195.5px);
 
 @for $i from 0 through $num-rows - 1 {
   .row-#{$i} {
+    -ms-grid-row: row#{$i};
     grid-row-start: row#{$i};
   }
 }
 
 @for $j from 0 through $num-columns - 1 {
   .col-#{$j} {
+    -ms-grid-column: col#{$j};
     grid-column-start: col#{$j};
   }
 }
