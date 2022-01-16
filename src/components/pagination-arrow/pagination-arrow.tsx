@@ -1,4 +1,3 @@
-import * as styles from './pagination-arrow.scss';
 const {Icon, IconState} = KalturaPlayer.ui.components;
 
 const ARROW_LEFT_PATH =
@@ -11,9 +10,8 @@ const PaginationArrow = ({onClick, disabled, id, path}: {onClick: () => void; di
   return (
     <div
       onClick={disabled ? undefined : onClick}
-      className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active} ${styles.paginationArrow} ${
-        disabled ? styles.disabled : ''
-      }`}>
+      className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
+      style={disabled ? {cursor: 'default'} : ''}>
       <Icon
         activeColor={KalturaPlayer.ui.style.white}
         color={'#888'}
