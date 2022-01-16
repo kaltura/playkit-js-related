@@ -3,6 +3,9 @@ import * as styles from './related-grid.scss';
 
 const IMAGE_HEIGHT = 98;
 const CONTENT_HEIGHT = 49;
+
+const WIDTH = 174;
+const WIDTH_EXPANDED = 195.5;
 interface RelatedGridProps {
   data: KalturaPlayerTypes.Sources[];
   isExpanded: boolean;
@@ -15,7 +18,7 @@ const RelatedGrid = ({data, isExpanded}: RelatedGridProps) => {
   const entries = [];
 
   const entriesPerPage = isExpanded ? ENTRIES_EXPANDED_NUM : ENTRIES_NUM;
-  const width = isExpanded ? 195.5 : 174;
+  const width = isExpanded ? WIDTH_EXPANDED : WIDTH;
 
   for (let i = 0; i < entriesPerPage; ++i) {
     const entryData = data[i];
