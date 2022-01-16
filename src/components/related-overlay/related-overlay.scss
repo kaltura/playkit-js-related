@@ -1,0 +1,74 @@
+.related-overlay {
+  backdrop-filter: blur(16px);
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 576px;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  width: 1024px;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .content {
+    margin: 133px 97px;
+
+    .grid-pages-wrapper {
+      height: 310px;
+      overflow: hidden;
+      position: relative;
+      width: 830px;
+
+      .grid-pages {
+        display: flex;
+        left: -830px;
+        position: absolute;
+        width: 2490px;
+
+        .grid-page {
+          display: flex;
+          gap: 16px;
+          width: 830px;
+        }
+      }
+
+      &.slide-right {
+        .grid-pages {
+          animation: slide-right 300ms ease forwards;
+        }
+      }
+
+      &.slide-left {
+        .grid-pages {
+          animation: slide-left 300ms ease forwards;
+        }
+      }
+    }
+  }
+
+  .arrow-right {
+    position: absolute;
+    left: 53px;
+    top: 256px;
+  }
+
+  .arrow-left {
+    position: absolute;
+    right: 53px;
+    top: 256px;
+  }
+}
+
+@keyframes slide-left {
+  100% {
+    transform: translateX(-830px);
+  }
+}
+
+@keyframes slide-right {
+  100% {
+    transform: translateX(830px);
+  }
+}

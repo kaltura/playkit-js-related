@@ -1,0 +1,29 @@
+$num-rows: 2;
+$row-height: 147px;
+$num-columns: 4;
+$column-width: minmax(174px, 195.5px);
+
+.related-grid {
+  display: grid;
+  gap: 16px;
+
+  -ms-grid-columns: [col0] $column-width [col1] $column-width [col2] $column-width [col3] $column-width;
+  grid-template-columns: [col0] $column-width [col1] $column-width [col2] $column-width [col3] $column-width;
+
+  -ms-grid-rows: [row0] $row-height [row1] $row-height;
+  grid-template-rows: [row0] $row-height [row1] $row-height;
+}
+
+@for $i from 0 through $num-rows - 1 {
+  .row-#{$i} {
+    -ms-grid-row: row#{$i};
+    grid-row-start: row#{$i};
+  }
+}
+
+@for $j from 0 through $num-columns - 1 {
+  .col-#{$j} {
+    -ms-grid-column: col#{$j};
+    grid-column-start: col#{$j};
+  }
+}

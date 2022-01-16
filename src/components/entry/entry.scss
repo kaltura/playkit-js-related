@@ -1,0 +1,99 @@
+/* texts */
+.text {
+  font-size: 14px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.duration-text {
+  @extend .text;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.up-next-text {
+  @extend .text;
+  color: #ccc;
+}
+
+.title-text {
+  @extend .text;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+/* entry */
+.entry {
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    .entry-content {
+      background-color: #000;
+    }
+  }
+}
+
+.entry-content {
+  background-color: #222;
+  border-radius: 0 0 8px 8px;
+}
+
+.image {
+  border-radius: 8px 8px 0 0;
+}
+
+.no-image {
+  border-radius: 8px 8px 0 0;
+  background-color: #000;
+}
+
+.duration {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+  left: 4px;
+  padding: 2px;
+  position: absolute;
+}
+
+/* specific entries */
+.next-entry {
+  position: relative;
+
+  .timer {
+    position: absolute;
+    top: 44px;
+    left: 100px;
+  }
+
+  .duration {
+    top: 125px;
+  }
+
+  .entry-content {
+    padding: 8px 16px 16px;
+
+    .up-next {
+      padding-bottom: 4px;
+    }
+
+    .entry-text {
+      max-height: 92px;
+      padding-top: 4px;
+    }
+  }
+}
+
+.grid-entry {
+  .duration {
+    top: 76px;
+  }
+
+  .entry-text {
+    max-height: 33px;
+    margin: 8px 16px;
+  }
+}
