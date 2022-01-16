@@ -1,10 +1,7 @@
 .pagination-arrow {
-  cursor: pointer;
-  height: 24px;
-  width: 24px;
-  margin: 4px;
+  opacity: 1;
 
   &.disabled {
-    cursor: auto;
+    cursor: default;
   }
 }
