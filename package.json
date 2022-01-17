@@ -9,8 +9,8 @@
     "dev": "webpack-dev-server --mode development",
     "watch": "webpack --progress --colors --watch --mode development",
     "test": "NODE_ENV=test karma start --color --mode development",
+    "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
     "release": "standard-version",
-    "publish": "git push --follow-tags --no-verify origin master",
     "eslint": "eslint . --color",
     "prettier:fix": "prettier --write ."
   },
