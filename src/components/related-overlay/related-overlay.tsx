@@ -55,12 +55,14 @@ const RelatedOverlay = connect(mapStateToProps)(
       }
     };
 
-    if (isPlaybackEnded && relatedManager.showOnPlaybackDone) {
+    if (!isPlaybackEnded) {
+      setIsVisible(isPaused && relatedManager.showOnPlaybackPaused);
+      setCountdown(-1);
+    } else if (relatedManager.showOnPlaybackDone) {
       setIsVisible(true);
       setCountdown(relatedManager.countdownTime);
     } else {
-      setIsVisible(isPaused && relatedManager.showOnPlaybackPaused);
-      setCountdown(-1);
+      setIsVisible(false);
     }
 
     const {entries} = relatedManager;
