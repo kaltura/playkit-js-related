@@ -54,7 +54,7 @@ class RelatedManager {
   }
 
   get countdownTime() {
-    return Number.isInteger(this.config.autoContinueTime) ? this.config.autoContinueTime : -1;
+    return this.config.autoContinue && Number.isInteger(this.config.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
   get entries() {
