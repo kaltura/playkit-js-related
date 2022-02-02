@@ -1,4 +1,5 @@
 import {EntryListResponse} from 'types/entry-list-response';
+import {RelatedLoader} from './related-loader';
 
 class EntryService {
   _player: KalturaPlayerTypes.Player;
@@ -23,9 +24,20 @@ class EntryService {
       try {
         const response: EntryListResponse = await this._player.provider.getEntryListConfig({entries});
         return processResponse(response);
-      } catch (e) {}
+      } catch (e) {
+        return [];
+      }
     }
     return [];
+  }
+
+  async getEntriesByContext(entryId: string) {
+    try {
+      const response = await this._player.provider.doRequest([{loader: RelatedLoader, params: {entryId}}]);
+      return response.get('related').relatedEntries;
+    } catch (e) {
+      return [];
+    }
   }
 }
 

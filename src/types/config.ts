@@ -3,8 +3,9 @@ interface RelatedConfig {
   autoContinueTime: number;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
-  playlistId?: string;
+  playlistId: string | null;
   entryList?: Array<string>;
+  useContext: boolean;
 }
 
 export {RelatedConfig};

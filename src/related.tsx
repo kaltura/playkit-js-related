@@ -2,6 +2,7 @@ import {RelatedConfig} from './types/config';
 import {RelatedManager} from 'related-manager';
 import {RelatedOverlay} from 'components/related-overlay/related-overlay';
 import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
+import {Next} from 'components/next/next';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -20,7 +21,9 @@ class Related extends KalturaPlayer.core.BasePlugin {
     autoContinueTime: 5,
     showOnPlaybackDone: true,
     showOnPlaybackPaused: false,
-    entryList: []
+    playlistId: null,
+    entryList: [],
+    useContext: false
   };
 
   private relatedManager: RelatedManager;
@@ -42,68 +45,47 @@ class Related extends KalturaPlayer.core.BasePlugin {
    */
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
-    this.relatedManager = new RelatedManager(player, this.eventManager, this.config);
+    this.relatedManager = new RelatedManager({
+      player,
+      eventManager: this.eventManager,
+      config: this.config,
+      dispatchEvent: this.dispatchEvent.bind(this)
+    });
     this.init();
   }
 
-  private async init() {
-    const entriesLoaded = await this.relatedManager.load();
-    if (entriesLoaded) {
-      this.player.ui.addComponent({
-        label: 'kaltura-related-grid',
-        presets: PRESETS,
-        area: 'GuiArea',
-        get: () => {
-          const props = {
-            relatedManager: this.relatedManager
-          };
-          return <RelatedOverlay {...props} />;
-        }
-      });
+  private init() {
+    const {relatedManager} = this;
+    relatedManager.load();
 
-      this.player.ui.addComponent({
-        label: 'kaltura-related-pre-playback-play-overlay',
-        presets: PRESETS,
-        area: 'GuiArea',
-        get: () => {
-          return <PrePlaybackPlayOverlayWrapper />;
-        },
-        replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
-      });
+    this.player.ui.addComponent({
+      label: 'kaltura-related-grid',
+      presets: PRESETS,
+      area: 'GuiArea',
+      get: () => <RelatedOverlay relatedManager={this.relatedManager} />
+    });
 
-      const {PrevNext} = KalturaPlayer.ui.components;
-      const item = {
-        relatedManager: this.relatedManager,
-        get sources() {
-          return this.relatedManager.entries[0];
-        }
-      };
-      const prevNext = (
-        <PrevNext
-          type={'next'}
-          item={item}
-          onClick={() => {
-            this.relatedManager.playNext();
-          }}
-        />
-      );
-      this.player.ui.addComponent({
-        label: 'kaltura-relayed-overlay-next',
-        presets: PRESETS,
-        area: 'OverlayPlaybackControls',
-        get: () => {
-          return prevNext;
-        }
-      });
-      this.player.ui.addComponent({
-        label: 'kaltura-related-bottom-bar-next',
-        presets: PRESETS,
-        area: 'BottomBarPlaybackControls',
-        get: () => {
-          return prevNext;
-        }
-      });
-    }
+    this.player.ui.addComponent({
+      label: 'kaltura-related-pre-playback-play-overlay',
+      presets: PRESETS,
+      area: 'GuiArea',
+      get: () => <PrePlaybackPlayOverlayWrapper relatedManager={relatedManager} />,
+      replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
+    });
+
+    this.player.ui.addComponent({
+      label: 'kaltura-relayed-overlay-next',
+      presets: PRESETS,
+      area: 'OverlayPlaybackControls',
+      get: () => <Next relatedManager={relatedManager} />
+    });
+
+    this.player.ui.addComponent({
+      label: 'kaltura-related-bottom-bar-next',
+      presets: PRESETS,
+      area: 'BottomBarPlaybackControls',
+      get: () => <Next relatedManager={relatedManager} />
+    });
   }
 }
 

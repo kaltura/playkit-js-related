@@ -21,6 +21,8 @@ const GridPages = ({
     return data.slice(pageStart, pageStart + 8);
   };
 
+  if (!data.length) return <></>;
+
   const firstEntryData = data[0];
   const firstEntry = (
     <NextEntry
