@@ -9,6 +9,8 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "jest/no-deprecated-functions": "off"
+    "jest/no-deprecated-functions": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"]
   }
 }
