@@ -41,6 +41,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "browserslist": [
+    "ie 11"
+  ],
   "keywords": [
     "related entries grid",
     "kaltura",
