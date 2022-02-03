@@ -18,21 +18,33 @@ interface EntryProps {
 const Entry = ({id, children, duration, imageUrl, width, imageHeight, contentHeight}: EntryProps) => {
   const {relatedManager} = useContext(RelatedContext);
   const [showImage, setShowImage] = useState(true);
+  const [useImageDimensions, setUseImageDimensions] = useState(true);
 
   let image;
-  if (showImage && imageUrl) {
+  if (!showImage) {
+    image = <div className={styles.noImage} style={{width, height: imageHeight}} />;
+  } else if (useImageDimensions) {
     image = (
       <img
         className={styles.image}
         src={`${imageUrl}/width/${width}/height/${imageHeight}`}
         style={{width, height: imageHeight}}
         onError={() => {
-          setShowImage(false);
+          setUseImageDimensions(false);
         }}
       />
     );
   } else {
-    image = <div className={styles.noImage} style={{width, height: imageHeight}} />;
+    image = (
+      <img
+        className={styles.image}
+        src={imageUrl}
+        style={{width, height: imageHeight}}
+        onError={() => {
+          setShowImage(false);
+        }}
+      />
+    );
   }
 
   const color = KalturaPlayer.ui.style.white;

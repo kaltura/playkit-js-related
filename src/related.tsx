@@ -23,6 +23,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     showOnPlaybackPaused: false,
     playlistId: null,
     entryList: [],
+    sourcesList: [],
     useContext: false
   };
 

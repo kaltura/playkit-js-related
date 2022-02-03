@@ -15,6 +15,7 @@ class RelatedManager {
   private entryService: EntryService;
   private dispatchEvent: (name: string, payload: any) => void;
   private _entries: KalturaPlayerTypes.Sources[] = [];
+  private _areEntriesExternal = false;
 
   constructor(props: RelatedManagerProps) {
     this.player = props.player;
@@ -33,17 +34,27 @@ class RelatedManager {
   }
 
   private async playByIndex(index: number) {
-    this.player.loadMedia({entryId: this.entries[index].id});
+    if (this._areEntriesExternal) {
+      this.player.setMedia({sources: this.entries[index]});
+    } else {
+      this.player.loadMedia({entryId: this.entries[index].id});
+    }
     this.cycleEntries(index);
   }
 
   async load() {
-    const {playlistId, entryList, useContext} = this.config;
+    const {playlistId, entryList, sourcesList, useContext} = this.config;
     if (playlistId) {
+      this._areEntriesExternal = false;
       this.entries = await this.entryService.getEntriesByPlaylistId(playlistId);
     } else if (entryList?.length) {
+      this._areEntriesExternal = false;
       this.entries = await this.entryService.getEntriesByEntryIds(entryList);
+    } else if (sourcesList?.length) {
+      this._areEntriesExternal = true;
+      this.entries = this.entryService.getEntriesByConfig(sourcesList);
     } else if (useContext) {
+      this._areEntriesExternal = true;
       this.listen(this.player.Event.SOURCE_SELECTED, () => {
         this.entryService.getEntriesByContext(this.player.sources.id).then(entries => {
           this.entries = entries;
@@ -87,6 +98,10 @@ class RelatedManager {
 
   get entries() {
     return this._entries;
+  }
+
+  get areEntriesExternal() {
+    return this._areEntriesExternal;
   }
 }
 

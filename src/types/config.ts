@@ -4,7 +4,8 @@ interface RelatedConfig {
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
   playlistId: string | null;
-  entryList?: Array<string>;
+  entryList: Array<string>;
+  sourcesList: Array<any>;
   useContext: boolean;
 }
 
