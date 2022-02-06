@@ -54,7 +54,7 @@ class RelatedManager {
       this._areEntriesExternal = true;
       this.entries = this.entryService.getEntriesByConfig(sourcesList);
     } else if (useContext) {
-      this._areEntriesExternal = true;
+      this._areEntriesExternal = false;
       this.listen(this.player.Event.SOURCE_SELECTED, () => {
         this.entryService.getEntriesByContext(this.player.sources.id).then(entries => {
           this.entries = entries;
