@@ -29,6 +29,7 @@ const GridPages = ({
       id={firstEntryData.id}
       key={firstEntryData.id}
       duration={firstEntryData.duration}
+      type={firstEntryData.type}
       imageUrl={firstEntryData.poster}
       width={260}
       imageHeight={147}

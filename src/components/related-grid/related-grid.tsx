@@ -27,6 +27,7 @@ const RelatedGrid = ({data, isExpanded}: RelatedGridProps) => {
         id={entryData.id}
         key={entryData.id}
         duration={entryData.duration}
+        type={entryData.type}
         imageUrl={entryData.poster}
         width={width}
         imageHeight={IMAGE_HEIGHT}
