@@ -33,11 +33,14 @@ class RelatedManager {
     this.entries = [...this._entries, lastPlayedEntry];
   }
 
-  private async playByIndex(index: number) {
+  private playByIndex(index: number) {
     if (this._areEntriesExternal) {
       this.player.setMedia({sources: this.entries[index]});
+      this.player.play();
     } else {
-      this.player.loadMedia({entryId: this.entries[index].id});
+      this.player.loadMedia({entryId: this.entries[index].id}).then(() => {
+        this.player.play();
+      });
     }
     this.cycleEntries(index);
   }
