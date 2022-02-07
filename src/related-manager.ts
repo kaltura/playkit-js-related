@@ -21,7 +21,7 @@ class RelatedManager {
     this.player = props.player;
     this.eventManager = props.eventManager;
     this.config = props.config;
-    this.entryService = new EntryService(props.player);
+    this.entryService = new EntryService(props.player, props.config.entriesByContextLimit);
     this.dispatchEvent = props.dispatchEvent;
 
     this.playNext = this.playNext.bind(this);
@@ -93,7 +93,7 @@ class RelatedManager {
 
   set entries(entries) {
     this._entries = entries;
-    this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, null);
+    this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, entries);
   }
 
   get entries() {

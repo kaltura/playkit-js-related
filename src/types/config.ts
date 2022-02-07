@@ -7,6 +7,7 @@ interface RelatedConfig {
   entryList: Array<string>;
   sourcesList: Array<any>;
   useContext: boolean;
+  entriesByContextLimit: number;
 }
 
 export {RelatedConfig};

@@ -2,15 +2,17 @@ import {EntryListResponse} from 'types/entry-list-response';
 import {RelatedLoader} from './related-loader';
 
 class EntryService {
-  _player: KalturaPlayerTypes.Player;
+  private player: KalturaPlayerTypes.Player;
+  private entriesByContextLimit: number;
 
-  constructor(player: KalturaPlayerTypes.Player) {
-    this._player = player;
+  constructor(player: KalturaPlayerTypes.Player, entriesByContextLimit: number) {
+    this.player = player;
+    this.entriesByContextLimit = entriesByContextLimit;
   }
 
   async getEntriesByPlaylistId(playlistId: string): Promise<KalturaPlayerTypes.Sources[]> {
     try {
-      const response: EntryListResponse = await this._player.provider.getPlaylistConfig({playlistId});
+      const response: EntryListResponse = await this.player.provider.getPlaylistConfig({playlistId});
       return processResponse(response);
     } catch (e) {
       return [];
@@ -22,7 +24,7 @@ class EntryService {
 
     if (entries.length) {
       try {
-        const response: EntryListResponse = await this._player.provider.getEntryListConfig({entries});
+        const response: EntryListResponse = await this.player.provider.getEntryListConfig({entries});
         return processResponse(response);
       } catch (e) {
         return [];
@@ -63,7 +65,7 @@ class EntryService {
 
   async getEntriesByContext(entryId: string): Promise<KalturaPlayerTypes.Sources[]> {
     try {
-      const response = await this._player.provider.doRequest([{loader: RelatedLoader, params: {entryId}}]);
+      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit: this.entriesByContextLimit}}]);
       return response.get('related').relatedEntries;
     } catch (e) {
       return [];

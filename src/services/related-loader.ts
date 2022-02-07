@@ -10,7 +10,7 @@ class RelatedLoader implements KalturaPlayerTypes.ILoader {
     return 'related';
   }
 
-  constructor({entryId}: {entryId: string}) {
+  constructor({entryId, limit}: {entryId: string; limit: number}) {
     this.entryId = entryId;
 
     const userEntryRequest = new RequestBuilder();
@@ -21,7 +21,7 @@ class RelatedLoader implements KalturaPlayerTypes.ILoader {
       filter: {
         objectType: 'KalturaMediaEntryFilterForPlaylist',
         idNotIn: entryId,
-        limit: 12
+        limit
       },
       playlistContext: {
         objectType: 'KalturaEntryContext',
