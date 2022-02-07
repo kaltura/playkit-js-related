@@ -3,6 +3,7 @@ import {RelatedManager} from 'related-manager';
 import {RelatedOverlay} from 'components/related-overlay/related-overlay';
 import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
 import {Next} from 'components/next/next';
+import {RelatedEvent} from 'types/related-event';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -24,7 +25,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     playlistId: null,
     entryList: [],
     sourcesList: [],
-    useContext: false
+    useContext: false,
+    entriesByContextLimit: 12
   };
 
   private relatedManager: RelatedManager;
@@ -52,12 +54,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
       config: this.config,
       dispatchEvent: this.dispatchEvent.bind(this)
     });
-    this.init();
+    this.relatedManager.load();
+    this.injectUIComponents();
   }
 
-  private init() {
+  private injectUIComponents() {
     const {relatedManager} = this;
-    relatedManager.load();
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',
@@ -74,18 +76,30 @@ class Related extends KalturaPlayer.core.BasePlugin {
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
+    const nextProps = {
+      onClick: () => relatedManager.playNext(),
+      onLoaded: (cb: (nextEntries: []) => void) => {
+        relatedManager.listen(RelatedEvent.ENTRIES_CHANGED, ({payload}: {payload: []}) => cb(payload));
+        // in case entries were set before the handler was registered
+        this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, relatedManager.entries);
+      },
+      onUnloaded: (cb: (nextEntries: []) => void) => {
+        relatedManager.unlisten(RelatedEvent.ENTRIES_CHANGED, cb);
+      }
+    };
+
     this.player.ui.addComponent({
       label: 'kaltura-relayed-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
-      get: () => <Next relatedManager={relatedManager} />
+      get: () => <Next {...nextProps} />
     });
 
     this.player.ui.addComponent({
       label: 'kaltura-related-bottom-bar-next',
       presets: PRESETS,
       area: 'BottomBarPlaybackControls',
-      get: () => <Next relatedManager={relatedManager} />
+      get: () => <Next {...nextProps} />
     });
   }
 }
