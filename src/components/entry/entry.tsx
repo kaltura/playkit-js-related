@@ -57,7 +57,7 @@ const Entry = withText({
   if (type === KalturaPlayer.core.MediaType.LIVE) {
     entryDuration = (
       <div className={`${styles.duration} ${styles.live}`}>
-        <span className={styles.durationText}>{liveText}</span>
+        <span className={styles.liveText}>{liveText}</span>
       </div>
     );
   } else if (duration) {

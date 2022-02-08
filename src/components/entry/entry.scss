@@ -5,7 +5,8 @@
   text-overflow: ellipsis;
 }
 
-.duration-text {
+.duration-text,
+.live-text {
   @extend .text;
   font-size: 12px;
   line-height: 14px;
