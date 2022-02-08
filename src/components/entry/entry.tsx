@@ -1,7 +1,6 @@
 import {RelatedContext} from 'components/related-context/related-context';
 import {ComponentChildren} from 'preact';
 import {useContext, useState} from 'preact/hooks';
-import {EntryType} from './entry-type';
 import * as styles from './entry.scss';
 
 const {withText} = KalturaPlayer.ui.preacti18n;
@@ -55,7 +54,7 @@ const Entry = withText({
   const color = KalturaPlayer.ui.style.white;
   let entryDuration;
 
-  if (type === EntryType.LIVE) {
+  if (type === KalturaPlayer.core.MediaType.LIVE) {
     entryDuration = (
       <div className={`${styles.duration} ${styles.live}`}>
         <span className={styles.durationText}>{liveText}</span>
