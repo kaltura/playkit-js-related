@@ -72,7 +72,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper relatedManager={relatedManager} />,
+      get: () => <PrePlaybackPlayOverlayWrapper showOnPlaybackDone={relatedManager.showOnPlaybackDone} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
