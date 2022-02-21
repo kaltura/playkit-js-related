@@ -1,4 +1,5 @@
 import {GridEntry} from 'components/entry/grid-entry';
+import {Sources} from 'types/sources';
 import * as styles from './related-grid.scss';
 
 const IMAGE_HEIGHT = 98;
@@ -7,7 +8,7 @@ const CONTENT_HEIGHT = 49;
 const WIDTH = 174;
 const WIDTH_EXPANDED = 195.5;
 interface RelatedGridProps {
-  data: KalturaPlayerTypes.Sources[];
+  data: Sources[];
   isExpanded: boolean;
 }
 
@@ -24,8 +25,8 @@ const RelatedGrid = ({data, isExpanded}: RelatedGridProps) => {
     const entryData = data[i];
     const entry = entryData ? (
       <GridEntry
-        id={entryData.id}
-        key={entryData.id}
+        id={entryData.internalIndex}
+        key={entryData.internalIndex}
         duration={entryData.duration}
         type={entryData.type}
         imageUrl={entryData.poster}

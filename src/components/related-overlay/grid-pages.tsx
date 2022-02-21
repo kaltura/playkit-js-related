@@ -2,6 +2,7 @@ import {RelatedGrid} from 'components/related-grid/related-grid';
 import {NextEntry} from 'components/entry/next-entry';
 
 import * as styles from './related-overlay.scss';
+import {Sources} from 'types/sources';
 
 const GridPages = ({
   data,
@@ -10,7 +11,7 @@ const GridPages = ({
   currPage,
   nextPage
 }: {
-  data: KalturaPlayerTypes.Sources[];
+  data: Sources[];
   countdown: number;
   prevPage: number;
   currPage: number;
@@ -26,8 +27,8 @@ const GridPages = ({
   const firstEntryData = data[0];
   const firstEntry = (
     <NextEntry
-      id={firstEntryData.id}
-      key={firstEntryData.id}
+      id={firstEntryData.internalIndex}
+      key={firstEntryData.internalIndex}
       duration={firstEntryData.duration}
       type={firstEntryData.type}
       imageUrl={firstEntryData.poster}

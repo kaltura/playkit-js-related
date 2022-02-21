@@ -6,7 +6,7 @@ import * as styles from './entry.scss';
 const {withText} = KalturaPlayer.ui.preacti18n;
 const {toHHMMSS} = KalturaPlayer.ui.utils;
 interface EntryProps {
-  id: string;
+  id: number;
   children?: ComponentChildren;
   duration?: number;
   type?: string;

@@ -1,6 +1,7 @@
 import {EntryService} from 'services/entry-service';
 import {RelatedConfig} from 'types/config';
 import {RelatedEvent} from 'types/related-event';
+import {Sources} from 'types/sources';
 
 interface RelatedManagerProps {
   player: KalturaPlayerTypes.Player;
@@ -14,7 +15,7 @@ class RelatedManager {
   private config: RelatedConfig;
   private entryService: EntryService;
   private dispatchEvent: (name: string, payload: any) => void;
-  private _entries: KalturaPlayerTypes.Sources[] = [];
+  private _entries: Sources[] = [];
   private _areEntriesExternal = false;
 
   constructor(props: RelatedManagerProps) {
@@ -46,20 +47,20 @@ class RelatedManager {
   }
 
   async load() {
-    const {playlistId, entryList, sourcesList, useContext} = this.config;
-    if (playlistId) {
+    const {playlist, entryList, externalEntryList, useContext} = this.config;
+    if (playlist && playlist.playlistId) {
       this._areEntriesExternal = false;
-      this.entries = await this.entryService.getEntriesByPlaylistId(playlistId);
-    } else if (entryList?.length) {
+      this.entries = await this.entryService.getByPlaylist(playlist);
+    } else if (entryList && entryList.entries && entryList.entries.length) {
       this._areEntriesExternal = false;
-      this.entries = await this.entryService.getEntriesByEntryIds(entryList);
-    } else if (sourcesList?.length) {
+      this.entries = await this.entryService.getByEntryList(entryList);
+    } else if (externalEntryList && externalEntryList.length) {
       this._areEntriesExternal = true;
-      this.entries = this.entryService.getEntriesByConfig(sourcesList);
+      this.entries = this.entryService.getBySourcesList(externalEntryList);
     } else if (useContext) {
       this._areEntriesExternal = false;
       this.listen(this.player.Event.SOURCE_SELECTED, () => {
-        this.entryService.getEntriesByContext(this.player.sources.id).then(entries => {
+        this.entryService.getByContext(this.player.sources.id).then(entries => {
           this.entries = entries;
         });
       });
@@ -70,8 +71,8 @@ class RelatedManager {
     this.playByIndex(0);
   }
 
-  playSelected(entryId: string) {
-    this.playByIndex(this.entries.findIndex(({id}) => id === entryId));
+  playSelected(internalIndex: number) {
+    this.playByIndex(internalIndex);
   }
 
   listen(name: string, listener: any) {
@@ -94,12 +95,17 @@ class RelatedManager {
     return this.config.autoContinue && Number.isInteger(this.config.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
-  set entries(entries) {
-    this._entries = entries;
-    this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, entries);
+  set entries(entries: KalturaPlayerTypes.Sources[]) {
+    this._entries = entries.map((entry, index) => {
+      return {
+        ...entry,
+        internalIndex: index
+      };
+    });
+    this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, this._entries);
   }
 
-  get entries() {
+  get entries(): Sources[] {
     return this._entries;
   }
 
