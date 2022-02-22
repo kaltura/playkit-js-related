@@ -3,11 +3,9 @@ import {RelatedLoader} from './related-loader';
 
 class EntryService {
   private player: KalturaPlayerTypes.Player;
-  private entriesByContextLimit: number;
 
-  constructor(player: KalturaPlayerTypes.Player, entriesByContextLimit: number) {
+  constructor(player: KalturaPlayerTypes.Player) {
     this.player = player;
-    this.entriesByContextLimit = entriesByContextLimit;
   }
 
   async getByPlaylist(playlistInfo: {playlistId: string; ks?: string}): Promise<KalturaPlayerTypes.Sources[]> {
@@ -34,9 +32,9 @@ class EntryService {
     });
   }
 
-  async getByContext(entryId: string): Promise<KalturaPlayerTypes.Sources[]> {
+  async getByContext(entryId: string, limit: number): Promise<KalturaPlayerTypes.Sources[]> {
     try {
-      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit: this.entriesByContextLimit}}]);
+      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}]);
       return response.get('related').relatedEntries;
     } catch (e) {
       return [];

@@ -31,20 +31,21 @@ class RelatedLoader implements KalturaPlayerTypes.ILoader {
     this.requests = [userEntryRequest];
   }
 
-  set response(serverResponse: any) {
-    const entries = serverResponse[0]?.data;
-    this._relatedEntries = entries.map((entry: any) => {
-      const {description, duration, id, name, thumbnailUrl: poster} = entry;
-      return {
-        id,
-        poster,
-        duration,
-        description,
-        metadata: {
-          name
+  set response([response]: [any]) {
+    if (!response.hasError && response.data?.length) {
+      const entries = response.data.map((entry: any) => {
+        return {
+          ...entry,
+          poster: entry.thumbnailUrl
+        };
+      });
+      const parsedResponse = KalturaPlayer.providers.OVPProviderParser.getEntryList({
+        playlistItems: {
+          entries
         }
-      };
-    });
+      });
+      this._relatedEntries = parsedResponse.items;
+    }
   }
 
   get relatedEntries() {

@@ -22,7 +22,7 @@ class RelatedManager {
     this.player = props.player;
     this.eventManager = props.eventManager;
     this.config = props.config;
-    this.entryService = new EntryService(props.player, props.config.entriesByContextLimit);
+    this.entryService = new EntryService(props.player);
     this.dispatchEvent = props.dispatchEvent;
 
     this.playNext = this.playNext.bind(this);
@@ -60,7 +60,7 @@ class RelatedManager {
     } else if (useContext) {
       this._areEntriesExternal = false;
       this.listen(this.player.Event.SOURCE_SELECTED, () => {
-        this.entryService.getByContext(this.player.sources.id).then(entries => {
+        this.entryService.getByContext(this.player.sources.id, this.config.entriesByContextLimit).then(entries => {
           this.entries = entries;
         });
       });
