@@ -4,7 +4,7 @@ class RelatedLoader implements KalturaPlayerTypes.ILoader {
   private entryId;
   requests: any[];
 
-  _relatedEntries: any;
+  _relatedEntries: KalturaPlayerTypes.Sources[] = [];
 
   static get id(): string {
     return 'related';

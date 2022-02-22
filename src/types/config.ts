@@ -8,7 +8,7 @@ interface RelatedConfig {
     ks?: string;
   } | null;
   entryList: {
-    entries: Array<any>;
+    entries: Array<KalturaPlayerTypes.OVPMediaInfo | KalturaPlayerTypes.OTTMediaInfo>;
     ks?: string;
   } | null;
   externalEntryList: Array<KalturaPlayerTypes.Sources>;

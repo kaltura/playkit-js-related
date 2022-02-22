@@ -17,7 +17,10 @@ class EntryService {
     }
   }
 
-  async getByEntryList(entryList: {entries: any[]; ks?: string}): Promise<KalturaPlayerTypes.Sources[]> {
+  async getByEntryList(entryList: {
+    entries: Array<KalturaPlayerTypes.OVPMediaInfo | KalturaPlayerTypes.OTTMediaInfo>;
+    ks?: string;
+  }): Promise<KalturaPlayerTypes.Sources[]> {
     try {
       const response: EntryListResponse = await this.player.provider.getEntryListConfig(entryList);
       return processResponse(response);
@@ -26,7 +29,7 @@ class EntryService {
     }
   }
 
-  getBySourcesList(sourcesList: any[]): KalturaPlayerTypes.Sources[] {
+  getBySourcesList(sourcesList: KalturaPlayerTypes.Sources[]): KalturaPlayerTypes.Sources[] {
     return sourcesList.filter(sources => {
       return sources.dash?.length || sources.hls?.length || sources.progressive?.length;
     });
