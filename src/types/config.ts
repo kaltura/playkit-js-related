@@ -3,17 +3,12 @@ interface RelatedConfig {
   autoContinueTime: number;
   showOnPlaybackDone: boolean;
   showOnPlaybackPaused: boolean;
-  playlist: {
-    playlistId: string;
-    ks?: string;
-  } | null;
-  entryList: {
-    entries: Array<KalturaPlayerTypes.OVPMediaInfo | KalturaPlayerTypes.OTTMediaInfo>;
-    ks?: string;
-  } | null;
+  playlistId: string | null;
+  entryList: Array<KalturaPlayerTypes.MediaInfo>;
   externalEntryList: Array<KalturaPlayerTypes.Sources>;
   useContext: boolean;
   entriesByContextLimit: number;
+  ks: string;
 }
 
 export {RelatedConfig};

@@ -1,5 +1,5 @@
 enum RelatedEvent {
-  ENTRIES_CHANGED = 'relatedentrieschanged'
+  RELATED_ENTRIES_CHANGED = 'relatedentrieschanged'
 }
 
 export {RelatedEvent};

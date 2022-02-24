@@ -22,14 +22,16 @@ class Related extends KalturaPlayer.core.BasePlugin {
     autoContinueTime: 5,
     showOnPlaybackDone: true,
     showOnPlaybackPaused: false,
-    playlist: null,
-    entryList: null,
+    playlistId: null,
+    entryList: [],
     externalEntryList: [],
     useContext: false,
-    entriesByContextLimit: 12
+    entriesByContextLimit: 12,
+    ks: ''
   };
 
   private relatedManager: RelatedManager;
+  private ks = '';
 
   /**
    * @static
@@ -51,10 +53,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.relatedManager = new RelatedManager({
       player,
       eventManager: this.eventManager,
-      config: this.config,
       dispatchEvent: this.dispatchEvent.bind(this)
     });
-    this.relatedManager.load();
     this.injectUIComponents();
   }
 
@@ -65,26 +65,26 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay relatedManager={this.relatedManager} />
+      get: () => <RelatedOverlay relatedManager={relatedManager} />
     });
 
     this.player.ui.addComponent({
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper showOnPlaybackDone={relatedManager.showOnPlaybackDone} />,
+      get: () => <PrePlaybackPlayOverlayWrapper relatedManager={relatedManager} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
     const nextProps = {
       onClick: () => relatedManager.playNext(),
-      onLoaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.listen(RelatedEvent.ENTRIES_CHANGED, ({payload}: {payload: []}) => cb(payload));
+      onLoaded: (callback: (nextEntries: []) => void) => {
+        relatedManager.listen(RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
         // in case entries were set before the handler was registered
-        this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, relatedManager.entries);
+        this.dispatchEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, relatedManager.entries);
       },
       onUnloaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.unlisten(RelatedEvent.ENTRIES_CHANGED, cb);
+        relatedManager.unlisten(RelatedEvent.RELATED_ENTRIES_CHANGED, cb);
       }
     };
 
@@ -101,6 +101,34 @@ class Related extends KalturaPlayer.core.BasePlugin {
       area: 'BottomBarPlaybackControls',
       get: () => <Next {...nextProps} />
     });
+  }
+
+  private getNewKs(): string {
+    if (this.config?.ks) {
+      return this.config.ks;
+    }
+    const {isAnonymous, ks} = this.player.config.session;
+    return !isAnonymous && ks ? ks : '';
+  }
+
+  loadMedia() {
+    const {ks, config, relatedManager} = this;
+    const {useContext, playlistId, entryList} = config;
+    const newKs = this.getNewKs();
+
+    if (!relatedManager.isInitialized) {
+      // first loadMedia
+      relatedManager.load(config, newKs);
+    } else if (ks && ks !== newKs) {
+      // ks changed
+      this.ks = newKs;
+      if (useContext || playlistId || entryList?.length) {
+        relatedManager.load(config, newKs);
+      }
+    } else if (useContext) {
+      // ks didn't change, refresh context entries anyway
+      relatedManager.load(config, newKs);
+    }
   }
 }
 

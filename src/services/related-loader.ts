@@ -39,7 +39,7 @@ class RelatedLoader implements KalturaPlayerTypes.ILoader {
           poster: entry.thumbnailUrl
         };
       });
-      const parsedResponse = KalturaPlayer.providers.OVPProviderParser.getEntryList({
+      const parsedResponse = KalturaPlayer.providers.ProviderParser.getEntryList({
         playlistItems: {
           entries
         }

@@ -6,22 +6,22 @@ import {Sources} from 'types/sources';
 interface RelatedManagerProps {
   player: KalturaPlayerTypes.Player;
   eventManager: KalturaPlayerTypes.EventManager;
-  config: RelatedConfig;
   dispatchEvent: (name: string, paylod: any) => void;
 }
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
   private eventManager: KalturaPlayerTypes.EventManager;
-  private config: RelatedConfig;
   private entryService: EntryService;
   private dispatchEvent: (name: string, payload: any) => void;
   private _entries: Sources[] = [];
   private _areEntriesExternal = false;
+  private config: RelatedConfig | null = null;
+  private ks = '';
+  private _isInitialized = false;
 
   constructor(props: RelatedManagerProps) {
     this.player = props.player;
     this.eventManager = props.eventManager;
-    this.config = props.config;
     this.entryService = new EntryService(props.player);
     this.dispatchEvent = props.dispatchEvent;
 
@@ -31,7 +31,7 @@ class RelatedManager {
   private cycleEntries(lastPlayedIndex: number) {
     const lastPlayedEntry = this._entries[lastPlayedIndex];
     this._entries.splice(lastPlayedIndex, 1);
-    this.entries = [...this._entries, lastPlayedEntry];
+    this.setEntries([...this._entries, lastPlayedEntry]);
   }
 
   private playByIndex(index: number) {
@@ -39,32 +39,37 @@ class RelatedManager {
       this.player.setMedia({sources: this.entries[index]});
       this.player.play();
     } else {
-      this.player.loadMedia({entryId: this.entries[index].id}).then(() => {
+      const entry = this.entries[index];
+      this.player.loadMedia({...entry, entryId: entry.id, ks: this.ks}).then(() => {
         this.player.play();
       });
     }
     this.cycleEntries(index);
   }
 
-  async load() {
-    const {playlist, entryList, externalEntryList, useContext} = this.config;
-    if (playlist && playlist.playlistId) {
+  async load(config: RelatedConfig, ks: string) {
+    this.config = config;
+    this.ks = ks;
+
+    const {playlistId, entryList, externalEntryList, useContext, entriesByContextLimit} = config;
+    let entries: KalturaPlayerTypes.Sources[] = [];
+
+    if (playlistId) {
       this._areEntriesExternal = false;
-      this.entries = await this.entryService.getByPlaylist(playlist);
-    } else if (entryList && entryList.entries && entryList.entries.length) {
+      entries = await this.entryService.getByPlaylist({ks, playlistId});
+    } else if (entryList?.length) {
       this._areEntriesExternal = false;
-      this.entries = await this.entryService.getByEntryList(entryList);
-    } else if (externalEntryList && externalEntryList.length) {
+      entries = await this.entryService.getByEntryList({entries: entryList, ks});
+    } else if (externalEntryList?.length) {
       this._areEntriesExternal = true;
-      this.entries = this.entryService.getBySourcesList(externalEntryList);
+      entries = this.entryService.getBySourcesList(externalEntryList);
     } else if (useContext) {
       this._areEntriesExternal = false;
-      this.listen(this.player.Event.SOURCE_SELECTED, () => {
-        this.entryService.getByContext(this.player.sources.id, this.config.entriesByContextLimit).then(entries => {
-          this.entries = entries;
-        });
-      });
+      entries = await this.entryService.getByContext(this.player.sources.id, entriesByContextLimit);
     }
+
+    this.setEntries(entries);
+    this._isInitialized = true;
   }
 
   playNext() {
@@ -83,34 +88,34 @@ class RelatedManager {
     this.eventManager.unlisten(this.player, name, listener);
   }
 
-  get showOnPlaybackDone() {
-    return this.config.showOnPlaybackDone;
+  get showOnPlaybackDone(): boolean {
+    return this.config?.showOnPlaybackDone || false;
   }
 
-  get showOnPlaybackPaused() {
-    return this.config.showOnPlaybackPaused;
+  get showOnPlaybackPaused(): boolean {
+    return this.config?.showOnPlaybackPaused || false;
   }
 
-  get countdownTime() {
-    return this.config.autoContinue && Number.isInteger(this.config.autoContinueTime) ? this.config.autoContinueTime : -1;
+  get countdownTime(): number {
+    return this.config?.autoContinue && Number.isInteger(this.config?.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
-  set entries(entries: KalturaPlayerTypes.Sources[]) {
+  private setEntries(entries: KalturaPlayerTypes.Sources[]) {
     this._entries = entries.map((entry, index) => {
       return {
         ...entry,
         internalIndex: index
       };
     });
-    this.dispatchEvent(RelatedEvent.ENTRIES_CHANGED, this._entries);
+    this.dispatchEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, this._entries);
   }
 
   get entries(): Sources[] {
     return this._entries;
   }
 
-  get areEntriesExternal() {
-    return this._areEntriesExternal;
+  get isInitialized(): boolean {
+    return this._isInitialized;
   }
 }
 

@@ -1,3 +1,5 @@
+import {RelatedManager} from 'related-manager';
+
 const {PrePlaybackPlayOverlay} = KalturaPlayer.ui.components;
 const {connect} = KalturaPlayer.ui.redux;
 
@@ -9,11 +11,11 @@ const mapStateToProps = (state: any) => {
 
 interface PrePlaybackPlayOverlayWrapperProps {
   isPlaybackEnded: boolean;
-  showOnPlaybackDone: boolean;
+  relatedManager: RelatedManager;
 }
 
-const PrePlaybackPlayOverlayWrapper = connect(mapStateToProps)(({isPlaybackEnded, showOnPlaybackDone}: PrePlaybackPlayOverlayWrapperProps) => {
-  return isPlaybackEnded && showOnPlaybackDone ? undefined : <PrePlaybackPlayOverlay />;
+const PrePlaybackPlayOverlayWrapper = connect(mapStateToProps)(({isPlaybackEnded, relatedManager}: PrePlaybackPlayOverlayWrapperProps) => {
+  return isPlaybackEnded && relatedManager.showOnPlaybackDone ? undefined : <PrePlaybackPlayOverlay />;
 });
 
 export {PrePlaybackPlayOverlayWrapper};
