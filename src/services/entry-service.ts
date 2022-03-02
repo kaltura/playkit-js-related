@@ -32,9 +32,9 @@ class EntryService {
     });
   }
 
-  async getByContext(entryId: string, limit: number): Promise<KalturaPlayerTypes.Sources[]> {
+  async getByContext(entryId: string, ks: string, limit: number): Promise<KalturaPlayerTypes.Sources[]> {
     try {
-      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}]);
+      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}], ks);
       return response.get('related').relatedEntries;
     } catch (e) {
       return [];

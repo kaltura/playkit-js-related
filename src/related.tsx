@@ -103,18 +103,10 @@ class Related extends KalturaPlayer.core.BasePlugin {
     });
   }
 
-  private getNewKs(): string {
-    if (this.config?.ks) {
-      return this.config.ks;
-    }
-    const {isAnonymous, ks} = this.player.config.session;
-    return !isAnonymous && ks ? ks : '';
-  }
-
   loadMedia() {
     const {ks, config, relatedManager} = this;
     const {useContext, playlistId, entryList} = config;
-    const newKs = this.getNewKs();
+    const newKs = this.config?.ks;
 
     if (!relatedManager.isInitialized) {
       // first loadMedia

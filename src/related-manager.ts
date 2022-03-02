@@ -65,7 +65,7 @@ class RelatedManager {
       entries = this.entryService.getBySourcesList(externalEntryList);
     } else if (useContext) {
       this._areEntriesExternal = false;
-      entries = await this.entryService.getByContext(this.player.sources.id, entriesByContextLimit);
+      entries = await this.entryService.getByContext(this.player.sources.id, ks, entriesByContextLimit);
     }
 
     this.setEntries(entries);

@@ -33,7 +33,8 @@
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
     "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {
     "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#master"
