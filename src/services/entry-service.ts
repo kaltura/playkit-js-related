@@ -1,31 +1,44 @@
 import {EntryListResponse} from 'types/entry-list-response';
+import {RelatedLoader} from './related-loader';
 
 class EntryService {
-  _player: KalturaPlayerTypes.Player;
+  private player: KalturaPlayerTypes.Player;
 
   constructor(player: KalturaPlayerTypes.Player) {
-    this._player = player;
+    this.player = player;
   }
 
-  async getEntriesByPlaylistId(playlistId: string) {
+  async getByPlaylist(playlistInfo: {playlistId: string; ks?: string}): Promise<KalturaPlayerTypes.Sources[]> {
     try {
-      const response: EntryListResponse = await this._player.provider.getPlaylistConfig({playlistId});
+      const response: EntryListResponse = await this.player.provider.getPlaylistConfig(playlistInfo);
       return processResponse(response);
     } catch (e) {
       return [];
     }
   }
 
-  async getEntriesByEntryIds(entryIds: string[]) {
-    const entries = entryIds.map(entryId => ({entryId}));
-
-    if (entries.length) {
-      try {
-        const response: EntryListResponse = await this._player.provider.getEntryListConfig({entries});
-        return processResponse(response);
-      } catch (e) {}
+  async getByEntryList(entryList: {entries: KalturaPlayerTypes.MediaInfo[]; ks?: string}): Promise<KalturaPlayerTypes.Sources[]> {
+    try {
+      const response: EntryListResponse = await this.player.provider.getEntryListConfig(entryList);
+      return processResponse(response);
+    } catch (e) {
+      return [];
     }
-    return [];
+  }
+
+  getBySourcesList(sourcesList: KalturaPlayerTypes.Sources[]): KalturaPlayerTypes.Sources[] {
+    return sourcesList.filter(sources => {
+      return sources.dash?.length || sources.hls?.length || sources.progressive?.length;
+    });
+  }
+
+  async getByContext(entryId: string, ks: string, limit: number): Promise<KalturaPlayerTypes.Sources[]> {
+    try {
+      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}], ks);
+      return response.get('related').relatedEntries;
+    } catch (e) {
+      return [];
+    }
   }
 }
 

@@ -53,7 +53,16 @@ Finally, add the bundle as a script tag in your page, and initialize the player
        related: {
          playlistId: ...
        }
-     }
+     },
+     ui: {
+      translations: { // for local development
+        en: {
+          related: {
+            upNextIn: 'Up Next In'
+          }
+        }
+      }
+    }
      ...
     };
     var player = KalturaPlayer.setup(config);

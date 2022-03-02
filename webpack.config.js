@@ -57,7 +57,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: __dirname + '/src'
+    static: __dirname + '/src'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
