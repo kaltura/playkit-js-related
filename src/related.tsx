@@ -53,7 +53,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.relatedManager = new RelatedManager({
       player,
       eventManager: this.eventManager,
-      dispatchEvent: this.dispatchEvent.bind(this)
+      dispatchEvent: this.dispatchEvent.bind(this),
+      logger: this.logger
     });
     this.injectUIComponents();
   }
@@ -115,6 +116,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       // ks changed
       this.ks = newKs;
       if (useContext || playlistId || entryList?.length) {
+        this.logger.info('ks changed - reloading related entries');
         relatedManager.load(config, newKs);
       }
     } else if (useContext) {

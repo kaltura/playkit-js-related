@@ -7,6 +7,7 @@ interface RelatedManagerProps {
   player: KalturaPlayerTypes.Player;
   eventManager: KalturaPlayerTypes.EventManager;
   dispatchEvent: (name: string, paylod: any) => void;
+  logger: KalturaPlayerTypes.Logger;
 }
 class RelatedManager {
   private player: KalturaPlayerTypes.Player;
@@ -18,14 +19,15 @@ class RelatedManager {
   private config: RelatedConfig | null = null;
   private ks = '';
   private _isInitialized = false;
+  private _logger: KalturaPlayerTypes.Logger;
 
-  constructor(props: RelatedManagerProps) {
-    this.player = props.player;
-    this.eventManager = props.eventManager;
-    this.entryService = new EntryService(props.player);
-    this.dispatchEvent = props.dispatchEvent;
-
+  constructor({player, eventManager, dispatchEvent, logger}: RelatedManagerProps) {
+    this.player = player;
+    this.eventManager = eventManager;
+    this.dispatchEvent = dispatchEvent;
+    this._logger = logger;
     this.playNext = this.playNext.bind(this);
+    this.entryService = new EntryService(player, logger);
   }
 
   private cycleEntries(lastPlayedIndex: number) {
@@ -40,9 +42,15 @@ class RelatedManager {
       this.player.play();
     } else {
       const entry = this.entries[index];
-      this.player.loadMedia({...entry, entryId: entry.id, ks: this.ks}).then(() => {
-        this.player.play();
-      });
+      this.player
+        .loadMedia({...entry, entryId: entry.id, ks: this.ks})
+        .then(() => {
+          this.logger.info('loadMedia success');
+          this.player.play();
+        })
+        .catch(() => {
+          this.logger.warning('loadMedia failed');
+        });
     }
     this.cycleEntries(index);
   }
@@ -66,6 +74,12 @@ class RelatedManager {
     } else if (useContext) {
       this._areEntriesExternal = false;
       entries = await this.entryService.getByContext(this.player.sources.id, ks, entriesByContextLimit);
+    } else {
+      this.logger.warn('no source configured');
+    }
+
+    if (!entries.length) {
+      this.logger.warn('no related entries found');
     }
 
     this.setEntries(entries);
@@ -73,10 +87,12 @@ class RelatedManager {
   }
 
   playNext() {
+    this.logger.info('going to play next entry');
     this.playByIndex(0);
   }
 
   playSelected(internalIndex: number) {
+    this.logger.info('going to play selected entry');
     this.playByIndex(internalIndex);
   }
 
@@ -101,6 +117,7 @@ class RelatedManager {
   }
 
   private setEntries(entries: KalturaPlayerTypes.Sources[]) {
+    this.logger.info(`related entries changed`);
     this._entries = entries.map((entry, index) => {
       return {
         ...entry,
@@ -116,6 +133,10 @@ class RelatedManager {
 
   get isInitialized(): boolean {
     return this._isInitialized;
+  }
+
+  get logger(): any {
+    return this._logger;
   }
 }
 
