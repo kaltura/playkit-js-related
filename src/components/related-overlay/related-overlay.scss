@@ -1,10 +1,11 @@
 .related-overlay {
   backdrop-filter: blur(16px);
   background-color: rgba(0, 0, 0, 0.7);
-  height: 576px;
-  position: absolute;
+  height: 100%;
   transition: opacity 0.3s ease;
-  width: 1024px;
+  width: 100%;
+
+  position: absolute;
 
   &.hidden {
     opacity: 0;
@@ -13,7 +14,25 @@
   }
 
   .content {
-    margin: 133px 97px;
+    display: flex;
+    transform: translate(-50%, -50%);
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    .arrow {
+      position: absolute;
+      top: 127px;
+
+      &.arrow-right {
+        right: -48px;
+      }
+
+      &.arrow-left {
+        left: -48px;
+      }
+    }
 
     .grid-pages-wrapper {
       height: 310px;
@@ -45,18 +64,6 @@
         }
       }
     }
-  }
-
-  .arrow-right {
-    position: absolute;
-    left: 53px;
-    top: 256px;
-  }
-
-  .arrow-left {
-    position: absolute;
-    right: 53px;
-    top: 256px;
   }
 }
 
