@@ -1,3 +1,5 @@
+import {ComponentChildren} from 'preact';
+
 import {RelatedGrid} from 'components/related-grid/related-grid';
 import {NextEntry} from 'components/entry/next-entry';
 
@@ -17,93 +19,71 @@ const GridPages = ({
   currPage: number;
   nextPage: number;
 }) => {
-  const getEntriesByPage = (page: number) => {
-    const pageStart = page * 7;
-    return data.slice(pageStart, pageStart + 8);
-  };
+  const getEntriesByPage = (page: number) => data.slice(page * 7, page * 7 + 8);
 
   if (!data.length) return <></>;
 
-  const firstEntryData = data[0];
-  const firstEntry = (
-    <NextEntry
-      id={firstEntryData.internalIndex}
-      key={firstEntryData.internalIndex}
-      duration={firstEntryData.duration}
-      type={firstEntryData.type}
-      imageUrl={firstEntryData.poster}
-      width={260}
-      imageHeight={147}
-      contentHeight={163}
-      title={firstEntryData.metadata?.name}
-      description={firstEntryData.metadata?.description}
-      countdown={countdown}
-    />
-  );
+  if (currPage < 2) {
+    const [firstEntryData] = data;
+    const firstPage = (
+      <GridPage>
+        <NextEntry
+          id={firstEntryData.internalIndex}
+          key={firstEntryData.internalIndex}
+          duration={firstEntryData.duration}
+          type={firstEntryData.type}
+          imageUrl={firstEntryData.poster}
+          width={260}
+          imageHeight={147}
+          contentHeight={163}
+          title={firstEntryData.metadata?.name}
+          description={firstEntryData.metadata?.description}
+          countdown={countdown}
+        />
+        <RelatedGrid data={data.slice(1, 7)} isExpanded={false} />
+      </GridPage>
+    );
+    const secondPage = (
+      <GridPage>
+        <RelatedGrid data={getEntriesByPage(1)} />
+      </GridPage>
+    );
 
-  const firstPageEntries = data.slice(1, 7);
-  const prevPageEntries = getEntriesByPage(prevPage);
-  const currPageEntries = getEntriesByPage(currPage);
-  const nextPageEntries = getEntriesByPage(nextPage);
-
-  let prevGrid;
-  let currGrid;
-  let nextGrid;
-
-  if (currPage === 0) {
-    currGrid = (
-      <>
-        {firstEntry}
-        <RelatedGrid data={firstPageEntries} isExpanded={false} />
-      </>
-    );
-    nextGrid = (
-      <>
-        <RelatedGrid data={nextPageEntries} isExpanded={true} />
-      </>
-    );
-  } else if (currPage === 1) {
-    prevGrid = (
-      <>
-        {firstEntry}
-        <RelatedGrid data={firstPageEntries} isExpanded={false} />
-      </>
-    );
-    currGrid = (
-      <>
-        <RelatedGrid data={currPageEntries} isExpanded={true} />
-      </>
-    );
-    nextGrid = (
-      <>
-        <RelatedGrid data={nextPageEntries} isExpanded={true} />
-      </>
-    );
-  } else {
-    prevGrid = (
-      <>
-        <RelatedGrid data={prevPageEntries} isExpanded={true} />
-      </>
-    );
-    currGrid = (
-      <>
-        <RelatedGrid data={currPageEntries} isExpanded={true} />
-      </>
-    );
-    nextGrid = (
-      <>
-        <RelatedGrid data={nextPageEntries} isExpanded={true} />
-      </>
+    return (
+      <div className={styles.gridPages}>
+        {currPage === 0 ? (
+          <>
+            <GridPage />
+            {firstPage}
+            {secondPage}
+          </>
+        ) : (
+          <>
+            {firstPage}
+            {secondPage}
+            <GridPage>
+              <RelatedGrid data={getEntriesByPage(2)} isExpanded={true} />
+            </GridPage>
+          </>
+        )}
+      </div>
     );
   }
 
   return (
     <div className={styles.gridPages}>
-      <div className={`${styles.gridPage} `}>{prevGrid}</div>
-      <div className={`${styles.gridPage} `}>{currGrid}</div>
-      <div className={`${styles.gridPage} `}>{nextGrid}</div>
+      <GridPage>
+        <RelatedGrid data={getEntriesByPage(prevPage)} />
+      </GridPage>
+      <GridPage>
+        <RelatedGrid data={getEntriesByPage(currPage)} />
+      </GridPage>
+      <GridPage>
+        <RelatedGrid data={getEntriesByPage(nextPage)} />
+      </GridPage>
     </div>
   );
 };
 
+const GridPage = ({children}: {children?: ComponentChildren}) => <div className={`${styles.gridPage} `}>{children}</div>;
 export {GridPages};
