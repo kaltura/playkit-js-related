@@ -13,68 +13,12 @@
     cursor: default;
   }
 
-  .content {
+  .related-content {
     display: flex;
     transform: translate(-50%, -50%);
 
     position: absolute;
     left: 50%;
     top: 50%;
-
-    .arrow {
-      position: absolute;
-      top: 127px;
-
-      &.arrow-right {
-        right: -48px;
-      }
-
-      &.arrow-left {
-        left: -48px;
-      }
-    }
-
-    .grid-pages-wrapper {
-      height: 310px;
-      overflow: hidden;
-      position: relative;
-      width: 830px;
-
-      .grid-pages {
-        display: flex;
-        left: -830px;
-        position: absolute;
-        width: 2490px;
-
-        .grid-page {
-          display: flex;
-          width: 830px;
-        }
-      }
-
-      &.slide-right {
-        .grid-pages {
-          animation: slide-right 300ms ease forwards;
-        }
-      }
-
-      &.slide-left {
-        .grid-pages {
-          animation: slide-left 300ms ease forwards;
-        }
-      }
-    }
-  }
-}
-
-@keyframes slide-left {
-  100% {
-    transform: translateX(-830px);
-  }
-}
-
-@keyframes slide-right {
-  100% {
-    transform: translateX(830px);
   }
 }

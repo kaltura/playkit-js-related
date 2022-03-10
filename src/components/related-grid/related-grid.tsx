@@ -1,49 +1,163 @@
-import {GridEntry} from 'components/entry/grid-entry';
-import {Sources} from 'types/sources';
+import {ComponentChildren} from 'preact';
+import {useState, useEffect, useReducer} from 'preact/hooks';
+const {connect} = KalturaPlayer.ui.redux;
+const {PLAYER_SIZE} = KalturaPlayer.ui.components;
+
+import {RelatedGridEntries} from 'components/related-grid/related-grid-entries';
+import {NextEntry} from 'components/entry/next-entry';
+import {PageReducer} from './page-reducer';
+import {PageAction} from './page-action';
+import {ArrowLeft, ArrowRight} from 'components/pagination-arrow/pagination-arrow';
+
 import * as styles from './related-grid.scss';
+import {Sources} from 'types/sources';
 
-const IMAGE_HEIGHT = 98;
-const CONTENT_HEIGHT = 49;
-
-const WIDTH = 174;
-const WIDTH_EXPANDED = 195.5;
-interface RelatedGridProps {
-  data: Sources[];
-  isExpanded?: boolean;
-}
-
-const ENTRIES_NUM = 6;
-const ENTRIES_EXPANDED_NUM = 8;
-
-const RelatedGrid = ({data, isExpanded = true}: RelatedGridProps) => {
-  const entries = [];
-
-  const entriesPerPage = isExpanded ? ENTRIES_EXPANDED_NUM : ENTRIES_NUM;
-  const width = isExpanded ? WIDTH_EXPANDED : WIDTH;
-
-  for (let i = 0; i < entriesPerPage; ++i) {
-    const entryData = data[i];
-    const entry = entryData ? (
-      <GridEntry
-        id={entryData.internalIndex}
-        key={entryData.internalIndex}
-        duration={entryData.duration}
-        type={entryData.type}
-        imageUrl={entryData.poster}
-        width={width}
-        imageHeight={IMAGE_HEIGHT}
-        contentHeight={CONTENT_HEIGHT}
-        title={entryData.metadata?.name}
-      />
-    ) : undefined;
-
-    const row = i % 2;
-    const col = (i - row) / 2;
-
-    entries.push(<div className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>{entry}</div>);
-  }
-
-  return <div className={styles.relatedGrid}>{entries}</div>;
+const mapStateToProps = (state: any) => {
+  const {shell} = state;
+  return {
+    sizeBreakpoint: shell.playerSize
+  };
 };
 
+interface RelatedGridProps {
+  data: Sources[];
+  pages: number[];
+  countdown: number;
+  sizeBreakpoint: string;
+}
+
+const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}: RelatedGridProps) => {
+  if (!data.length) return <></>;
+
+  const entriesPerPage = getEntriesPerPage(sizeBreakpoint);
+  const getEntriesByPage = (page: number) => {
+    return data.slice(page * (entriesPerPage - 1), 1 + (page + 1) * entriesPerPage);
+  };
+
+  const onAnimationEnd = () => {
+    if (pageAction !== PageAction.NOTHING) {
+      dispatch(pageAction);
+      setPageAnimation('');
+      setPageAction(PageAction.NOTHING);
+    }
+  };
+
+  const [pageState, dispatch] = useReducer(PageReducer, {
+    prevPage: -1,
+    currPage: 0,
+    nextPage: 1
+  });
+  const {prevPage, currPage, nextPage} = pageState;
+  const [pageAction, setPageAction] = useState(PageAction.NOTHING);
+  const [pageAnimation, setPageAnimation] = useState('');
+
+  useEffect(() => {
+    if (pageAction !== PageAction.NOTHING) {
+      setPageAnimation(pageAction === PageAction.NEXT ? styles.slideLeft : styles.slideRight);
+    }
+  }, [pageAction]);
+
+  const arrowLeft = (
+    <div className={`${styles.arrow} ${styles.arrowLeft}`}>
+      <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
+    </div>
+  );
+  const arrowRight = (
+    <div className={`${styles.arrow} ${styles.arrowRight}`}>
+      <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && data.length <= nextPage * entriesPerPage} />
+    </div>
+  );
+
+  if (currPage < 2) {
+    return (
+      <>
+        {arrowLeft}
+        <div className={`${styles.relatedGrid} ${pageAnimation} ${getPagesSizeClass(sizeBreakpoint)}`} onAnimationEnd={onAnimationEnd}>
+          <div className={`${styles.gridPages}`}>
+            {currPage === 0 ? (
+              <>
+                <GridPage />
+                <FirstPage data={data} entriesPerPage={entriesPerPage} countdown={countdown} />
+                <GridPage>
+                  <RelatedGridEntries data={getEntriesByPage(1)} entriesPerPage={entriesPerPage} />
+                </GridPage>
+              </>
+            ) : (
+              <>
+                <FirstPage data={data} entriesPerPage={entriesPerPage} countdown={countdown} />
+                <GridPage>
+                  <RelatedGridEntries data={getEntriesByPage(1)} entriesPerPage={entriesPerPage} />
+                </GridPage>
+                <GridPage>
+                  <RelatedGridEntries data={getEntriesByPage(2)} entriesPerPage={entriesPerPage} />
+                </GridPage>
+              </>
+            )}
+          </div>
+        </div>
+        {arrowRight}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {arrowLeft}
+      <div className={`${styles.relatedGrid} ${pageAnimation} ${getPagesSizeClass(sizeBreakpoint)}`} onAnimationEnd={onAnimationEnd}>
+        <div className={`${styles.gridPages}`}>
+          <GridPage>
+            <RelatedGridEntries data={getEntriesByPage(prevPage)} entriesPerPage={entriesPerPage} />
+          </GridPage>
+          <GridPage>
+            <RelatedGridEntries data={getEntriesByPage(currPage)} entriesPerPage={entriesPerPage} />
+          </GridPage>
+          <GridPage>
+            <RelatedGridEntries data={getEntriesByPage(nextPage)} entriesPerPage={entriesPerPage} />
+          </GridPage>
+        </div>
+      </div>
+      {arrowRight}
+    </>
+  );
+});
+
+const getPagesSizeClass = (sizeBreakpoint: string) => {
+  return sizeBreakpoint === PLAYER_SIZE.LARGE ? styles.large : styles.extraLarge;
+};
+
+const getEntriesPerPage = (sizeBreakpoint: string) => {
+  switch (sizeBreakpoint) {
+    // case PLAYER_SIZE.MEDIUM: {
+    //   // 4 per page + different shape
+    //   break;
+    // }
+    case PLAYER_SIZE.LARGE: {
+      return 6;
+    }
+    case PLAYER_SIZE.EXTRA_LARGE: {
+      return 8;
+    }
+  }
+  return 0;
+};
+
+const GridPage = ({children}: {children?: ComponentChildren}) => <div className={`${styles.gridPage} `}>{children}</div>;
+const FirstPage = ({data, entriesPerPage, countdown}: {data: Sources[]; entriesPerPage: number; countdown: number}) => (
+  <GridPage>
+    <NextEntry
+      id={data[0].internalIndex}
+      key={data[0].internalIndex}
+      duration={data[0].duration}
+      type={data[0].type}
+      imageUrl={data[0].poster}
+      width={260}
+      imageHeight={147}
+      contentHeight={163}
+      title={data[0].metadata?.name}
+      description={data[0].metadata?.description}
+      countdown={countdown}
+    />
+    <RelatedGridEntries data={data.slice(1, entriesPerPage - 1)} entriesPerPage={entriesPerPage} isExpanded={false} />
+  </GridPage>
+);
 export {RelatedGrid};
