@@ -29,11 +29,6 @@ interface RelatedGridProps {
 const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}: RelatedGridProps) => {
   if (!data.length) return <></>;
 
-  const entriesPerPage = getEntriesPerPage(sizeBreakpoint);
-  const getEntriesByPage = (page: number) => {
-    return data.slice(page * (entriesPerPage - 1), 1 + (page + 1) * entriesPerPage);
-  };
-
   const onAnimationEnd = () => {
     if (pageAction !== PageAction.NOTHING) {
       dispatch(pageAction);
@@ -56,17 +51,27 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
       setPageAnimation(pageAction === PageAction.NEXT ? styles.slideLeft : styles.slideRight);
     }
   }, [pageAction]);
+  const entriesPerPage = getEntriesPerPage(sizeBreakpoint);
+  const getEntriesByPage = (page: number) => {
+    return data.slice(page * (entriesPerPage - 1), 1 + (page + 1) * entriesPerPage);
+  };
 
-  const arrowLeft = (
-    <div className={`${styles.arrow} ${styles.arrowLeft}`}>
-      <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
-    </div>
-  );
-  const arrowRight = (
-    <div className={`${styles.arrow} ${styles.arrowRight}`}>
-      <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && data.length <= nextPage * entriesPerPage} />
-    </div>
-  );
+  const arrowLeft =
+    data.length > entriesPerPage - 1 ? (
+      <div className={`${styles.arrow} ${styles.arrowLeft}`}>
+        <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
+      </div>
+    ) : (
+      <></>
+    );
+  const arrowRight =
+    data.length > entriesPerPage - 1 ? (
+      <div className={`${styles.arrow} ${styles.arrowRight}`}>
+        <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && data.length <= nextPage * entriesPerPage} />
+      </div>
+    ) : (
+      <></>
+    );
 
   if (currPage < 2) {
     return (
