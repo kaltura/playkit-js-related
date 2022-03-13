@@ -1,7 +1,7 @@
 @mixin grid-width($page-width) {
   width: $page-width;
 
-  .related-grid {
+  .grid-pages {
     left: -$page-width;
     width: $page-width * 3;
 
@@ -25,10 +25,25 @@
   }
 }
 
+@mixin grid-entries($num_columns) {
+  .related-grid-entries {
+    $columns: null;
+    @for $i from 1 through $num_columns - 1 {
+      $columns: $columns#{$column-width}#{' '}#{$grid-gap};
+    }
+    $columns: $columns#{' '}#{$column-width};
+
+    -ms-grid-columns: $columns;
+    grid-template-columns: $columns;
+  }
+}
+
 $grid-width-xl: 830px;
 $grid-width-l: 640px;
 $grid-height: 310px;
 
+$num-columns-xl: 4;
+$num-colimns-l: 3;
 $row-height: 147px;
 $column-width: minmax(174px, 195.5px);
 $grid-gap: 16px;
@@ -54,10 +69,12 @@ $arrow-margin-top: 127px;
   &.large {
     @include grid-width($grid-width-l);
     @include grid-animation($grid-width-l);
+    @include grid-entries($num-colimns-l);
   }
   &.extra-large {
     @include grid-width($grid-width-xl);
     @include grid-animation($grid-width-xl);
+    @include grid-entries($num-columns-xl);
   }
 
   height: $grid-height;
@@ -70,6 +87,14 @@ $arrow-margin-top: 127px;
 
     .grid-page {
       display: flex;
+
+      .related-grid-entries {
+        display: -ms-grid;
+        display: grid;
+
+        -ms-grid-rows: $row-height $grid-gap $row-height;
+        grid-template-rows: $row-height $grid-gap $row-height;
+      }
     }
   }
 
@@ -84,17 +109,6 @@ $arrow-margin-top: 127px;
       animation: slide-left 0.3s ease forwards;
     }
   }
-}
-
-.related-grid-entries {
-  display: -ms-grid;
-  display: grid;
-
-  -ms-grid-columns: $column-width $grid-gap $column-width $grid-gap $column-width $grid-gap $column-width;
-  grid-template-columns: $column-width $grid-gap $column-width $grid-gap $column-width $grid-gap $column-width;
-
-  -ms-grid-rows: $row-height $grid-gap $row-height;
-  grid-template-rows: $row-height $grid-gap $row-height;
 }
 
 .row-0 {
