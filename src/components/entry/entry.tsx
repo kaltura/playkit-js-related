@@ -1,72 +1,23 @@
+import {EntryImage} from 'components/entry-image/entry-image';
 import {RelatedContext} from 'components/related-context/related-context';
 import {ComponentChildren} from 'preact';
-import {useContext, useState} from 'preact/hooks';
+import {useContext} from 'preact/hooks';
+import {EntryDimensions} from 'types/entry-dimensions';
 import * as styles from './entry.scss';
 
-const {withText} = KalturaPlayer.ui.preacti18n;
-const {toHHMMSS} = KalturaPlayer.ui.utils;
 interface EntryProps {
   id: number;
   children?: ComponentChildren;
   duration?: number;
-  type?: string;
-  imageUrl?: string;
-  width: number;
-  imageHeight: number;
-  contentHeight: number;
-  liveText?: string;
+  type: KalturaPlayerTypes.EntryTypes;
+  poster?: string;
+  entryDimensions: EntryDimensions;
 }
 
-const Entry = withText({
-  liveText: 'controls.live'
-})(({id, children, duration, type, imageUrl, width, imageHeight, contentHeight, liveText}: EntryProps) => {
+const Entry = ({id, children, duration, type, poster, entryDimensions}: EntryProps) => {
   const {relatedManager} = useContext(RelatedContext);
-  const [showImage, setShowImage] = useState(true);
-  const [useImageDimensions, setUseImageDimensions] = useState(true);
-
-  let image;
-  if (!showImage) {
-    image = <div className={styles.noImage} style={{width, height: imageHeight}} />;
-  } else if (useImageDimensions) {
-    image = (
-      <img
-        className={styles.image}
-        src={`${imageUrl}/width/${width}/height/${imageHeight}`}
-        style={{width, height: imageHeight}}
-        onError={() => {
-          setUseImageDimensions(false);
-        }}
-      />
-    );
-  } else {
-    image = (
-      <img
-        className={styles.image}
-        src={imageUrl}
-        style={{width, height: imageHeight}}
-        onError={() => {
-          setShowImage(false);
-        }}
-      />
-    );
-  }
-
   const color = KalturaPlayer.ui.style.white;
-  let entryDuration;
-
-  if (type === KalturaPlayer.core.MediaType.LIVE) {
-    entryDuration = (
-      <div className={`${styles.duration} ${styles.live}`}>
-        <span className={styles.liveText}>{liveText}</span>
-      </div>
-    );
-  } else if (duration) {
-    entryDuration = (
-      <div className={styles.duration}>
-        <span className={styles.durationText}>{toHHMMSS(duration)}</span>
-      </div>
-    );
-  }
+  const {width, imageHeight, contentHeight} = entryDimensions;
 
   return (
     <div
@@ -75,13 +26,12 @@ const Entry = withText({
       onClick={() => {
         relatedManager?.playSelected(id);
       }}>
-      {image}
-      {entryDuration}
+      <EntryImage {...{poster, duration, type, width, height: imageHeight}} />
       <div className={styles.entryContent} style={{width, height: contentHeight}}>
         {children}
       </div>
     </div>
   );
-});
+};
 
 export {Entry, EntryProps};

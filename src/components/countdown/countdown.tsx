@@ -1,23 +1,20 @@
 import {useEffect, useState} from 'preact/hooks';
 
-const useCountDown = (start: number, onDone: () => void) => {
+const useCountDown = (start: number) => {
   const [counter, setCounter] = useState(start);
   useEffect(() => {
     if (counter === 0) {
-      if (onDone) {
-        onDone();
-      }
       return;
     }
     setTimeout(() => {
       setCounter(counter - 1);
     }, 1000);
-  }, [counter, onDone]);
+  }, [counter]);
   return counter;
 };
 
-const Countdown = ({seconds, onDone}: {seconds: number; onDone: () => void}) => {
-  const timeLeft = useCountDown(seconds, onDone);
+const Countdown = ({seconds}: {seconds: number}) => {
+  const timeLeft = useCountDown(seconds);
   return <span>{timeLeft}</span>;
 };
 

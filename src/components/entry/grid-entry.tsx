@@ -1,5 +1,10 @@
-import {Entry, EntryProps} from './entry';
-import {EntryText} from './entry-text';
+import {useContext} from 'preact/hooks';
+
+import {MultilineText} from 'components/multiline-text/multiline-text';
+import {EntryProps} from './entry';
+import {RelatedContext} from 'components/related-context/related-context';
+import {EntryImage} from 'components/entry-image/entry-image';
+
 import * as styles from './entry.scss';
 
 interface GridEntryProps extends EntryProps {
@@ -7,14 +12,26 @@ interface GridEntryProps extends EntryProps {
 }
 
 const GridEntry = (props: GridEntryProps) => {
-  const {title, ...otherProps} = props;
+  const {relatedManager} = useContext(RelatedContext);
+
+  const {id, title, duration, type, poster, entryDimensions} = props;
+  const {width, imageHeight, contentHeight} = entryDimensions;
+
   return (
     <div className={styles.gridEntry}>
-      <Entry {...otherProps}>
-        <div className={styles.text}>
-          <EntryText text={title || ''} />
+      <div
+        className={styles.entry}
+        style={{width, color: KalturaPlayer.ui.style.white}}
+        onClick={() => {
+          relatedManager?.playSelected(id);
+        }}>
+        <EntryImage {...{poster, duration, type, width, height: imageHeight}} />
+        <div className={styles.entryContent} style={{width, height: contentHeight}}>
+          <div className={styles.text}>
+            <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
+          </div>
         </div>
-      </Entry>
+      </div>
     </div>
   );
 };

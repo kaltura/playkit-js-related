@@ -5,13 +5,6 @@
   text-overflow: ellipsis;
 }
 
-.duration-text,
-.live-text {
-  @extend .text;
-  font-size: 12px;
-  line-height: 14px;
-}
-
 .up-next-text {
   @extend .text;
   color: #ccc;
@@ -42,28 +35,6 @@
   border-radius: 0 0 8px 8px;
 }
 
-.image {
-  border-radius: 8px 8px 0 0;
-}
-
-.no-image {
-  border-radius: 8px 8px 0 0;
-  background-color: #000;
-}
-
-.duration {
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 3px;
-  left: 4px;
-  padding: 2px;
-  position: absolute;
-
-  &.live {
-    background-color: #e12437;
-    text-transform: uppercase;
-  }
-}
-
 /* specific entries */
 .next-entry {
   position: relative;
@@ -71,16 +42,17 @@
 
   .timer {
     position: absolute;
-    top: 44px;
-    left: 100px;
-  }
-
-  .duration {
-    top: 125px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
   }
 
   .entry-content {
     padding: 8px 16px 16px;
+
+    &.minimal {
+      padding: 8px;
+    }
 
     .up-next {
       padding-bottom: 4px;
@@ -90,16 +62,45 @@
       max-height: 92px;
       padding-top: 4px;
     }
+
+    .minimal-text {
+      width: 151px;
+      padding: 8px;
+    }
+  }
+
+  img {
+    border-radius: 8px;
   }
 }
 
 .grid-entry {
-  .duration {
-    top: 76px;
+  &.minimal {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .entry-content {
+      border-radius: 0;
+    }
+
+    .entry-text {
+      max-height: 56px;
+      max-width: 93px;
+      margin: 8px;
+    }
+
+    img {
+      border-radius: 0;
+    }
   }
 
   .entry-text {
     max-height: 33px;
     margin: 8px 16px;
+  }
+
+  img {
+    border-radius: 8px;
   }
 }

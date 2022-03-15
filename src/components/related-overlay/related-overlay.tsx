@@ -1,6 +1,7 @@
 import {RelatedContext} from 'components/related-context/related-context';
 import {useState} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
+import {Sources} from 'types/sources';
 import {RelatedGrid} from '../related-grid/related-grid';
 import * as styles from './related-overlay.scss';
 
@@ -28,13 +29,17 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
   const [isVisible, setIsVisible] = useState(false);
   const [countdown, setCountdown] = useState(-1);
 
-  if (!relatedManager.entries.length || sizeBreakpoint === PLAYER_SIZE.TINY) {
+  if (!relatedManager.entries.length) {
     setIsVisible(false);
+    setCountdown(-1);
   } else if (!isPlaybackEnded) {
-    setIsVisible(isPaused && relatedManager.showOnPlaybackPaused);
+    setIsVisible(
+      isPaused && relatedManager.showOnPlaybackPaused
+      // && sizeBreakpoint !== PLAYER_SIZE.EXTRA_SMALL && sizeBreakpoint !== PLAYER_SIZE.SMALL
+    );
     setCountdown(-1);
   } else if (relatedManager.showOnPlaybackDone) {
-    setIsVisible(true);
+    setIsVisible(sizeBreakpoint !== PLAYER_SIZE.TINY);
     setCountdown(relatedManager.countdownTime);
   } else {
     setIsVisible(false);
@@ -45,12 +50,26 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
       <div className={`${styles.relatedOverlay} ${isVisible ? '' : styles.hidden}`}>
         <RelatedContext.Provider value={{relatedManager}}>
           <div className={styles.relatedContent}>
-            <RelatedGrid data={relatedManager.entries} countdown={countdown} />
+            <RelatedContent entries={relatedManager.entries} countdown={countdown} sizeBreakpoint={sizeBreakpoint} />
           </div>
         </RelatedContext.Provider>
       </div>
     </div>
   );
 });
+
+const RelatedContent = ({entries, countdown, sizeBreakpoint}: {entries: Sources[]; countdown: number; sizeBreakpoint: string}) => {
+  if (!entries.length) return <></>;
+
+  switch (sizeBreakpoint) {
+    case PLAYER_SIZE.EXTRA_SMALL:
+    case PLAYER_SIZE.SMALL: {
+      return <></>;
+      //return <EntryPreview data={entries[0]} countdown={countdown} />;
+    }
+    default:
+      return <RelatedGrid data={entries} countdown={countdown} />;
+  }
+};
 
 export {RelatedOverlay};
