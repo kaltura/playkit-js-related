@@ -25,12 +25,13 @@
     width: 142px;
   }
 
-  img {
-    border-radius: 8px;
-  }
-
   .main {
     display: flex;
+
+    .entry-image-container {
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
     .controls {
       margin-left: 8px;
@@ -51,9 +52,8 @@
           background-color: #006efa;
           margin-bottom: 8px;
           display: flex;
-
-          // top: -50%;
-          // left: -50%;
+          flex-direction: column;
+          justify-content: end;
 
           .play-content {
             justify-content: center;
@@ -61,7 +61,7 @@
             display: flex;
 
             .play-icon {
-              margin-right: 4px;
+              margin-left: -4px;
 
               i {
                 width: 24px;
@@ -70,6 +70,7 @@
             }
 
             .play-text {
+              line-height: 24px;
             }
           }
         }

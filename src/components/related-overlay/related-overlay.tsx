@@ -1,3 +1,4 @@
+import {NextEntryPreview} from 'components/next-entry-preview/next-entry-preview';
 import {RelatedContext} from 'components/related-context/related-context';
 import {useState} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
@@ -64,8 +65,7 @@ const RelatedContent = ({entries, countdown, sizeBreakpoint}: {entries: Sources[
   switch (sizeBreakpoint) {
     case PLAYER_SIZE.EXTRA_SMALL:
     case PLAYER_SIZE.SMALL: {
-      return <></>;
-      //return <EntryPreview data={entries[0]} countdown={countdown} />;
+      return <NextEntryPreview data={entries[0]} countdown={countdown} />;
     }
     default:
       return <RelatedGrid data={entries} countdown={countdown} />;

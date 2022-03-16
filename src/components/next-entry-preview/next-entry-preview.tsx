@@ -3,15 +3,17 @@ import {Sources} from 'types/sources';
 
 const {Icon, IconType} = KalturaPlayer.ui.components;
 
-import * as styles from './entry-preview.scss';
+import * as styles from './next-entry-preview.scss';
 
-const EntryPreview = ({data}: {data: Sources; countdown: number}) => {
+const NextEntryPreview = ({data}: {data: Sources; countdown: number}) => {
   return (
     <div className={styles.entryPreview}>
       <div className={styles.upNextText}>Up Next</div>
       <div className={styles.titleText}>{data.metadata?.name}</div>
       <div className={styles.main}>
-        <EntryImage {...{src: data.poster, duration: data.duration, type: data.type, width: 129, height: 72}} />
+        <div className={styles.entryImageContainer}>
+          <EntryImage {...{src: data.poster, duration: data.duration, type: data.type, width: 129, height: 72}} />
+        </div>
         <div className={styles.controls}>
           <div className={`${styles.control} ${styles.play}`}>
             <div className={styles.playContent}>
@@ -30,4 +32,4 @@ const EntryPreview = ({data}: {data: Sources; countdown: number}) => {
   );
 };
 
-export {EntryPreview};
+export {NextEntryPreview};
