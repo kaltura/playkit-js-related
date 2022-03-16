@@ -51,17 +51,14 @@
         &.play {
           background-color: #006efa;
           margin-bottom: 8px;
-          display: flex;
-          flex-direction: column;
-          justify-content: end;
 
           .play-content {
-            justify-content: center;
-            align-self: center;
             display: flex;
+            margin: auto;
+            width: fit-content;
 
             .play-icon {
-              margin-left: -4px;
+              margin-top: 4px;
 
               i {
                 width: 24px;
@@ -70,7 +67,7 @@
             }
 
             .play-text {
-              line-height: 24px;
+              line-height: 32px;
             }
           }
         }
@@ -78,11 +75,10 @@
         &.cancel {
           background-color: #000;
 
-          .cancel-content {
-            width: 43px;
-            transform: translate(50%, 50%);
-            top: -50%;
-            left: -50%;
+          .cancel-text {
+            width: fit-content;
+            margin: auto;
+            line-height: 32px;
           }
         }
       }
