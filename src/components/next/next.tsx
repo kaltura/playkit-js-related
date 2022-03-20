@@ -1,12 +1,19 @@
-const {PrevNext} = KalturaPlayer.ui.components;
+const {PrevNext, Tooltip} = KalturaPlayer.ui.components;
 import {useState, useEffect} from 'preact/hooks';
+
+const {withText} = KalturaPlayer.ui.preacti18n;
+
+import * as styles from './next.scss';
 interface NextProps {
+  next: string;
   onClick: (cb: () => void) => void;
   onLoaded: (cb: (nextEntries: []) => void) => void;
   onUnloaded: (cb: (nextEntries: []) => void) => void;
 }
 
-const Next = (props: NextProps) => {
+const Next = withText({
+  next: 'playlist.next'
+})((props: NextProps) => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -22,7 +29,15 @@ const Next = (props: NextProps) => {
     };
   }, []);
 
-  return entries.length ? <PrevNext type={'next'} item={{sources: entries[0]}} onClick={props.onClick} /> : <></>;
-};
+  return entries.length ? (
+    <div className={styles.next}>
+      <Tooltip label={props.next}>
+        <PrevNext type={'next'} item={{sources: entries[0]}} onClick={props.onClick} />
+      </Tooltip>
+    </div>
+  ) : (
+    <></>
+  );
+});
 
 export {Next};
