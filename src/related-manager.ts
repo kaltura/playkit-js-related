@@ -20,6 +20,7 @@ class RelatedManager {
   private ks = '';
   private _isInitialized = false;
   private _logger: KalturaPlayerTypes.Logger;
+  private _isHiddenByUser = false;
 
   constructor({player, eventManager, dispatchEvent, logger}: RelatedManagerProps) {
     this.player = player;
@@ -86,6 +87,10 @@ class RelatedManager {
     this._isInitialized = true;
   }
 
+  startOver() {
+    this.player.play();
+  }
+
   playNext() {
     this.logger.info('going to play next entry');
     this.playByIndex(0);
@@ -102,6 +107,11 @@ class RelatedManager {
 
   unlisten(name: string, listener: any) {
     this.eventManager.unlisten(this.player, name, listener);
+  }
+
+  set isHiddenByUser(isHiddenByUser: boolean) {
+    this._isHiddenByUser = isHiddenByUser;
+    this.dispatchEvent(RelatedEvent.HIDDEN_STATE_CHANGED, isHiddenByUser);
   }
 
   get showOnPlaybackDone(): boolean {

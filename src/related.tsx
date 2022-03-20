@@ -1,9 +1,9 @@
 import {RelatedConfig} from './types/config';
 import {RelatedManager} from 'related-manager';
 import {RelatedOverlay} from 'components/related-overlay/related-overlay';
-import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
 import {Next} from 'components/next/next';
 import {RelatedEvent} from 'types/related-event';
+import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -69,11 +69,21 @@ class Related extends KalturaPlayer.core.BasePlugin {
       get: () => <RelatedOverlay relatedManager={relatedManager} />
     });
 
+    const preplayBackPlayOverlayProps = {
+      relatedManager,
+      onLoaded: (callback: (nextEntries: []) => void) => {
+        relatedManager.listen(RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: []}) => callback(payload));
+      },
+      onUnloaded: (cb: (nextEntries: []) => void) => {
+        relatedManager.unlisten(RelatedEvent.HIDDEN_STATE_CHANGED, cb);
+      }
+    };
+
     this.player.ui.addComponent({
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper relatedManager={relatedManager} />,
+      get: () => <PrePlaybackPlayOverlayWrapper {...preplayBackPlayOverlayProps} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
@@ -90,7 +100,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     };
 
     this.player.ui.addComponent({
-      label: 'kaltura-relayed-overlay-next',
+      label: 'kaltura-related-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
       get: () => <Next {...nextProps} />
@@ -108,6 +118,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     const {ks, config, relatedManager} = this;
     const {useContext, playlistId, entryList} = config;
     const newKs = this.config?.ks;
+
+    relatedManager.isHiddenByUser = false;
 
     if (!relatedManager.isInitialized) {
       // first loadMedia
