@@ -20,7 +20,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
   static defaultConfig: RelatedConfig = {
     autoContinue: true,
     autoContinueTime: 5,
-    showOnPlaybackDone: true,
     showOnPlaybackPaused: false,
     playlistId: null,
     entryList: [],

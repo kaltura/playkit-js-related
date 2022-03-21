@@ -114,10 +114,6 @@ class RelatedManager {
     this.dispatchEvent(RelatedEvent.HIDDEN_STATE_CHANGED, isHiddenByUser);
   }
 
-  get showOnPlaybackDone(): boolean {
-    return this.config?.showOnPlaybackDone || false;
-  }
-
   get showOnPlaybackPaused(): boolean {
     return this.config?.showOnPlaybackPaused || false;
   }

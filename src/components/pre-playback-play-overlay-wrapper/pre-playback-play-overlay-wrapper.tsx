@@ -46,7 +46,7 @@ const PrePlaybackPlayOverlayWrapper = withText({
         };
       }, []);
 
-      if (!(isPlaybackEnded && relatedManager.showOnPlaybackDone)) return <PrePlaybackPlayOverlay />;
+      if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
       else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
         return (
           <div className={styles.minimalPrePlaybackPlayOverlay}>
