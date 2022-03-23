@@ -60,6 +60,11 @@ const ENTRY_DIMENSIONS_EXPANDED = {
 };
 
 const NEXT_ENTRY_DIMENSIONS = {
+  [PLAYER_SIZE.EXTRA_SMALL]: {
+    width: 167,
+    imageHeight: 94,
+    contentHeight: 34
+  },
   [PLAYER_SIZE.SMALL]: {
     width: 167,
     imageHeight: 94,
