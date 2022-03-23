@@ -1,14 +1,21 @@
+import {ComponentChildren} from 'preact';
 import {useContext} from 'preact/hooks';
 
 import {MultilineText} from 'components/multiline-text/multiline-text';
-import {EntryProps} from './entry';
 import {RelatedContext} from 'components/related-context/related-context';
 import {EntryImage} from 'components/entry-image/entry-image';
 
 import * as styles from './entry.scss';
+import {EntryDimensions} from 'types/entry-dimensions';
 
-interface GridEntryProps extends EntryProps {
+interface GridEntryProps {
   title?: string;
+  id: number;
+  children?: ComponentChildren;
+  duration?: number;
+  type: KalturaPlayerTypes.EntryTypes;
+  poster?: string;
+  entryDimensions: EntryDimensions;
 }
 
 const GridEntry = (props: GridEntryProps) => {
@@ -20,7 +27,7 @@ const GridEntry = (props: GridEntryProps) => {
   return (
     <div className={styles.gridEntry}>
       <div
-        className={styles.entry}
+        className={`${styles.entry} ${styles.clickable}`}
         style={{width, color: KalturaPlayer.ui.style.white}}
         onClick={() => {
           relatedManager?.playSelected(id);

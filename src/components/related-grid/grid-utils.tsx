@@ -6,12 +6,15 @@ import {MinimalNextEntry} from 'components/entry/minimal-next-entry';
 import {NextEntry} from 'components/entry/next-entry';
 import {EntryDimensions} from 'types/entry-dimensions';
 import {Sources} from 'types/sources';
-import * as styles from './related-grid.scss';
+
+import * as entryStyles from '../entry/entry.scss';
 
 const SIZE_CLASS = {
-  [PLAYER_SIZE.MEDIUM]: styles.medium,
-  [PLAYER_SIZE.LARGE]: styles.large,
-  [PLAYER_SIZE.EXTRA_LARGE]: styles.extraLarge
+  [PLAYER_SIZE.SMALL]: 'extraSmall',
+  [PLAYER_SIZE.SMALL]: 'small',
+  [PLAYER_SIZE.MEDIUM]: 'medium',
+  [PLAYER_SIZE.LARGE]: 'large',
+  [PLAYER_SIZE.EXTRA_LARGE]: 'extraLarge'
 };
 
 const NUM_ENTRIES = {
@@ -57,6 +60,11 @@ const ENTRY_DIMENSIONS_EXPANDED = {
 };
 
 const NEXT_ENTRY_DIMENSIONS = {
+  [PLAYER_SIZE.SMALL]: {
+    width: 167,
+    imageHeight: 94,
+    contentHeight: 34
+  },
   [PLAYER_SIZE.MEDIUM]: {
     width: 167,
     imageHeight: 94,
@@ -76,7 +84,7 @@ const NEXT_ENTRY_DIMENSIONS = {
 
 const getEntryDimensions = (sizeBreakpoint: string) => ENTRY_DIMENSIONS[sizeBreakpoint];
 const getExpandedEntryDimensions = (sizeBreakpoint: string) => ENTRY_DIMENSIONS_EXPANDED[sizeBreakpoint];
-const getSizeClass = (sizeBreakpoint: string) => SIZE_CLASS[sizeBreakpoint];
+const getSizeClass = (sizeBreakpoint: string, styles: Record<string, string>) => styles[SIZE_CLASS[sizeBreakpoint]];
 const getPageSize = (sizeBreakpoint: string) => NUM_ENTRIES[sizeBreakpoint];
 const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: EntryDimensions) => {
   const props = {
@@ -91,7 +99,7 @@ const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: En
 
   return sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <MinimalGridEntry {...props} /> : <GridEntry {...props} />;
 };
-const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources) => {
+const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, onCancel?: () => void) => {
   const {duration, type, poster, metadata} = data;
   const props = {
     id: 0,
@@ -102,10 +110,17 @@ const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources) 
     entryDimensions: NEXT_ENTRY_DIMENSIONS[sizeBreakpoint],
     title: metadata?.name,
     description: metadata?.description,
-    countdown
+    countdown,
+    sizeClass: getSizeClass(sizeBreakpoint, entryStyles),
+    alwaysShowButtons: sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL || sizeBreakpoint === PLAYER_SIZE.SMALL,
+    onCancel
   };
 
-  return sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <MinimalNextEntry {...props} /> : <NextEntry {...props} />;
+  return sizeBreakpoint === PLAYER_SIZE.LARGE || sizeBreakpoint === PLAYER_SIZE.EXTRA_LARGE ? (
+    <NextEntry {...props} />
+  ) : (
+    <MinimalNextEntry {...props} />
+  );
 };
 
 export {getEntryDimensions, getExpandedEntryDimensions, getNextEntry, getGridEntry, getSizeClass, getPageSize};

@@ -38,6 +38,7 @@ class RelatedManager {
   }
 
   private playByIndex(index: number) {
+    this.isHiddenByUser = false;
     if (this._areEntriesExternal) {
       this.player.setMedia({sources: this.entries[index]});
       this.player.play();
@@ -88,6 +89,7 @@ class RelatedManager {
   }
 
   startOver() {
+    this.isHiddenByUser = false;
     this.player.play();
   }
 

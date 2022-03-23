@@ -1,35 +1,41 @@
+import {useState, useContext} from 'preact/hooks';
+
 import {GridEntryProps} from './grid-entry';
-import * as styles from './entry.scss';
 import {Countdown} from 'components/countdown/countdown';
 import {BaseNextEntry} from './base-next-entry';
 import {MultilineText} from 'components/multiline-text/multiline-text';
 
 const {withText} = KalturaPlayer.ui.preacti18n;
 
+import * as styles from './entry.scss';
+import {RelatedContext} from 'components/related-context/related-context';
 interface NextEntryProps extends GridEntryProps {
   description?: string;
   countdown: number;
   upNext: string;
   upNextIn: string;
-  hideUpNext?: boolean;
 }
 
 const NextEntry = withText({
   upNext: 'playlist.up_next',
   upNextIn: 'related.upNextIn'
 })((props: NextEntryProps) => {
-  const {entryDimensions} = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {relatedManager} = useContext(RelatedContext);
+
+  const {entryDimensions, countdown} = props;
   const {width, contentHeight} = entryDimensions;
+  const [countdownCancelled, setCountdownCancelled] = useState(false);
 
   return (
-    <BaseNextEntry {...props}>
+    <BaseNextEntry {...{...props, onCancel: () => setCountdownCancelled(true)}}>
       <div className={styles.entryContent} style={{width, height: contentHeight}}>
         <div className={styles.upNext}>
           <span className={styles.upNextText}>
-            {props.countdown > 0 ? (
+            {countdown > 0 && !countdownCancelled ? (
               <span>
                 {`${props.upNextIn} `}
-                <Countdown seconds={props.countdown} />
+                <Countdown seconds={countdown} />
               </span>
             ) : (
               <span>{props.upNext}</span>

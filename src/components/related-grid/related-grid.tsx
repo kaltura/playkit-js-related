@@ -76,7 +76,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
 
   if (currPage < 2) {
     return (
-      <div className={getSizeClass(sizeBreakpoint)}>
+      <div className={getSizeClass(sizeBreakpoint, styles)}>
         {arrowLeft}
         <div className={`${styles.relatedGrid} ${pageAnimation}`} onAnimationEnd={onAnimationEnd}>
           <div className={`${styles.gridPages}`}>
@@ -122,7 +122,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   }
 
   return (
-    <div className={getSizeClass(sizeBreakpoint)}>
+    <div className={getSizeClass(sizeBreakpoint, styles)}>
       {arrowLeft}
       <div className={`${styles.relatedGrid} ${pageAnimation}`} onAnimationEnd={onAnimationEnd}>
         <div className={`${styles.gridPages}`}>

@@ -1,8 +1,8 @@
-import {NextEntryPreview} from 'components/next-entry-preview/next-entry-preview';
 import {RelatedContext} from 'components/related-context/related-context';
 import {useState} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
 import {RelatedGrid} from '../related-grid/related-grid';
+import {getNextEntry} from '../related-grid/grid-utils';
 import * as styles from './related-overlay.scss';
 
 const {connect} = KalturaPlayer.ui.redux;
@@ -56,7 +56,7 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
         <RelatedContext.Provider value={{relatedManager}}>
           <div className={styles.relatedContent}>
             {sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL || sizeBreakpoint === PLAYER_SIZE.SMALL ? (
-              <NextEntryPreview data={relatedManager.entries[0]} countdown={countdown} onCancel={() => onCancel()} />
+              getNextEntry(sizeBreakpoint, countdown, relatedManager.entries[0], onCancel)
             ) : (
               <RelatedGrid data={relatedManager.entries} countdown={countdown} />
             )}

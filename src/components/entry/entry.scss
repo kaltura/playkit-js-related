@@ -21,7 +21,11 @@
 /* entry */
 .entry {
   position: relative;
-  cursor: pointer;
+
+  .entry-content {
+    background-color: #222;
+    border-radius: 0 0 8px 8px;
+  }
 
   &:hover {
     .entry-content {
@@ -30,47 +34,80 @@
   }
 }
 
-.entry-content {
-  background-color: #222;
-  border-radius: 0 0 8px 8px;
-}
-
 /* specific entries */
 .next-entry {
-  position: relative;
-  margin-right: 16px;
-
-  .timer {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
+  img {
+    border-radius: 8px;
   }
 
   .entry-content {
     padding: 8px 16px 16px;
+  }
 
-    &.minimal {
-      padding: 8px;
-    }
+  .buttons {
+    display: flex;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: fit-content;
 
-    .up-next {
-      padding-bottom: 4px;
-    }
+    .button {
+      cursor: pointer;
+      margin: auto;
+      border-radius: 4px;
+      padding: 4px;
 
-    .entry-text {
-      max-height: 92px;
-      padding-top: 4px;
-    }
+      &.play-now {
+        display: inline-block;
+        position: relative;
+        margin-right: 8px;
 
-    .minimal-text {
-      width: 151px;
-      padding: 8px;
+        background: #004cad;
+        background: linear-gradient(to right, #006efa 50%, #004cad 50%);
+        background-size: 200% 100%;
+        background-position: 0 0;
+        transition-timing-function: linear;
+        transition-property: background-position;
+
+        &.animated {
+          background-position: -100% 0;
+        }
+      }
+
+      &.cancel {
+        background-color: rgba($color: #000, $alpha: 0.6);
+      }
+
+      .button-text {
+        color: #fff;
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 15.6px;
+      }
     }
   }
 
-  img {
-    border-radius: 8px;
+  &.small {
+    overflow: hidden;
+  }
+
+  &.medium {
+    margin-right: 16px;
+  }
+
+  &.large,
+  &.extra-large {
+    margin-right: 16px;
+
+    .button {
+      padding: 7.5px 8px;
+
+      .button-text {
+        font-size: 14px;
+        line-height: 16.8px;
+      }
+    }
   }
 }
 
@@ -101,4 +138,8 @@
   img {
     border-radius: 8px;
   }
+}
+
+.clickable {
+  cursor: pointer;
 }

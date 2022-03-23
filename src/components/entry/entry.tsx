@@ -21,7 +21,7 @@ const Entry = ({id, children, duration, type, poster, entryDimensions}: EntryPro
 
   return (
     <div
-      className={styles.entry}
+      className={`${styles.entry} ${styles.clickable}`}
       style={{width, color}}
       onClick={() => {
         relatedManager?.playSelected(id);

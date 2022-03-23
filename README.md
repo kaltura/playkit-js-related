@@ -59,6 +59,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
         en: {
           related: {
             upNextIn: 'Up Next In'
+            playNow: "Play Now"
           }
         }
       }
