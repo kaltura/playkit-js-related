@@ -25,18 +25,16 @@ const GridEntry = (props: GridEntryProps) => {
   const {width, imageHeight, contentHeight} = entryDimensions;
 
   return (
-    <div className={styles.gridEntry}>
-      <div
-        className={`${styles.entry} ${styles.clickable}`}
-        style={{width, color: KalturaPlayer.ui.style.white}}
-        onClick={() => {
-          relatedManager?.playSelected(id);
-        }}>
-        <EntryImage {...{poster, duration, type, width, height: imageHeight}} />
-        <div className={styles.entryContent} style={{width, height: contentHeight}}>
-          <div className={styles.text}>
-            <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
-          </div>
+    <div
+      className={`${styles.entry} ${styles.gridEntry} ${styles.clickable}`}
+      style={{width, color: KalturaPlayer.ui.style.white}}
+      onClick={() => {
+        relatedManager?.playSelected(id);
+      }}>
+      <EntryImage {...{poster, duration, type, width, height: imageHeight}} />
+      <div className={styles.entryContent} style={{width, height: contentHeight}}>
+        <div className={styles.text}>
+          <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
         </div>
       </div>
     </div>
