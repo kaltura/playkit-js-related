@@ -1,34 +1,25 @@
+import {Related} from 'related';
 import {EntryService} from 'services/entry-service';
 import {RelatedConfig} from 'types/config';
 import {RelatedEvent} from 'types/related-event';
 import {Sources} from 'types/sources';
-
-interface RelatedManagerProps {
-  player: KalturaPlayerTypes.Player;
-  eventManager: KalturaPlayerTypes.EventManager;
-  dispatchEvent: (name: string, paylod: any) => void;
-  logger: KalturaPlayerTypes.Logger;
-}
-class RelatedManager {
-  private player: KalturaPlayerTypes.Player;
-  private eventManager: KalturaPlayerTypes.EventManager;
+class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private entryService: EntryService;
-  private dispatchEvent: (name: string, payload: any) => void;
+
   private _entries: Sources[] = [];
   private _areEntriesExternal = false;
   private config: RelatedConfig | null = null;
   private ks = '';
   private _isInitialized = false;
-  private _logger: KalturaPlayerTypes.Logger;
   private _isHiddenByUser = false;
+  private plugin: Related;
 
-  constructor({player, eventManager, dispatchEvent, logger}: RelatedManagerProps) {
-    this.player = player;
-    this.eventManager = eventManager;
-    this.dispatchEvent = dispatchEvent;
-    this._logger = logger;
+  constructor(plugin: Related) {
+    super();
+    this.plugin = plugin;
+
     this.playNext = this.playNext.bind(this);
-    this.entryService = new EntryService(player, logger);
+    this.entryService = new EntryService(plugin.player, plugin.logger);
   }
 
   private cycleEntries(lastPlayedIndex: number) {
@@ -40,15 +31,15 @@ class RelatedManager {
   private playByIndex(index: number) {
     this.isHiddenByUser = false;
     if (this._areEntriesExternal) {
-      this.player.setMedia({sources: this.entries[index]});
-      this.player.play();
+      this.plugin.player.setMedia({sources: this.entries[index]});
+      this.plugin.player.play();
     } else {
       const entry = this.entries[index];
-      this.player
+      this.plugin.player
         .loadMedia({...entry, entryId: entry.id, ks: this.ks})
         .then(() => {
           this.logger.info('loadMedia success');
-          this.player.play();
+          this.plugin.player.play();
         })
         .catch(() => {
           this.logger.warning('loadMedia failed');
@@ -75,7 +66,7 @@ class RelatedManager {
       entries = this.entryService.getBySourcesList(externalEntryList);
     } else if (useContext) {
       this._areEntriesExternal = false;
-      entries = await this.entryService.getByContext(this.player.sources.id, ks, entriesByContextLimit);
+      entries = await this.entryService.getByContext(this.plugin.player.sources.id, ks, entriesByContextLimit);
     } else {
       this.logger.warn('no source configured');
     }
@@ -90,7 +81,7 @@ class RelatedManager {
 
   startOver() {
     this.isHiddenByUser = false;
-    this.player.play();
+    this.plugin.player.play();
   }
 
   playNext() {
@@ -104,16 +95,16 @@ class RelatedManager {
   }
 
   listen(name: string, listener: any) {
-    this.eventManager.listen(this.player, name, listener);
+    this.plugin.eventManager.listen(this, name, listener);
   }
 
   unlisten(name: string, listener: any) {
-    this.eventManager.unlisten(this.player, name, listener);
+    this.plugin.eventManager.unlisten(this, name, listener);
   }
 
   set isHiddenByUser(isHiddenByUser: boolean) {
     this._isHiddenByUser = isHiddenByUser;
-    this.dispatchEvent(RelatedEvent.HIDDEN_STATE_CHANGED, isHiddenByUser);
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.HIDDEN_STATE_CHANGED, isHiddenByUser));
   }
 
   get showOnPlaybackPaused(): boolean {
@@ -132,7 +123,7 @@ class RelatedManager {
         internalIndex: index
       };
     });
-    this.dispatchEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, this._entries);
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, this._entries));
   }
 
   get entries(): Sources[] {
@@ -144,7 +135,7 @@ class RelatedManager {
   }
 
   get logger(): any {
-    return this._logger;
+    return this.plugin.logger;
   }
 }
 

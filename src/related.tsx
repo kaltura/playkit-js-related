@@ -49,12 +49,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    */
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
-    this.relatedManager = new RelatedManager({
-      player,
-      eventManager: this.eventManager,
-      dispatchEvent: this.dispatchEvent.bind(this),
-      logger: this.logger
-    });
+    this.relatedManager = new RelatedManager(this);
     this.injectUIComponents();
   }
 
