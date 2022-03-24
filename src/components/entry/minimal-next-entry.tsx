@@ -10,7 +10,7 @@ const MinimalNextEntry = (props: GridEntryProps) => {
 
   return (
     <BaseNextEntry {...props}>
-      <div className={`${styles.entryContent} ${styles.minimal}`} style={{width, height: contentHeight}}>
+      <div className={`${styles.entryContent}`} style={{width, height: contentHeight}}>
         <div className={styles.text}>{props.title ? <MultilineText text={props.title} lineHeight={18} lines={1} /> : <></>}</div>
       </div>
     </BaseNextEntry>
