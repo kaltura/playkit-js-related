@@ -63,7 +63,7 @@
         position: relative;
         margin-right: 8px;
 
-        background: #004cad;
+        background: #006efa;
         background: linear-gradient(to right, #006efa 50%, #004cad 50%);
         background-size: 200% 100%;
         background-position: 0 0;
@@ -89,11 +89,17 @@
   }
 
   &.small {
-    overflow: hidden;
+    img {
+      border-radius: 8px 8px 0 0;
+    }
   }
 
   &.medium {
     margin-right: 16px;
+
+    img {
+      border-radius: 8px 8px 0 0;
+    }
   }
 
   &.large,
