@@ -75,8 +75,9 @@ const BaseNextEntry = withText({
               className={`${styles.button} ${styles.playNow} ${animated ? styles.animated : ''}`}
               onClick={onPlayNowClick}
               style={{
-                'transition-duration': `${countdown}s`
+                background: KalturaPlayer.ui.style.brandColor
               }}>
+              <div className={styles.animation} style={{'animation-duration': `${countdown}s`}} />
               <div className={styles.buttonText}>{playNowLabel}</div>
             </div>
             <div className={`${styles.button} ${styles.cancel}`} onClick={onCancelClick}>
