@@ -25,7 +25,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private cycleEntries(lastPlayedIndex: number) {
     const lastPlayedEntry = this._entries[lastPlayedIndex];
     this._entries.splice(lastPlayedIndex, 1);
-    this.setEntries([...this._entries, lastPlayedEntry]);
+    this.entries = [...this._entries, lastPlayedEntry];
   }
 
   private playByIndex(index: number) {
@@ -75,7 +75,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       this.logger.warn('no related entries found');
     }
 
-    this.setEntries(entries);
+    this.entries = entries;
     this._isInitialized = true;
   }
 
@@ -115,7 +115,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     return this.config?.autoContinue && Number.isInteger(this.config?.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
-  private setEntries(entries: KalturaPlayerTypes.Sources[]) {
+  set entries(entries: KalturaPlayerTypes.Sources[]) {
     this.logger.info(`related entries changed`);
     this._entries = entries.map((entry, index) => {
       return {

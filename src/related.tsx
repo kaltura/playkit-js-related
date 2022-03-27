@@ -86,7 +86,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
       onLoaded: (callback: (nextEntries: []) => void) => {
         relatedManager.listen(RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
         // in case entries were set before the handler was registered
-        this.dispatchEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, relatedManager.entries);
+        // eslint-disable-next-line no-self-assign
+        relatedManager.entries = relatedManager.entries;
       },
       onUnloaded: (cb: (nextEntries: []) => void) => {
         relatedManager.unlisten(RelatedEvent.RELATED_ENTRIES_CHANGED, cb);
@@ -128,6 +129,10 @@ class Related extends KalturaPlayer.core.BasePlugin {
     } else if (useContext) {
       // ks didn't change, refresh context entries anyway
       relatedManager.load(config, newKs);
+    } else {
+      // make sure next button is visible
+      // eslint-disable-next-line no-self-assign
+      relatedManager.entries = relatedManager.entries;
     }
   }
 }
