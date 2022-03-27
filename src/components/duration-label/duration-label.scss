@@ -1,11 +1,9 @@
 .duration {
   padding: 2px;
-  color: #ccc;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 3px;
 
   &.live {
-    background-color: #e12437;
     text-transform: uppercase;
   }
 }
