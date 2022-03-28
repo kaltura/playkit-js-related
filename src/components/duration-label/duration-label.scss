@@ -1,0 +1,18 @@
+.duration {
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+
+  &.live {
+    text-transform: uppercase;
+  }
+}
+
+.duration-text,
+.live-text {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  line-height: 14px;
+}

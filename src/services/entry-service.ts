@@ -3,9 +3,11 @@ import {RelatedLoader} from './related-loader';
 
 class EntryService {
   private player: KalturaPlayerTypes.Player;
+  private logger: KalturaPlayerTypes.Logger;
 
-  constructor(player: KalturaPlayerTypes.Player) {
+  constructor(player: KalturaPlayerTypes.Player, logger: KalturaPlayerTypes.Logger) {
     this.player = player;
+    this.logger = logger;
   }
 
   async getByPlaylist(playlistInfo: {playlistId: string; ks?: string}): Promise<KalturaPlayerTypes.Sources[]> {
@@ -13,6 +15,7 @@ class EntryService {
       const response: EntryListResponse = await this.player.provider.getPlaylistConfig(playlistInfo);
       return processResponse(response);
     } catch (e) {
+      this.logger.warn(`failed to get related entries by playlist id ${playlistInfo.playlistId}`);
       return [];
     }
   }
@@ -22,6 +25,7 @@ class EntryService {
       const response: EntryListResponse = await this.player.provider.getEntryListConfig(entryList);
       return processResponse(response);
     } catch (e) {
+      this.logger.warn(`failed to get related entries by entry list`);
       return [];
     }
   }
@@ -37,6 +41,7 @@ class EntryService {
       const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}], ks);
       return response.get('related').relatedEntries;
     } catch (e) {
+      this.logger.warn(`failed to get related entries by context`);
       return [];
     }
   }

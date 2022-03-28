@@ -1,14 +1,14 @@
-import {Entry} from './entry';
+import {useState, useContext} from 'preact/hooks';
+
 import {GridEntryProps} from './grid-entry';
-import * as styles from './entry.scss';
 import {Countdown} from 'components/countdown/countdown';
-import {Timer} from 'components/timer/timer';
-import {RelatedContext} from 'components/related-context/related-context';
-import {useContext} from 'preact/hooks';
-import {EntryText} from './entry-text';
+import {BaseNextEntry} from './base-next-entry';
+import {MultilineText} from 'components/multiline-text/multiline-text';
 
 const {withText} = KalturaPlayer.ui.preacti18n;
 
+import * as styles from './entry.scss';
+import {RelatedContext} from 'components/related-context/related-context';
 interface NextEntryProps extends GridEntryProps {
   description?: string;
   countdown: number;
@@ -20,33 +20,32 @@ const NextEntry = withText({
   upNext: 'playlist.up_next',
   upNextIn: 'related.upNextIn'
 })((props: NextEntryProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {relatedManager} = useContext(RelatedContext);
 
-  let upNext = <span>{props.upNext}</span>;
-  let timer;
-  if (props.countdown > 0) {
-    upNext = (
-      <span>
-        {`${props.upNextIn} `}
-        <Countdown seconds={props.countdown} onDone={() => relatedManager?.playNext()} />
-      </span>
-    );
-    timer = <Timer seconds={props.countdown} />;
-  }
+  const {entryDimensions, countdown} = props;
+  const {width, contentHeight} = entryDimensions;
+  const [countdownCancelled, setCountdownCancelled] = useState(false);
 
   return (
-    <div className={styles.nextEntry}>
-      <Entry {...props}>
-        <div className={styles.timer}>{timer}</div>
+    <BaseNextEntry {...{...props, onCancel: () => setCountdownCancelled(true)}}>
+      <div className={styles.entryContent} style={{width, height: contentHeight}}>
         <div className={styles.upNext}>
-          <span className={styles.upNextText}>{upNext}</span>
+          <span className={styles.upNextText}>
+            {countdown > 0 && !countdownCancelled ? (
+              <span>
+                {`${props.upNextIn} `}
+                <Countdown seconds={countdown} />
+              </span>
+            ) : (
+              <span>{props.upNext}</span>
+            )}
+          </span>
         </div>
         <div className={styles.titleText}>{props.title}</div>
-        <div className={styles.text}>
-          <EntryText text={props.description || ''} />
-        </div>
-      </Entry>
-    </div>
+        <div className={styles.entryText}>{props.description ? <MultilineText text={props.description} lineHeight={18} lines={2} /> : <></>}</div>
+      </div>
+    </BaseNextEntry>
   );
 });
 

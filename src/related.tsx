@@ -1,9 +1,9 @@
 import {RelatedConfig} from './types/config';
 import {RelatedManager} from 'related-manager';
 import {RelatedOverlay} from 'components/related-overlay/related-overlay';
-import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
 import {Next} from 'components/next/next';
 import {RelatedEvent} from 'types/related-event';
+import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -20,7 +20,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
   static defaultConfig: RelatedConfig = {
     autoContinue: true,
     autoContinueTime: 5,
-    showOnPlaybackDone: true,
     showOnPlaybackPaused: false,
     playlistId: null,
     entryList: [],
@@ -50,11 +49,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    */
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
-    this.relatedManager = new RelatedManager({
-      player,
-      eventManager: this.eventManager,
-      dispatchEvent: this.dispatchEvent.bind(this)
-    });
+    this.relatedManager = new RelatedManager(this);
     this.injectUIComponents();
   }
 
@@ -68,11 +63,21 @@ class Related extends KalturaPlayer.core.BasePlugin {
       get: () => <RelatedOverlay relatedManager={relatedManager} />
     });
 
+    const preplayBackPlayOverlayProps = {
+      relatedManager,
+      onLoaded: (callback: (nextEntries: []) => void) => {
+        relatedManager.listen(RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: []}) => callback(payload));
+      },
+      onUnloaded: (cb: (nextEntries: []) => void) => {
+        relatedManager.unlisten(RelatedEvent.HIDDEN_STATE_CHANGED, cb);
+      }
+    };
+
     this.player.ui.addComponent({
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper relatedManager={relatedManager} />,
+      get: () => <PrePlaybackPlayOverlayWrapper {...preplayBackPlayOverlayProps} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
@@ -81,7 +86,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
       onLoaded: (callback: (nextEntries: []) => void) => {
         relatedManager.listen(RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
         // in case entries were set before the handler was registered
-        this.dispatchEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, relatedManager.entries);
+        // eslint-disable-next-line no-self-assign
+        relatedManager.entries = relatedManager.entries;
       },
       onUnloaded: (cb: (nextEntries: []) => void) => {
         relatedManager.unlisten(RelatedEvent.RELATED_ENTRIES_CHANGED, cb);
@@ -89,7 +95,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     };
 
     this.player.ui.addComponent({
-      label: 'kaltura-relayed-overlay-next',
+      label: 'kaltura-related-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
       get: () => <Next {...nextProps} />
@@ -108,6 +114,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     const {useContext, playlistId, entryList} = config;
     const newKs = this.config?.ks;
 
+    relatedManager.isHiddenByUser = false;
+
     if (!relatedManager.isInitialized) {
       // first loadMedia
       relatedManager.load(config, newKs);
@@ -115,11 +123,16 @@ class Related extends KalturaPlayer.core.BasePlugin {
       // ks changed
       this.ks = newKs;
       if (useContext || playlistId || entryList?.length) {
+        this.logger.info('ks changed - reloading related entries');
         relatedManager.load(config, newKs);
       }
     } else if (useContext) {
       // ks didn't change, refresh context entries anyway
       relatedManager.load(config, newKs);
+    } else {
+      // make sure next button is visible
+      // eslint-disable-next-line no-self-assign
+      relatedManager.entries = relatedManager.entries;
     }
   }
 }
