@@ -196,9 +196,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.15.4", "@babel/runtime@^7.9.2":
-  version "7.16.3"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
-  integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
+  version "7.17.8"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.8.tgz#3e56e4aff81befa55ac3ac6a0967349fd1c5bca2"
+  integrity sha512-dQpEpK0O9o6lj6oPu0gRDbbnk+4LeHlNcBpspf6Olzt3GIX4P1lWF1gS+pHLDFlaJvbR6q7jCfQ08zA4QJBnmA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -305,10 +305,10 @@
   resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-dash/-/playkit-js-dash-1.30.0.tgz#6985d86b88e5b3ccf976f7ad020bfeca5aab7af8"
   integrity sha512-jMnlhuN3ryXlKHFvOI8leySZKj/oWjuXjCsmhhP/OyROR2tMW9qhJEJPPzyAonCXnnlV31g5WHm+7/ZCW1rDbA==
 
-"@playkit-js/playkit-js-hls@1.29.0":
-  version "1.29.0"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-hls/-/playkit-js-hls-1.29.0.tgz#62b96c0b8340c4ce4d06141a78cfbffe875bc1dc"
-  integrity sha512-19AlGBhTYvwD1B3uyHyt+KT1bfAdGNI5nENPHLASa1z6HzslNNhR15Uucc9gNOBEQgyBNWVWOEtWmNM+QCJOuA==
+"@playkit-js/playkit-js-hls@1.30.1":
+  version "1.30.1"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js-hls/-/playkit-js-hls-1.30.1.tgz#1c6298cafadfabe9510e013f319774f486f3a4c6"
+  integrity sha512-92nrsOXBQveF+BmKqC2LxLp+zGjqKvBCh5vL8Ea0+COzha/jPovKtwhGxzyF3gTIukYoocMC8IisFFQCIPkCmw==
 
 "@playkit-js/playkit-js-ui@0.70.1":
   version "0.70.1"
@@ -320,10 +320,10 @@
     react-redux "^7.2.0"
     redux "^4.0.5"
 
-"@playkit-js/playkit-js@0.78.0":
-  version "0.78.0"
-  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js/-/playkit-js-0.78.0.tgz#39ec91d6e36dcdb90e17298fa5615ab6dfb1bf46"
-  integrity sha512-ZxtOkQn9dN0wMz/pFL55rUHSLhBr8AEhY5psgzqH8rPGGQ6qWIvTriFbf8fErPpaIX4AQPD3b5nni4u+G3SUlw==
+"@playkit-js/playkit-js@0.79.0":
+  version "0.79.0"
+  resolved "https://registry.yarnpkg.com/@playkit-js/playkit-js/-/playkit-js-0.79.0.tgz#853b6af69954638951cda420856891acfd9b66e2"
+  integrity sha512-cVz+ewW5j02jZDck5vLnIaBLTs8Jh3dNLB1h0nyZVqpXRx1kZsl9iyCIIVbuM8AaCQDokaTkqGUEp8680EmCyg==
   dependencies:
     js-logger "^1.6.0"
     ua-parser-js "1.0.2"
@@ -469,9 +469,9 @@
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
 "@types/react-redux@^7.1.20":
-  version "7.1.20"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.20.tgz#42f0e61ababb621e12c66c96dda94c58423bd7df"
-  integrity sha512-q42es4c8iIeTgcnB+yJgRTTzftv3eYYvCZOh1Ckn2eX/3o5TdsQYKUWpLoLuGlcY/p+VAhV9IOEZJcWk/vfkXw==
+  version "7.1.23"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.23.tgz#3c2bb1bcc698ae69d70735f33c5a8e95f41ac528"
+  integrity sha512-D02o3FPfqQlfu2WeEYwh3x2otYd2Dk1o8wAfsA0B1C2AJEFxE663Ozu7JzuWbznGgW248NaOF6wsqCGNq9d3qw==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
@@ -479,9 +479,9 @@
     redux "^4.0.0"
 
 "@types/react@*":
-  version "17.0.37"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.37.tgz#6884d0aa402605935c397ae689deed115caad959"
-  integrity sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==
+  version "17.0.43"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.43.tgz#4adc142887dd4a2601ce730bc56c3436fdb07a55"
+  integrity sha512-8Q+LNpdxf057brvPu1lMtC5Vn7J119xrP1aq4qiaefNioQUYANF/CYeK4NsKorSZyUGJ66g0IM+4bbjwx45o2A==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1535,9 +1535,9 @@ cssesc@^3.0.0:
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
 csstype@^3.0.2:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
-  integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.11.tgz#d66700c5eacfac1940deb4e3ee5642792d85cd33"
+  integrity sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==
 
 dargs@^7.0.0:
   version "7.0.0"
@@ -1735,9 +1735,9 @@ electron-to-chromium@^1.4.17:
   integrity sha512-PO3kEfcxPrti/4STbXvCkNIF4fgWvCKl2508e6UI7KomCDffpIfeBZLXsh5DK/XGsjUw3kwq6WEsi0MJTlGAdg==
 
 eme-encryption-scheme-polyfill@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.3.tgz#2ca6e06480e06cceb5e50efd27943ac46c959878"
-  integrity sha512-44CNFMsqzHdKHrzWxlS7xZ8KUHn5XutBqpmCuWzNIynmAyFInHrrD3ozv/RvK9ZhgV6QY6Easx8EWAmxteNodg==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.4.tgz#7d818302af3f3b19d5974255dcc92dc087413845"
+  integrity sha512-MHYJX1v145Pjj2YJTrVVuJOYyXrxGVy8LWf6kV5M4jrV/GyoeuJKyTuD+GaD+VAiE8Ip+MptiH4dXk6ZVmMNow==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -3011,17 +3011,17 @@ jsonparse@^1.2.0:
     object.assign "^4.1.2"
 
 "kaltura-player-js@https://github.com/kaltura/kaltura-player-js.git#master":
-  version "3.0.0"
-  resolved "https://github.com/kaltura/kaltura-player-js.git#ffea61f5a7f98ad9fb3a4af164e1d067eab8964c"
+  version "3.1.0"
+  resolved "https://github.com/kaltura/kaltura-player-js.git#908d652fc8543f20bb09ffdca3fa2b77a88e275d"
   dependencies:
     "@babel/polyfill" "^7.0.0"
-    "@playkit-js/playkit-js" "0.78.0"
+    "@playkit-js/playkit-js" "0.79.0"
     "@playkit-js/playkit-js-dash" "1.30.0"
-    "@playkit-js/playkit-js-hls" "1.29.0"
+    "@playkit-js/playkit-js-hls" "1.30.1"
     "@playkit-js/playkit-js-ui" "0.70.1"
     hls.js "^1.1.5"
     intersection-observer "^0.12.0"
-    playkit-js-providers "https://github.com/kaltura/playkit-js-providers.git#v2.33.0"
+    playkit-js-providers "https://github.com/kaltura/playkit-js-providers.git#v2.34.0"
     proxy-polyfill "^0.3.0"
     shaka-player "3.3.0"
 
@@ -3687,9 +3687,9 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-"playkit-js-providers@https://github.com/kaltura/playkit-js-providers.git#v2.33.0":
-  version "2.33.0"
-  resolved "https://github.com/kaltura/playkit-js-providers.git#9601657a0f68d78c56f1a70a70b1121a21798166"
+"playkit-js-providers@https://github.com/kaltura/playkit-js-providers.git#v2.34.0":
+  version "2.34.0"
+  resolved "https://github.com/kaltura/playkit-js-providers.git#647b4bb8842e6a823e9d7744fed01c419c1512cb"
 
 portfinder@^1.0.28:
   version "1.0.28"
@@ -3768,9 +3768,9 @@ preact-i18n@^2.0.0-preactx.2:
     dlv "^1.1.2"
 
 preact@^10.3.4:
-  version "10.6.2"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.6.2.tgz#c849f91df9ad36bfa64d1a5d5880977f767c69e5"
-  integrity sha512-ppDjurt75nSxyikpyali+uKwRl8CK9N6ntOPovGIEGQagjMLVzEgVqFEsUUyUrqyE9Ch90KE0jmFc9q2QcPLBA==
+  version "10.6.6"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.6.6.tgz#f1899bc8dab7c0788b858481532cb3b5d764a520"
+  integrity sha512-dgxpTFV2vs4vizwKohYKkk7g7rmp1wOOcfd4Tz3IB3Wi+ivZzsn/SpeKJhRENSE+n8sUfsAl4S3HiCVT923ABw==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -3978,9 +3978,9 @@ redux@^4.0.0, redux@^4.0.5:
     "@babel/runtime" "^7.9.2"
 
 regenerator-runtime@^0.13.4:
-  version "0.13.7"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
-  integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
 
 regexp.prototype.flags@^1.2.0:
   version "1.4.1"
