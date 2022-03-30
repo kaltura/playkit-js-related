@@ -43,7 +43,9 @@ const NextEntry = withText({
           </span>
         </div>
         <div className={styles.titleText}>{props.title}</div>
-        <div className={styles.entryText}>{props.description ? <MultilineText text={props.description} lineHeight={18} lines={2} /> : <></>}</div>
+        <div className={`${styles.entryText} ${styles.text}`}>
+          {props.description ? <MultilineText text={props.description} lineHeight={18} lines={2} /> : <></>}
+        </div>
       </div>
     </BaseNextEntry>
   );
