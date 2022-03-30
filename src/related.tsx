@@ -24,7 +24,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     playlistId: null,
     entryList: [],
     externalEntryList: [],
-    useContext: false,
+    useContext: true,
     entriesByContextLimit: 12,
     ks: ''
   };
@@ -111,28 +111,21 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   loadMedia() {
     const {ks, config, relatedManager} = this;
-    const {useContext, playlistId, entryList} = config;
+    const {useContext, playlistId, entryList, externalEntryList} = config;
     const newKs = this.config?.ks;
 
     relatedManager.isHiddenByUser = false;
 
     if (!relatedManager.isInitialized) {
-      // first loadMedia
       relatedManager.load(config, newKs);
-    } else if (ks && ks !== newKs) {
-      // ks changed
-      this.ks = newKs;
-      if (useContext || playlistId || entryList?.length) {
+    } else if (playlistId || entryList?.length) {
+      if (ks && ks !== newKs) {
         this.logger.info('ks changed - reloading related entries');
         relatedManager.load(config, newKs);
       }
-    } else if (useContext) {
-      // ks didn't change, refresh context entries anyway
+    } else if (!externalEntryList?.length && useContext) {
+      // refresh context entries
       relatedManager.load(config, newKs);
-    } else {
-      // make sure next button is visible
-      // eslint-disable-next-line no-self-assign
-      relatedManager.entries = relatedManager.entries;
     }
   }
 }
