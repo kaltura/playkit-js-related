@@ -26,6 +26,7 @@ const GridEntry = (props: GridEntryProps) => {
 
   return (
     <div
+      key={id}
       className={`${styles.entry} ${styles.gridEntry} ${styles.clickable}`}
       style={{width, color: KalturaPlayer.ui.style.white}}
       onClick={() => {
