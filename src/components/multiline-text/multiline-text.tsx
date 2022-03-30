@@ -1,5 +1,7 @@
 import {useState, useRef, useLayoutEffect, useMemo} from 'preact/hooks';
 
+import * as styles from './multiline-text.scss';
+
 interface MultilineTextProps {
   text: string;
   lineHeight: number;
@@ -45,7 +47,7 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   }, [isTextFinalized, cutoffHeight, minLength, text, maxLength, currentLength]);
 
   return (
-    <div>
+    <div className={styles.multilineText}>
       <div ref={ref}>{isTextFinalized ? finalizedText : text.slice(0, currentLength)}</div>
     </div>
   );

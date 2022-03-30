@@ -1,0 +1,11 @@
+.multiline-text {
+  word-break: break-word;
+  height: 100%;
+  width: 100%;
+
+  div {
+    height: 100%;
+    width: 100%;
+    line-height: 18px;
+  }
+}
