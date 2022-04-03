@@ -7,7 +7,6 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private entryService: EntryService;
 
   private _entries: Sources[] = [];
-  private _areEntriesExternal = false;
   private config: RelatedConfig | null = null;
   private ks = '';
   private _isInitialized = false;
@@ -30,16 +29,17 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   private playByIndex(index: number) {
     this.isHiddenByUser = false;
-    if (this._areEntriesExternal) {
+    if (this.entryService.isPlayable(this.entries[index])) {
       this.plugin.player.setMedia({sources: this.entries[index]});
       this.plugin.player.play();
     } else {
       const entry = this.entries[index];
       this.plugin.player
         .loadMedia({...entry, entryId: entry.id, ks: this.ks})
-        .then(() => {
+        .then(({sources}: {sources: Sources}) => {
           this.logger.info('loadMedia success');
           this.plugin.player.play();
+          this.entries[index] = sources;
         })
         .catch(() => {
           this.logger.warning('loadMedia failed');
@@ -52,20 +52,16 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.config = config;
     this.ks = ks;
 
-    const {playlistId, entryList, externalEntryList, useContext, entriesByContextLimit} = config;
+    const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
     let entries: KalturaPlayerTypes.Sources[] = [];
 
     if (playlistId) {
-      this._areEntriesExternal = false;
       entries = await this.entryService.getByPlaylist({ks, playlistId});
     } else if (entryList?.length) {
-      this._areEntriesExternal = false;
       entries = await this.entryService.getByEntryList({entries: entryList, ks});
-    } else if (externalEntryList?.length) {
-      this._areEntriesExternal = true;
-      entries = this.entryService.getBySourcesList(externalEntryList);
+    } else if (sourcesList?.length) {
+      entries = this.entryService.getBySourcesList(sourcesList);
     } else if (useContext) {
-      this._areEntriesExternal = false;
       entries = await this.entryService.getByContext(this.plugin.player.sources.id, ks, entriesByContextLimit);
     } else {
       this.logger.warn('no source configured');

@@ -31,9 +31,7 @@ class EntryService {
   }
 
   getBySourcesList(sourcesList: KalturaPlayerTypes.Sources[]): KalturaPlayerTypes.Sources[] {
-    return sourcesList.filter(sources => {
-      return sources.dash?.length || sources.hls?.length || sources.progressive?.length;
-    });
+    return sourcesList.filter(sources => this.isPlayable(sources));
   }
 
   async getByContext(entryId: string, ks: string, limit: number): Promise<KalturaPlayerTypes.Sources[]> {
@@ -44,6 +42,10 @@ class EntryService {
       this.logger.warn(`failed to get related entries by context`);
       return [];
     }
+  }
+
+  isPlayable(sources: KalturaPlayerTypes.Sources) {
+    return sources.dash?.length || sources.hls?.length || sources.progressive?.length;
   }
 }
 
