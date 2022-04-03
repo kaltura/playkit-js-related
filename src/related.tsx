@@ -111,7 +111,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   loadMedia() {
     const {ks, config, relatedManager} = this;
-    const {useContext, playlistId, entryList, externalEntryList} = config;
+    const {useContext, playlistId, entryList, sourcesList} = config;
     const newKs = this.config?.ks;
 
     relatedManager.isHiddenByUser = false;
@@ -123,7 +123,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
         this.logger.info('ks changed - reloading related entries');
         relatedManager.load(config, newKs);
       }
-    } else if (!externalEntryList?.length && useContext) {
+    } else if (!sourcesList?.length && useContext) {
       // refresh context entries
       relatedManager.load(config, newKs);
     }
