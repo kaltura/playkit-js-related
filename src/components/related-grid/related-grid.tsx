@@ -52,7 +52,8 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   }, [pageAction]);
   const entriesPerPage = getPageSize(sizeBreakpoint);
   const getEntriesByPage = (page: number) => {
-    return data.slice(page * (entriesPerPage - 1), 1 + (page + 1) * entriesPerPage);
+    const firstPageSize = entriesPerPage - 1;
+    return data.slice(firstPageSize + (page - 1) * entriesPerPage, firstPageSize + page * entriesPerPage);
   };
 
   const arrowLeft =
