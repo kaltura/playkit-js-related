@@ -8,6 +8,7 @@
 .up-next-text {
   @extend .text;
   color: #ccc;
+  line-height: 18px;
 }
 
 .title-text {
@@ -21,6 +22,10 @@
 /* entry */
 .entry {
   position: relative;
+
+  img {
+    border-radius: 8px 8px 0 0;
+  }
 
   .entry-content {
     background-color: #222;
@@ -36,12 +41,17 @@
 
 /* specific entries */
 .next-entry {
-  img {
-    border-radius: 8px;
-  }
-
   .entry-content {
     padding: 8px 16px 16px;
+
+    .title-text {
+      padding: 4px 0;
+    }
+
+    .entry-text {
+      line-height: 18px;
+      height: 92px;
+    }
   }
 
   .buttons {
@@ -95,18 +105,8 @@
     }
   }
 
-  &.small {
-    img {
-      border-radius: 8px 8px 0 0;
-    }
-  }
-
   &.medium {
     margin-right: 16px;
-
-    img {
-      border-radius: 8px 8px 0 0;
-    }
   }
 
   &.large,
@@ -146,10 +146,6 @@
 
   .entry-text {
     margin: 8px 16px;
-  }
-
-  img {
-    border-radius: 8px;
   }
 }
 

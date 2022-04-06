@@ -94,7 +94,6 @@ const getPageSize = (sizeBreakpoint: string) => NUM_ENTRIES[sizeBreakpoint];
 const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: EntryDimensions) => {
   const props = {
     id: data.internalIndex,
-    key: data.internalIndex,
     duration: data.duration,
     type: data.type,
     poster: data.poster,
@@ -108,7 +107,6 @@ const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, 
   const {duration, type, poster, metadata} = data;
   const props = {
     id: 0,
-    key: 0,
     duration,
     type,
     poster,

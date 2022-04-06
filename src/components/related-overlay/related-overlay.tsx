@@ -42,7 +42,7 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
     return <></>;
   } else if (!isPlaybackEnded) {
     setIsVisible(
-      isPaused && relatedManager.showOnPlaybackPaused && sizeBreakpoint !== PLAYER_SIZE.EXTRA_SMALL && sizeBreakpoint !== PLAYER_SIZE.SMALL
+      isPaused && relatedManager.showOnPlaybackPaused && ![PLAYER_SIZE.TINY, PLAYER_SIZE.VERY_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint)
     );
     setCountdown(-1);
   } else {
@@ -50,9 +50,9 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
     setCountdown(relatedManager.countdownTime);
   }
 
-  return (
+  return isVisible ? (
     <div>
-      <div className={`${styles.relatedOverlay} ${isVisible ? '' : styles.hidden}`}>
+      <div className={styles.relatedOverlay}>
         <RelatedContext.Provider value={{relatedManager}}>
           <div className={styles.relatedContent}>
             {sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL || sizeBreakpoint === PLAYER_SIZE.SMALL ? (
@@ -64,6 +64,8 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
         </RelatedContext.Provider>
       </div>
     </div>
+  ) : (
+    <></>
   );
 });
 
