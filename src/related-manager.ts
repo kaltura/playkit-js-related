@@ -12,6 +12,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isInitialized = false;
   private _isHiddenByUser = false;
   private plugin: Related;
+  private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
 
   constructor(plugin: Related) {
     super();
@@ -33,9 +34,11 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       this.plugin.player.setMedia({sources: this.entries[index]});
       this.plugin.player.play();
     } else {
-      const entry = this.entries[index];
+      const entryId = this.entries[index].id;
+      const mediaInfo = this.mediaInfoMap?.has(entryId) ? this.mediaInfoMap.get(entryId) : {entryId};
+
       this.plugin.player
-        .loadMedia({...entry, entryId: entry.id, ks: this.ks})
+        .loadMedia({...mediaInfo, ks: this.ks})
         .then(({sources}: {sources: Sources}) => {
           this.logger.info('loadMedia success');
           this.plugin.player.play();
@@ -59,6 +62,11 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       entries = await this.entryService.getByPlaylist({ks, playlistId});
     } else if (entryList?.length) {
       entries = await this.entryService.getByEntryList({entries: entryList, ks});
+      entryList.forEach(mediaInfo => {
+        if (typeof mediaInfo === 'object' && mediaInfo.entryId && entries.find(entry => entry.id === mediaInfo.entryId)) {
+          this.mediaInfoMap.set(mediaInfo.entryId, mediaInfo);
+        }
+      });
     } else if (sourcesList?.length) {
       entries = this.entryService.getBySourcesList(sourcesList);
     } else if (useContext) {
