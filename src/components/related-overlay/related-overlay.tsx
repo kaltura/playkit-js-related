@@ -42,7 +42,7 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
     return <></>;
   } else if (!isPlaybackEnded) {
     setIsVisible(
-      isPaused && relatedManager.showOnPlaybackPaused && ![PLAYER_SIZE.TINY, PLAYER_SIZE.VERY_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint)
+      isPaused && relatedManager.showOnPlaybackPaused && ![PLAYER_SIZE.TINY, PLAYER_SIZE.EXTRA_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint)
     );
     setCountdown(-1);
   } else {
