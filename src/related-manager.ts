@@ -54,6 +54,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   async load(config: RelatedConfig, ks: string) {
     this.config = config;
     this.ks = ks;
+    this.mediaInfoMap.clear();
 
     const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
     let entries: KalturaPlayerTypes.Sources[] = [];
