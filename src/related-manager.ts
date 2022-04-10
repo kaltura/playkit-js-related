@@ -39,10 +39,9 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
       this.plugin.player
         .loadMedia({...mediaInfo, ks: this.ks})
-        .then(({sources}: {sources: Sources}) => {
+        .then(() => {
           this.logger.info('loadMedia success');
           this.plugin.player.play();
-          this.entries[index] = sources;
         })
         .catch(() => {
           this.logger.warning('loadMedia failed');
