@@ -13,9 +13,20 @@
 }
 
 @mixin grid-animation($page-width) {
+  @-webkit-keyframes slide-left {
+    100% {
+      transform: translateX(-$page-width);
+    }
+  }
   @keyframes slide-left {
     100% {
       transform: translateX(-$page-width);
+    }
+  }
+
+  @-webkit-keyframes slide-right {
+    100% {
+      transform: translateX($page-width);
     }
   }
 
@@ -137,12 +148,14 @@ $grid-gap: 16px;
 
   &.slide-right {
     .grid-pages {
+      -webkit-animation: slide-right 0.3s ease forwards;
       animation: slide-right 0.3s ease forwards;
     }
   }
 
   &.slide-left {
     .grid-pages {
+      -webkit-animation: slide-left 0.3s ease forwards;
       animation: slide-left 0.3s ease forwards;
     }
   }
