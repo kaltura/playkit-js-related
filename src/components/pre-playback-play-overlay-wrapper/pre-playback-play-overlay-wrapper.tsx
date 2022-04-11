@@ -10,11 +10,16 @@ const {PrePlaybackPlayOverlay, Icon, IconType, PLAYER_SIZE} = KalturaPlayer.ui.c
 const {connect} = KalturaPlayer.ui.redux;
 
 const mapStateToProps = (state: any) => {
+  const {isPlaybackEnded} = state.engine;
+  const {isMobile, playerSize} = state.shell;
+  const sizeBreakpoint = isMobile && playerSize !== PLAYER_SIZE.TINY ? PLAYER_SIZE.EXTRA_SMALL : playerSize;
+
   return {
-    isPlaybackEnded: state.engine.isPlaybackEnded,
-    sizeBreakpoint: state.shell.playerSize
+    isPlaybackEnded,
+    sizeBreakpoint
   };
 };
+
 interface PrePlaybackPlayOverlayWrapperProps {
   isPlaybackEnded: boolean;
   sizeBreakpoint: string;
