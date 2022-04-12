@@ -44,8 +44,11 @@ const BaseNextEntry = withText({
     }
   }, [countdown, showButtons]);
 
-  const onPlayNowClick = () => {
+  const onPlayNowClick = (e: MouseEvent) => {
+    e.stopPropagation();
     relatedManager?.playNext();
+    clearTimeout(timeoutId);
+    setTimeoutId(-1);
   };
 
   const onCancelClick = (e: MouseEvent) => {
@@ -59,7 +62,7 @@ const BaseNextEntry = withText({
 
   const onEntryClick = () => {
     if (!(countdown > 0 && showButtons)) {
-      onPlayNowClick();
+      relatedManager?.playNext();
     }
   };
 
