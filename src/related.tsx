@@ -98,14 +98,14 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
-      get: () => <Next {...nextProps} />
+      get: () => <Next {...{...nextProps, showPreview: false}} />
     });
 
     this.player.ui.addComponent({
       label: 'kaltura-related-bottom-bar-next',
       presets: PRESETS,
       area: 'BottomBarPlaybackControls',
-      get: () => <Next {...nextProps} />
+      get: () => <Next {...{...nextProps, showPreview: true}} />
     });
   }
 
