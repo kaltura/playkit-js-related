@@ -19,7 +19,7 @@ const Thumbnail = ({src = '', height, width}: {src?: string; height: number; wid
         }
       };
     }
-  }, [showImage]);
+  }, [retryLoad, showImage, thumbnailSrc]);
 
   return showImage ? (
     <img className={styles.image} src={thumbnailSrc} style={{width, height}} />
