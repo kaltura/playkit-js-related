@@ -9,12 +9,14 @@ const {connect} = KalturaPlayer.ui.redux;
 const {PLAYER_SIZE} = KalturaPlayer.ui.components;
 
 const mapStateToProps = (state: any) => {
-  const {engine, shell} = state;
-  const {isPaused, isPlaybackEnded} = engine;
+  const {isPaused, isPlaybackEnded} = state.engine;
+  const {isMobile, playerSize} = state.shell;
+  const sizeBreakpoint = isMobile && playerSize !== PLAYER_SIZE.TINY ? PLAYER_SIZE.EXTRA_SMALL : playerSize;
+
   return {
     isPaused,
     isPlaybackEnded,
-    sizeBreakpoint: shell.playerSize
+    sizeBreakpoint
   };
 };
 
