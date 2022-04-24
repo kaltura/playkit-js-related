@@ -68,6 +68,7 @@ const BaseNextEntry = withText({
 
   return (
     <div
+      tabIndex={0}
       className={`${styles.entry} ${styles.nextEntry} ${sizeClass} ${alwaysShowButtons || (countdown > 0 && showButtons) ? '' : styles.clickable}`}
       style={{width, color: KalturaPlayer.ui.style.white}}
       onClick={onEntryClick}>

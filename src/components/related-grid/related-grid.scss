@@ -57,6 +57,7 @@
   .arrow {
     position: absolute;
     top: $margin-y;
+    z-index: 1;
 
     &.arrow-right {
       right: $margin-x;
@@ -129,7 +130,7 @@ $grid-gap: 16px;
 }
 
 .related-grid {
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 
   .grid-pages {
@@ -138,6 +139,11 @@ $grid-gap: 16px;
 
     .grid-page {
       display: flex;
+      visibility: hidden;
+
+      &.active {
+        visibility: visible;
+      }
 
       .related-grid-entries {
         display: -ms-grid;
@@ -147,6 +153,12 @@ $grid-gap: 16px;
   }
 
   &.slide-right {
+    overflow: hidden;
+
+    .grid-page:nth-child(1) {
+      visibility: visible;
+    }
+
     .grid-pages {
       -webkit-animation: slide-right 0.3s ease forwards;
       animation: slide-right 0.3s ease forwards;
@@ -154,6 +166,12 @@ $grid-gap: 16px;
   }
 
   &.slide-left {
+    overflow: hidden;
+
+    .grid-page:nth-child(3) {
+      visibility: visible;
+    }
+
     .grid-pages {
       -webkit-animation: slide-left 0.3s ease forwards;
       animation: slide-left 0.3s ease forwards;

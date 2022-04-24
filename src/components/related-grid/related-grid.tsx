@@ -84,7 +84,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
             {currPage === 0 ? (
               <>
                 <GridPage />
-                <FirstPage {...{data, countdown, sizeBreakpoint}} />
+                <FirstPage {...{data, countdown, sizeBreakpoint, isActive: true}} />
                 <GridPage>
                   <RelatedGridEntries
                     sizeBreakpoint={sizeBreakpoint}
@@ -97,7 +97,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
             ) : (
               <>
                 <FirstPage {...{data, countdown, sizeBreakpoint}} />
-                <GridPage>
+                <GridPage isActive={true}>
                   <RelatedGridEntries
                     sizeBreakpoint={sizeBreakpoint}
                     data={getEntriesByPage(1)}
@@ -135,7 +135,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
               entryDimensions={entryDimensions}
             />
           </GridPage>
-          <GridPage>
+          <GridPage isActive={true}>
             <RelatedGridEntries
               sizeBreakpoint={sizeBreakpoint}
               data={getEntriesByPage(currPage)}
@@ -158,13 +158,25 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   );
 });
 
-const GridPage = ({children}: {children?: ComponentChildren}) => <div className={`${styles.gridPage} `}>{children}</div>;
-const FirstPage = ({data, countdown, sizeBreakpoint}: {data: Sources[]; countdown: number; sizeBreakpoint: string}) => {
+const GridPage = ({children, isActive = false}: {children?: ComponentChildren; isActive?: boolean}) =>
+  isActive ? <div className={`${styles.gridPage} ${styles.active}`}>{children}</div> : <div className={`${styles.gridPage}`}>{children}</div>;
+
+const FirstPage = ({
+  data,
+  countdown,
+  sizeBreakpoint,
+  isActive = false
+}: {
+  data: Sources[];
+  countdown: number;
+  sizeBreakpoint: string;
+  isActive?: boolean;
+}) => {
   const entryDimensions = getEntryDimensions(sizeBreakpoint);
   const pageSize = getPageSize(sizeBreakpoint);
 
   return (
-    <GridPage>
+    <GridPage isActive={isActive}>
       {getNextEntry(sizeBreakpoint, countdown, data[0])}
       <RelatedGridEntries
         sizeBreakpoint={sizeBreakpoint}
@@ -195,7 +207,7 @@ const RelatedGridEntries = ({
 
     const entryData = data[i];
     entries.push(
-      <div className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>
+      <div tabIndex={0} className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>
         {entryData ? getGridEntry(sizeBreakpoint, entryData, entryDimensions) : <></>}
       </div>
     );

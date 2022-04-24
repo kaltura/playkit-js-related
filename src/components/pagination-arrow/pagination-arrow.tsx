@@ -9,6 +9,7 @@ const ARROW_RIGHT_PATH =
 const PaginationArrow = ({onClick, disabled, id, path}: {onClick: () => void; disabled: boolean; id: string; path: string}) => {
   return (
     <div
+      tabIndex={0}
       onClick={disabled ? undefined : onClick}
       className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
       style={disabled ? {cursor: 'default'} : ''}>
