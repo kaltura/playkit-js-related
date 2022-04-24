@@ -181,7 +181,7 @@ const FirstPage = ({
       <RelatedGridEntries
         sizeBreakpoint={sizeBreakpoint}
         data={data.slice(1, pageSize - 1)}
-        entriesPerPage={pageSize}
+        entriesPerPage={pageSize - 2}
         entryDimensions={entryDimensions}
       />
     </GridPage>
