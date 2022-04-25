@@ -59,7 +59,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   const arrowLeft =
     data.length > entriesPerPage - 1 ? (
       <div className={`${styles.arrow} ${styles.arrowLeft}`}>
-        <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
+        <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} onEnter={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
       </div>
     ) : (
       <></>
@@ -67,7 +67,11 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   const arrowRight =
     data.length > entriesPerPage - 1 ? (
       <div className={`${styles.arrow} ${styles.arrowRight}`}>
-        <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && data.length <= nextPage * entriesPerPage} />
+        <ArrowRight
+          onClick={() => setPageAction(PageAction.NEXT)}
+          onEnter={() => setPageAction(PageAction.NEXT)}
+          disabled={currPage > 0 && data.length <= nextPage * entriesPerPage}
+        />
       </div>
     ) : (
       <></>
