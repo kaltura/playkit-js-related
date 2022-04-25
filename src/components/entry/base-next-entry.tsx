@@ -76,6 +76,7 @@ const BaseNextEntry = withText({
         {alwaysShowButtons || (countdown > 0 && showButtons) ? (
           <div className={styles.buttons}>
             <div
+              tabIndex={0}
               className={`${styles.button} ${styles.playNow} ${animated ? styles.animated : ''}`}
               onClick={onPlayNowClick}
               style={{
@@ -84,7 +85,7 @@ const BaseNextEntry = withText({
               <div className={styles.animation} style={{'animation-duration': `${countdown}s`}} />
               <div className={styles.buttonText}>{playNowLabel}</div>
             </div>
-            <div className={`${styles.button} ${styles.cancel}`} onClick={onCancelClick}>
+            <div tabIndex={0} className={`${styles.button} ${styles.cancel}`} onClick={onCancelClick}>
               <div className={styles.buttonText}>{cancelLabel}</div>
             </div>
           </div>

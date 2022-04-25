@@ -207,7 +207,7 @@ const RelatedGridEntries = ({
 
     const entryData = data[i];
     entries.push(
-      <div tabIndex={0} className={`${styles[`row${row}`]} ${styles[`col${col}`]}`}>
+      <div tabIndex={0} className={`${styles.gridEntry} ${styles[`row${row}`]} ${styles[`col${col}`]}`}>
         {entryData ? getGridEntry(sizeBreakpoint, entryData, entryDimensions) : <></>}
       </div>
     );

@@ -148,6 +148,10 @@ $grid-gap: 16px;
       .related-grid-entries {
         display: -ms-grid;
         display: grid;
+
+        .grid-entry {
+          width: fit-content;
+        }
       }
     }
   }
