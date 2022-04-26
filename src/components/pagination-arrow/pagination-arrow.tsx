@@ -14,20 +14,9 @@ interface PaginationArrowProps {
   path?: string;
 }
 
-const PaginationArrow = ({onClick, onEnter, disabled, id, path}: PaginationArrowProps) => {
-  const onKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
-      onEnter();
-    }
-  };
-
+const PaginationArrow = ({onClick, disabled, id, path}: PaginationArrowProps) => {
   return (
-    <div
-      tabIndex={0}
-      onClick={disabled ? undefined : onClick}
-      onKeyDown={disabled ? undefined : onKeyDown}
-      className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
-      style={disabled ? {cursor: 'default'} : ''}>
+    <button tabIndex={0} disabled={disabled} onClick={onClick} className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}>
       <Icon
         activeColor={KalturaPlayer.ui.style.white}
         color={'#888'}
@@ -36,7 +25,7 @@ const PaginationArrow = ({onClick, onEnter, disabled, id, path}: PaginationArrow
         state={disabled ? IconState.INACTIVE : IconState.ACTIVE}
         viewBox={`0 0 32 32`}
       />
-    </div>
+    </button>
   );
 };
 

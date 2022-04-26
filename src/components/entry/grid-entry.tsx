@@ -25,8 +25,9 @@ const GridEntry = (props: GridEntryProps) => {
   const {width, imageHeight, contentHeight} = entryDimensions;
 
   return (
-    <div
+    <button
       key={id}
+      tabIndex={0}
       className={`${styles.entry} ${styles.gridEntry} ${styles.clickable}`}
       style={{width, color: KalturaPlayer.ui.style.white}}
       onClick={() => {
@@ -38,7 +39,7 @@ const GridEntry = (props: GridEntryProps) => {
           <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
