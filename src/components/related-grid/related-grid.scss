@@ -112,12 +112,14 @@ $grid-gap: 16px;
 
     &.slide-left {
       .grid-pages {
-        animation-name: slide-left-m;
+        -webkit-animation-name: slide-left-m;
+                animation-name: slide-left-m;
       }  
     }
     &.slide-right {
       .grid-pages {
-        animation-name: slide-right-m;
+        -webkit-animation-name: slide-right-m;
+                animation-name: slide-right-m;
       }  
     }
   }
@@ -132,12 +134,14 @@ $grid-gap: 16px;
 
     &.slide-left {
       .grid-pages {
-        animation-name: slide-left-l;
+        -webkit-animation-name: slide-left-l;
+                animation-name: slide-left-l;
       }  
     }
     &.slide-right {
       .grid-pages {
-        animation-name: slide-right-l;
+        -webkit-animation-name: slide-right-l;
+                animation-name: slide-right-l;
       }  
     }
   }
@@ -152,12 +156,14 @@ $grid-gap: 16px;
 
     &.slide-left {
       .grid-pages {
-        animation-name: slide-left-xl;
+        -webkit-animation-name: slide-left-xl;
+                animation-name: slide-left-xl;
       }  
     }
     &.slide-right {
       .grid-pages {
-        animation-name: slide-right-xl;
+        -webkit-animation-name: slide-right-xl;
+                animation-name: slide-right-xl;
       }  
     }
   }
@@ -170,9 +176,12 @@ $grid-gap: 16px;
   .grid-pages {
     display: flex;
     position: absolute;
-    animation-duration: 0.3s;
-    animation-timing-function: ease;
-    animation-direction: forwards;
+    -webkit-animation-duration: 0.3s;
+            animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
+    -webkit-animation-direction: forwards;
+            animation-direction: forwards;
 
     .grid-page {
       display: flex;
@@ -187,6 +196,8 @@ $grid-gap: 16px;
         display: grid;
 
         .grid-entry {
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
           width: fit-content;
         }
       }
