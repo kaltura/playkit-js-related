@@ -12,25 +12,25 @@
   }
 }
 
-@mixin grid-animation($page-width) {
-  @-webkit-keyframes slide-left {
+@mixin grid-animation($size, $page-width) {
+  @-webkit-keyframes slide-left-#{$size} {
     100% {
       transform: translateX(-$page-width);
     }
   }
-  @keyframes slide-left {
+  @keyframes slide-left-#{$size} {
     100% {
       transform: translateX(-$page-width);
     }
   }
 
-  @-webkit-keyframes slide-right {
+  @-webkit-keyframes slide-right-#{$size} {
     100% {
       transform: translateX($page-width);
     }
   }
 
-  @keyframes slide-right {
+  @keyframes slide-right-#{$size} {
     100% {
       transform: translateX($page-width);
     }
@@ -99,13 +99,27 @@ $arrow-margin-y-xl: 127px;
 
 $grid-gap: 16px;
 
+@include grid-animation("m", $grid-width-m);
+@include grid-animation("l", $grid-width-l);
+@include grid-animation("xl", $grid-width-xl);
+
 .medium {
   @include arrow($arrow-margin-x-m, $arrow-margin-y-m);
 
   .related-grid {
     @include grid-size($grid-width-m, $grid-height-m);
-    @include grid-animation($grid-width-m);
     @include grid-entries($num-columns-m, $column-width-m, $row-height-m);
+
+    &.slide-left {
+      .grid-pages {
+        animation-name: slide-left-m;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        animation-name: slide-right-m;
+      }  
+    }
   }
 }
 
@@ -114,8 +128,18 @@ $grid-gap: 16px;
 
   .related-grid {
     @include grid-size($grid-width-l, $grid-height-l);
-    @include grid-animation($grid-width-l);
     @include grid-entries($num-columns-l, $column-width-l, $row-height-l);
+
+    &.slide-left {
+      .grid-pages {
+        animation-name: slide-left-l;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        animation-name: slide-right-l;
+      }  
+    }
   }
 }
 
@@ -124,8 +148,18 @@ $grid-gap: 16px;
 
   .related-grid {
     @include grid-size($grid-width-xl, $grid-height-xl);
-    @include grid-animation($grid-width-xl);
     @include grid-entries($num-columns-xl, $column-width-xl, $row-height-xl);
+
+    &.slide-left {
+      .grid-pages {
+        animation-name: slide-left-xl;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        animation-name: slide-right-xl;
+      }  
+    }
   }
 }
 
@@ -136,6 +170,9 @@ $grid-gap: 16px;
   .grid-pages {
     display: flex;
     position: absolute;
+    animation-duration: 0.3s;
+    animation-timing-function: ease;
+    animation-direction: forwards;
 
     .grid-page {
       display: flex;
@@ -162,11 +199,6 @@ $grid-gap: 16px;
     .grid-page:nth-child(1) {
       visibility: visible;
     }
-
-    .grid-pages {
-      -webkit-animation: slide-right 0.3s ease forwards;
-      animation: slide-right 0.3s ease forwards;
-    }
   }
 
   &.slide-left {
@@ -174,11 +206,6 @@ $grid-gap: 16px;
 
     .grid-page:nth-child(3) {
       visibility: visible;
-    }
-
-    .grid-pages {
-      -webkit-animation: slide-left 0.3s ease forwards;
-      animation: slide-left 0.3s ease forwards;
     }
   }
 }
