@@ -30,33 +30,24 @@ const BaseNextEntry = withText({
 
   const [animated, setAnimated] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
-  const [timeoutId, setTimeoutId] = useState(-1);
 
   useEffect(() => {
     if (countdown > 0 && showButtons) {
       setAnimated(true);
-      setTimeoutId(
-        window.setTimeout(() => {
-          relatedManager?.playNext();
-          setAnimated(false);
-        }, countdown * 1000)
-      );
+      relatedManager?.playNext(countdown);
     }
   }, [countdown, showButtons]);
 
   const onPlayNowClick = (e: MouseEvent) => {
     e.stopPropagation();
     relatedManager?.playNext();
-    clearTimeout(timeoutId);
-    setTimeoutId(-1);
   };
 
   const onCancelClick = (e: MouseEvent) => {
     e.stopPropagation();
     setAnimated(false);
     setShowButtons(false);
-    clearTimeout(timeoutId);
-    setTimeoutId(-1);
+    relatedManager?.clearNextEntryTimeout();
     onCancel();
   };
 
