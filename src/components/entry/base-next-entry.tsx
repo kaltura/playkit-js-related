@@ -67,10 +67,10 @@ const BaseNextEntry = withText({
   };
 
   return (
-    <button
+    <a
       tabIndex={0}
       className={`${styles.entry} ${styles.nextEntry} ${sizeClass}`}
-      style={{width, color: KalturaPlayer.ui.style.white}}
+      style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       disabled={alwaysShowButtons || (countdown > 0 && showButtons)}
       onClick={onEntryClick}>
       <EntryImage {...{poster, duration, type, width, height: imageHeight}}>
@@ -95,7 +95,7 @@ const BaseNextEntry = withText({
         )}
       </EntryImage>
       {props.children}
-    </button>
+    </a>
   );
 });
 

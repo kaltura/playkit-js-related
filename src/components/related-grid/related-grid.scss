@@ -180,8 +180,8 @@ $grid-gap: 16px;
             animation-duration: 0.3s;
     -webkit-animation-timing-function: ease;
             animation-timing-function: ease;
-    -webkit-animation-direction: forwards;
-            animation-direction: forwards;
+    -webkit-animation-direction: normal;
+            animation-direction: normal;
 
     .grid-page {
       display: flex;

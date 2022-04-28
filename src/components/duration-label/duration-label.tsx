@@ -17,7 +17,9 @@ const DurationLabel = withText({
   } else if (duration) {
     return (
       <div style={{color: KalturaPlayer.ui.style.white}} className={styles.duration}>
-        <span className={styles.durationText}>{toHHMMSS(duration)}</span>
+        <span tabIndex={-1} className={styles.durationText} aria-hidden>
+          {toHHMMSS(duration)}
+        </span>
       </div>
     );
   }
