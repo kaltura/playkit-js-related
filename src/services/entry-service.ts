@@ -92,15 +92,16 @@ const getDurationHumanizer = ({locale}: any) => {
   const languages = ['en'];
   if (locale) {
     if (locale.match('_')) {
-      languages.unshift(locale.toLowerCase().split('_')[0]);
+      languages.unshift(locale.split('_')[0]);
     }
-    languages.unshift(locale.toLowerCase());
+    languages.unshift(locale);
   }
 
+  const supportedLanguages = new Map(humanizeDuration.getSupportedLanguages().map((language: string) => [language.toLowerCase(), language]));
   for (const language of languages) {
     try {
-      if (humanizeDuration.getSupportedLanguages().includes(language)) {
-        return humanizeDuration.humanizer({language});
+      if (supportedLanguages.has(language)) {
+        return humanizeDuration.humanizer({language: supportedLanguages.get(language)});
       }
     } catch (e: any) {}
   }
