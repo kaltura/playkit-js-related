@@ -57,12 +57,12 @@ const PrePlaybackPlayOverlayWrapper = withText({
           <div className={styles.minimalPrePlaybackPlayOverlay}>
             <div className={styles.buttonContainer}>
               <Tooltip label={startOver}>
-                <button aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
+                <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
                   <Icon type={IconType.StartOver} />
                 </button>
               </Tooltip>
               <Tooltip label={next}>
-                <button aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
+                <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
                   <Icon type={IconType.Next} />
                 </button>
               </Tooltip>

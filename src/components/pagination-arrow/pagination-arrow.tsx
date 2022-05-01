@@ -14,7 +14,6 @@ enum ARROW_TYPE {
 
 interface PaginationArrowProps {
   onClick: () => void;
-  onEnter: () => void;
   disabled: boolean;
   type?: ARROW_TYPE;
   prev?: string;
@@ -44,12 +43,8 @@ const PaginationArrow = withText({
   );
 });
 
-const ArrowLeft = ({onClick, onEnter, disabled}: PaginationArrowProps) => (
-  <PaginationArrow onClick={onClick} onEnter={onEnter} disabled={disabled} type={ARROW_TYPE.LEFT} />
-);
+const ArrowLeft = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.LEFT} />;
 
-const ArrowRight = ({onClick, onEnter, disabled}: PaginationArrowProps) => (
-  <PaginationArrow onClick={onClick} onEnter={onEnter} disabled={disabled} type={ARROW_TYPE.RIGHT} />
-);
+const ArrowRight = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.RIGHT} />;
 
 export {ArrowLeft, ArrowRight};

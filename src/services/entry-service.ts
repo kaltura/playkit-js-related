@@ -7,20 +7,20 @@ import * as humanizeDuration from 'humanize-duration';
 class EntryService {
   private player: KalturaPlayerTypes.Player;
   private logger: KalturaPlayerTypes.Logger;
-  private getDurationText: (duration?: number) => string = () => '';
+  private getDurationText: (duration?: number) => string = (duration?: number) => (duration ? `${duration}` : '');
 
   constructor(player: KalturaPlayerTypes.Player, logger: KalturaPlayerTypes.Logger) {
     this.player = player;
     this.logger = logger;
 
     try {
-      const durationHumanizer = getDurationHumanizer();
+      const durationHumanizer = getDurationHumanizer(this.player?.config?.ui);
       if (durationHumanizer) {
         this.getDurationText = (duration?: number) => {
           try {
             return duration ? durationHumanizer(duration * 1000) : '';
           } catch (e: any) {
-            return '';
+            return `${duration}`;
           }
         };
       }
@@ -88,19 +88,24 @@ class EntryService {
   }
 }
 
-const getDurationHumanizer = () => {
-  try {
-    const supportedLanguages = humanizeDuration.getSupportedLanguages();
-    const language = navigator.language;
-    if (supportedLanguages.includes(language)) {
-      return humanizeDuration.humanizer({language: language});
-    } else if (navigator.languages) {
-      const navigatorLanguages = navigator.languages.filter(language => supportedLanguages.includes(language));
-      return humanizeDuration.humanizer({language: navigatorLanguages[0]});
+const getDurationHumanizer = ({locale}: any) => {
+  const languages = ['en'];
+  if (locale) {
+    if (locale.match('_')) {
+      languages.unshift(locale.toLowerCase().split('_')[0]);
     }
-  } catch (e: any) {
-    return null;
+    languages.unshift(locale.toLowerCase());
   }
+
+  for (const language of languages) {
+    try {
+      if (humanizeDuration.getSupportedLanguages().includes(language)) {
+        return humanizeDuration.humanizer({language});
+      }
+    } catch (e: any) {}
+  }
+
+  return null;
 };
 
 export {EntryService};

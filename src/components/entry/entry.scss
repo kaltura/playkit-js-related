@@ -137,6 +137,8 @@ button {
 }
 
 .grid-entry {
+  position: absolute;
+
   &.minimal {
     display: flex;
     border-radius: 8px;
