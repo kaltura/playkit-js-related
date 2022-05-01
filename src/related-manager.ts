@@ -94,6 +94,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.logger.info('going to play next entry');
 
     if (seconds && seconds > 0) {
+      this.clearNextEntryTimeout();
       this.nextEntryTimeoutId = window.setTimeout(() => {
         this.playByIndex(0);
       }, seconds * 1000);
