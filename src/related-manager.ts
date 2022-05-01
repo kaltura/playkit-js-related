@@ -30,6 +30,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   private playByIndex(index: number) {
+    this.clearNextEntryTimeout();
     this.isHiddenByUser = false;
     if (this.entryService.isPlayable(this.entries[index])) {
       this.plugin.player.setMedia({sources: this.entries[index]});
@@ -91,7 +92,6 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   playNext(seconds?: number) {
     this.logger.info('going to play next entry');
-    this.clearNextEntryTimeout();
 
     if (seconds && seconds > 0) {
       this.nextEntryTimeoutId = window.setTimeout(() => {
@@ -104,12 +104,11 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   playSelected(internalIndex: number) {
     this.logger.info('going to play selected entry');
-    this.clearNextEntryTimeout();
     this.playByIndex(internalIndex);
   }
 
   clearNextEntryTimeout() {
-    window.clearTimeout(this.nextEntryTimeoutId);
+    clearTimeout(this.nextEntryTimeoutId);
     this.nextEntryTimeoutId = -1;
   }
 
