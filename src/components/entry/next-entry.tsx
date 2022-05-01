@@ -32,7 +32,10 @@ const NextEntry = withText({
 
   return (
     <BaseNextEntry {...{...props, onCancel: () => setCountdownCancelled(true)}}>
-      <div aria-label={`${title} ${description} ${liveOrDurationText}`} className={styles.entryContent} style={{width, height: contentHeight}}>
+      <div
+        aria-label={`${upNext} ${title} ${description} ${liveOrDurationText}`}
+        className={styles.entryContent}
+        style={{width, height: contentHeight}}>
         <div className={styles.upNext}>
           <span className={styles.upNextText}>
             {countdown > 0 && !countdownCancelled ? (
@@ -54,4 +57,4 @@ const NextEntry = withText({
   );
 });
 
-export {NextEntry};
+export {NextEntry, NextEntryProps};
