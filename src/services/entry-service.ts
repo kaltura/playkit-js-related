@@ -1,4 +1,4 @@
-import {EntryData, EntryListResponse} from 'types/entry-list-response';
+import {EntryListResponse} from 'types/entry-list-response';
 import {Sources} from 'types/sources';
 import {RelatedLoader} from './related-loader';
 
@@ -12,6 +12,8 @@ class EntryService {
   constructor(player: KalturaPlayerTypes.Player, logger: KalturaPlayerTypes.Logger) {
     this.player = player;
     this.logger = logger;
+
+    this.mapSources = this.mapSources.bind(this);
 
     try {
       const durationHumanizer = getDurationHumanizer(this.player?.config?.ui);
@@ -29,16 +31,20 @@ class EntryService {
     }
   }
 
+  private mapSources(sources: KalturaPlayerTypes.Sources, index: number): Sources {
+    {
+      return {
+        ...sources,
+        internalIndex: index,
+        durationText: this.getDurationText(sources.duration)
+      };
+    }
+  }
+
   async getByPlaylist(playlistInfo: {playlistId: string; ks?: string}): Promise<Sources[]> {
     try {
       const response: EntryListResponse = await this.player.provider.getPlaylistConfig(playlistInfo);
-      return response.items.map(({sources}: EntryData, index) => {
-        return {
-          ...sources,
-          internalIndex: index,
-          durationText: this.getDurationText(sources.duration)
-        };
-      });
+      return response.items.map(({sources}: {sources: KalturaPlayerTypes.Sources}) => sources).map(this.mapSources);
     } catch (e) {
       this.logger.warn(`failed to get related entries by playlist id ${playlistInfo.playlistId}`);
       return [];
@@ -48,13 +54,7 @@ class EntryService {
   async getByEntryList(entryList: {entries: KalturaPlayerTypes.MediaInfo[]; ks?: string}): Promise<Sources[]> {
     try {
       const response: EntryListResponse = await this.player.provider.getEntryListConfig(entryList);
-      return response.items.map(({sources}: EntryData, index) => {
-        return {
-          ...sources,
-          internalIndex: index,
-          durationText: this.getDurationText(sources.duration)
-        };
-      });
+      return response.items.map(({sources}: {sources: KalturaPlayerTypes.Sources}) => sources).map(this.mapSources);
     } catch (e) {
       this.logger.warn(`failed to get related entries by entry list`);
       return [];
@@ -62,21 +62,13 @@ class EntryService {
   }
 
   getBySourcesList(sourcesList: KalturaPlayerTypes.Sources[]): Sources[] {
-    return sourcesList
-      .filter(sources => this.isPlayable(sources))
-      .map((sources: KalturaPlayerTypes.Sources, index) => {
-        return {
-          ...sources,
-          internalIndex: index,
-          durationText: this.getDurationText(sources.duration)
-        };
-      });
+    return sourcesList.filter(sources => this.isPlayable(sources)).map(this.mapSources);
   }
 
   async getByContext(entryId: string, ks: string, limit: number): Promise<Sources[]> {
     try {
       const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}], ks);
-      return response.get('related').relatedEntries;
+      return response.get('related').relatedEntries.map(this.mapSources);
     } catch (e) {
       this.logger.warn(`failed to get related entries by context`);
       return [];
