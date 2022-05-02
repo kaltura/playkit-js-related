@@ -58,8 +58,8 @@ Finally, add the bundle as a script tag in your page, and initialize the player
       translations: { // for local development
         en: {
           related: {
-            upNextIn: 'Up Next In'
-            playNow: "Play Now"
+            upNextIn: 'Up Next In',
+            playNow: 'Play Now'
           }
         }
       }
