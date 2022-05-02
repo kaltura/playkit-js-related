@@ -22,7 +22,7 @@ const Thumbnail = ({src = '', height, width}: {src?: string; height: number; wid
   }, [retryLoad, showImage, thumbnailSrc]);
 
   return showImage ? (
-    <img className={styles.image} src={thumbnailSrc} style={{width, height}} />
+    <img className={styles.image} src={thumbnailSrc} style={{width, height}} alt="" />
   ) : (
     <div className={styles.noImage} style={{width, height}} />
   );

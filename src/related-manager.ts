@@ -58,7 +58,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.mediaInfoMap.clear();
 
     const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
-    let entries: KalturaPlayerTypes.Sources[] = [];
+    let entries: Sources[] = [];
 
     if (playlistId) {
       entries = await this.entryService.getByPlaylist({ks, playlistId});
@@ -134,14 +134,9 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     return this.config?.autoContinue && Number.isInteger(this.config?.autoContinueTime) ? this.config.autoContinueTime : -1;
   }
 
-  set entries(entries: KalturaPlayerTypes.Sources[]) {
+  set entries(entries: Sources[]) {
     this.logger.info(`related entries changed`);
-    this._entries = entries.map((entry, index) => {
-      return {
-        ...entry,
-        internalIndex: index
-      };
-    });
+    this._entries = entries;
     this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, this._entries));
   }
 

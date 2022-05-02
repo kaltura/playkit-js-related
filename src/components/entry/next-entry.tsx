@@ -14,41 +14,47 @@ interface NextEntryProps extends GridEntryProps {
   countdown: number;
   upNext: string;
   upNextIn: string;
+  live: string;
 }
 
 const NextEntry = withText({
   upNext: 'playlist.up_next',
-  upNextIn: 'related.upNextIn'
+  upNextIn: 'related.upNextIn',
+  live: 'controls.live'
 })((props: NextEntryProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {relatedManager} = useContext(RelatedContext);
 
-  const {entryDimensions, countdown} = props;
+  const {entryDimensions, countdown, title, description, durationText, type, upNext, upNextIn, live} = props;
   const {width, contentHeight} = entryDimensions;
   const [countdownCancelled, setCountdownCancelled] = useState(false);
+  const liveOrDurationText = type === KalturaPlayer.core.MediaType.LIVE ? live : durationText;
 
   return (
     <BaseNextEntry {...{...props, onCancel: () => setCountdownCancelled(true)}}>
-      <div className={styles.entryContent} style={{width, height: contentHeight}}>
+      <div
+        aria-label={`${upNext} ${title} ${description} ${liveOrDurationText}`}
+        className={styles.entryContent}
+        style={{width, height: contentHeight}}>
         <div className={styles.upNext}>
           <span className={styles.upNextText}>
             {countdown > 0 && !countdownCancelled ? (
               <span>
-                {`${props.upNextIn} `}
+                {`${upNextIn} `}
                 <Countdown seconds={countdown} />
               </span>
             ) : (
-              <span>{props.upNext}</span>
+              <span>{upNext}</span>
             )}
           </span>
         </div>
-        <div className={styles.titleText}>{props.title}</div>
+        <div className={styles.titleText}>{title}</div>
         <div className={`${styles.entryText} ${styles.text}`}>
-          {props.description ? <MultilineText text={props.description} lineHeight={18} lines={2} /> : <></>}
+          {description ? <MultilineText text={description} lineHeight={18} lines={2} /> : <></>}
         </div>
       </div>
     </BaseNextEntry>
   );
 });
 
-export {NextEntry};
+export {NextEntry, NextEntryProps};

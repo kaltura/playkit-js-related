@@ -1,3 +1,4 @@
+const {withText} = KalturaPlayer.ui.preacti18n;
 const {Icon, IconState} = KalturaPlayer.ui.components;
 
 const ARROW_LEFT_PATH =
@@ -6,30 +7,44 @@ const ARROW_LEFT_PATH =
 const ARROW_RIGHT_PATH =
   'M12.2929 9.29289C11.9324 9.65338 11.9047 10.2206 12.2097 10.6129L12.2929 10.7071L17.585 16L12.2929 21.2929C11.9324 21.6534 11.9047 22.2206 12.2097 22.6129L12.2929 22.7071C12.6534 23.0676 13.2206 23.0953 13.6129 22.7903L13.7071 22.7071L19.7071 16.7071C20.0676 16.3466 20.0953 15.7794 19.7903 15.3871L19.7071 15.2929L13.7071 9.29289C13.3166 8.90237 12.6834 8.90237 12.2929 9.29289Z';
 
-const PaginationArrow = ({onClick, disabled, id, path}: {onClick: () => void; disabled: boolean; id: string; path: string}) => {
+enum ARROW_TYPE {
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+
+interface PaginationArrowProps {
+  onClick: () => void;
+  disabled: boolean;
+  type?: ARROW_TYPE;
+  prev?: string;
+  next?: string;
+}
+
+const PaginationArrow = withText({
+  prev: 'playlist.prev',
+  next: 'playlist.next'
+})(({onClick, disabled, type, prev, next}: PaginationArrowProps) => {
   return (
-    <div
+    <button
+      tabIndex={0}
+      aria-disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
-      style={disabled ? {cursor: 'default'} : ''}>
+      aria-label={type === ARROW_TYPE.LEFT ? prev : next}>
       <Icon
         activeColor={KalturaPlayer.ui.style.white}
         color={'#888'}
-        id={id}
-        path={path}
+        id={`related-arrow-${type}`}
+        path={type === ARROW_TYPE.LEFT ? ARROW_LEFT_PATH : ARROW_RIGHT_PATH}
         state={disabled ? IconState.INACTIVE : IconState.ACTIVE}
         viewBox={`0 0 32 32`}
       />
-    </div>
+    </button>
   );
-};
+});
 
-const ArrowRight = ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => {
-  return <PaginationArrow onClick={onClick} disabled={disabled} id={'related-arrow-right'} path={ARROW_RIGHT_PATH} />;
-};
+const ArrowLeft = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.LEFT} />;
 
-const ArrowLeft = ({onClick, disabled}: {onClick: () => void; disabled: boolean}) => {
-  return <PaginationArrow onClick={onClick} disabled={disabled} id={'related-arrow-left'} path={ARROW_LEFT_PATH} />;
-};
+const ArrowRight = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.RIGHT} />;
 
 export {ArrowLeft, ArrowRight};

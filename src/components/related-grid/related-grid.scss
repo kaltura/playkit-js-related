@@ -12,25 +12,25 @@
   }
 }
 
-@mixin grid-animation($page-width) {
-  @-webkit-keyframes slide-left {
+@mixin grid-animation($size, $page-width) {
+  @-webkit-keyframes slide-left-#{$size} {
     100% {
       transform: translateX(-$page-width);
     }
   }
-  @keyframes slide-left {
+  @keyframes slide-left-#{$size} {
     100% {
       transform: translateX(-$page-width);
     }
   }
 
-  @-webkit-keyframes slide-right {
+  @-webkit-keyframes slide-right-#{$size} {
     100% {
       transform: translateX($page-width);
     }
   }
 
-  @keyframes slide-right {
+  @keyframes slide-right-#{$size} {
     100% {
       transform: translateX($page-width);
     }
@@ -57,6 +57,7 @@
   .arrow {
     position: absolute;
     top: $margin-y;
+    z-index: 1;
 
     &.arrow-right {
       right: $margin-x;
@@ -98,13 +99,29 @@ $arrow-margin-y-xl: 127px;
 
 $grid-gap: 16px;
 
+@include grid-animation("m", $grid-width-m);
+@include grid-animation("l", $grid-width-l);
+@include grid-animation("xl", $grid-width-xl);
+
 .medium {
   @include arrow($arrow-margin-x-m, $arrow-margin-y-m);
 
   .related-grid {
     @include grid-size($grid-width-m, $grid-height-m);
-    @include grid-animation($grid-width-m);
     @include grid-entries($num-columns-m, $column-width-m, $row-height-m);
+
+    &.slide-left {
+      .grid-pages {
+        -webkit-animation-name: slide-left-m;
+                animation-name: slide-left-m;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        -webkit-animation-name: slide-right-m;
+                animation-name: slide-right-m;
+      }  
+    }
   }
 }
 
@@ -113,8 +130,20 @@ $grid-gap: 16px;
 
   .related-grid {
     @include grid-size($grid-width-l, $grid-height-l);
-    @include grid-animation($grid-width-l);
     @include grid-entries($num-columns-l, $column-width-l, $row-height-l);
+
+    &.slide-left {
+      .grid-pages {
+        -webkit-animation-name: slide-left-l;
+                animation-name: slide-left-l;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        -webkit-animation-name: slide-right-l;
+                animation-name: slide-right-l;
+      }  
+    }
   }
 }
 
@@ -123,40 +152,71 @@ $grid-gap: 16px;
 
   .related-grid {
     @include grid-size($grid-width-xl, $grid-height-xl);
-    @include grid-animation($grid-width-xl);
     @include grid-entries($num-columns-xl, $column-width-xl, $row-height-xl);
+
+    &.slide-left {
+      .grid-pages {
+        -webkit-animation-name: slide-left-xl;
+                animation-name: slide-left-xl;
+      }  
+    }
+    &.slide-right {
+      .grid-pages {
+        -webkit-animation-name: slide-right-xl;
+                animation-name: slide-right-xl;
+      }  
+    }
   }
 }
 
 .related-grid {
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 
   .grid-pages {
     display: flex;
     position: absolute;
+    -webkit-animation-duration: 0.3s;
+            animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease;
+            animation-timing-function: ease;
+    -webkit-animation-direction: normal;
+            animation-direction: normal;
 
     .grid-page {
       display: flex;
+      visibility: hidden;
+
+      &.active {
+        visibility: visible;
+      }
 
       .related-grid-entries {
         display: -ms-grid;
         display: grid;
+
+        .grid-entry {
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
+        }
       }
     }
   }
 
   &.slide-right {
-    .grid-pages {
-      -webkit-animation: slide-right 0.3s ease forwards;
-      animation: slide-right 0.3s ease forwards;
+    overflow: hidden;
+
+    .grid-page:nth-child(1) {
+      visibility: visible;
     }
   }
 
   &.slide-left {
-    .grid-pages {
-      -webkit-animation: slide-left 0.3s ease forwards;
-      animation: slide-left 0.3s ease forwards;
+    overflow: hidden;
+
+    .grid-page:nth-child(3) {
+      visibility: visible;
     }
   }
 }

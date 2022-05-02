@@ -16,7 +16,7 @@ interface EntryImageProps {
 
 const EntryImage = ({poster, type, duration, width, height, children}: EntryImageProps) => {
   return (
-    <div className={styles.entryImage}>
+    <div className={styles.entryImage} style={{height}}>
       {children}
       <Thumbnail src={poster} width={width} height={height} />
       <div className={styles.duration}>

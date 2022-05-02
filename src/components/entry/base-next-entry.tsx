@@ -58,14 +58,17 @@ const BaseNextEntry = withText({
   };
 
   return (
-    <div
-      className={`${styles.entry} ${styles.nextEntry} ${sizeClass} ${alwaysShowButtons || (countdown > 0 && showButtons) ? '' : styles.clickable}`}
-      style={{width, color: KalturaPlayer.ui.style.white}}
+    <a
+      tabIndex={0}
+      className={`${styles.entry} ${styles.nextEntry} ${sizeClass}`}
+      style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
+      disabled={alwaysShowButtons || (countdown > 0 && showButtons)}
       onClick={onEntryClick}>
       <EntryImage {...{poster, duration, type, width, height: imageHeight}}>
         {alwaysShowButtons || (countdown > 0 && showButtons) ? (
           <div className={styles.buttons}>
-            <div
+            <button
+              tabIndex={0}
               className={`${styles.button} ${styles.playNow} ${animated ? styles.animated : ''}`}
               onClick={onPlayNowClick}
               style={{
@@ -73,17 +76,17 @@ const BaseNextEntry = withText({
               }}>
               <div className={styles.animation} style={{'animation-duration': `${countdown}s`}} />
               <div className={styles.buttonText}>{playNowLabel}</div>
-            </div>
-            <div className={`${styles.button} ${styles.cancel}`} onClick={onCancelClick}>
+            </button>
+            <button tabIndex={0} className={`${styles.button} ${styles.cancel}`} onClick={onCancelClick}>
               <div className={styles.buttonText}>{cancelLabel}</div>
-            </div>
+            </button>
           </div>
         ) : (
           <></>
         )}
       </EntryImage>
       {props.children}
-    </div>
+    </a>
   );
 });
 

@@ -95,6 +95,7 @@ const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: En
   const props = {
     id: data.internalIndex,
     duration: data.duration,
+    durationText: data.durationText,
     type: data.type,
     poster: data.poster,
     title: data.metadata?.name,
@@ -104,10 +105,11 @@ const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: En
   return sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <MinimalGridEntry {...props} /> : <GridEntry {...props} />;
 };
 const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, onCancel?: () => void) => {
-  const {duration, type, poster, metadata} = data;
+  const {duration, type, poster, metadata, durationText} = data;
   const props = {
     id: 0,
     duration,
+    durationText,
     type,
     poster,
     entryDimensions: NEXT_ENTRY_DIMENSIONS[sizeBreakpoint],
