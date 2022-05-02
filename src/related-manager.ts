@@ -13,6 +13,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isHiddenByUser = false;
   private plugin: Related;
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
+  private nextEntryTimeoutId = -1;
 
   constructor(plugin: Related) {
     super();
@@ -29,6 +30,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   private playByIndex(index: number) {
+    this.clearNextEntryTimeout();
     this.isHiddenByUser = false;
     if (this.entryService.isPlayable(this.entries[index])) {
       this.plugin.player.setMedia({sources: this.entries[index]});
@@ -88,14 +90,27 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.plugin.player.play();
   }
 
-  playNext() {
+  playNext(seconds?: number) {
     this.logger.info('going to play next entry');
-    this.playByIndex(0);
+
+    if (seconds && seconds > 0) {
+      this.clearNextEntryTimeout();
+      this.nextEntryTimeoutId = window.setTimeout(() => {
+        this.playByIndex(0);
+      }, seconds * 1000);
+    } else {
+      this.playByIndex(0);
+    }
   }
 
   playSelected(internalIndex: number) {
     this.logger.info('going to play selected entry');
     this.playByIndex(internalIndex);
+  }
+
+  clearNextEntryTimeout() {
+    clearTimeout(this.nextEntryTimeoutId);
+    this.nextEntryTimeoutId = -1;
   }
 
   listen(name: string, listener: any) {
