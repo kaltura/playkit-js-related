@@ -21,9 +21,7 @@ class ImageService {
   private async imageFound(url: string) {
     if (!this.imageStateMap.has(url)) {
       try {
-        const image = new Image();
-        image.src = url;
-        await image.decode();
+        await this.fetchImage(url);
         this.imageStateMap.set(url, IMAGE_STATE.IMAGE_FOUND);
       } catch (e: any) {
         this.imageStateMap.set(url, IMAGE_STATE.IMAGE_NOT_FOUND);
@@ -31,6 +29,19 @@ class ImageService {
     }
 
     return this.imageStateMap.get(url) === IMAGE_STATE.IMAGE_FOUND;
+  }
+
+  private fetchImage(url: string) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.src = url;
+      image.onload = () => {
+        resolve(url);
+      };
+      image.onerror = () => {
+        reject();
+      };
+    });
   }
 }
 
