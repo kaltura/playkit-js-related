@@ -4,6 +4,7 @@ import {RelatedOverlay} from 'components/related-overlay/related-overlay';
 import {Next} from 'components/next/next';
 import {RelatedEvent} from 'types/related-event';
 import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
+import {ImageService} from 'services/image-service';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -55,12 +56,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   private injectUIComponents() {
     const {relatedManager} = this;
+    const imageService = new ImageService();
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay relatedManager={relatedManager} />
+      get: () => <RelatedOverlay relatedManager={relatedManager} imageService={imageService} />
     });
 
     const preplayBackPlayOverlayProps = {
