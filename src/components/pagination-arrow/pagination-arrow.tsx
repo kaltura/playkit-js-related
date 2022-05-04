@@ -29,6 +29,7 @@ const PaginationArrow = withText({
       tabIndex={0}
       aria-disabled={disabled}
       onClick={disabled ? undefined : onClick}
+      style={{cursor: disabled ? 'default' : 'pointer'}}
       className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
       aria-label={type === ARROW_TYPE.LEFT ? prev : next}>
       <Icon

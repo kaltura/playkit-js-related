@@ -1,4 +1,3 @@
-import {ComponentChildren} from 'preact';
 import {useState, useEffect, useReducer} from 'preact/hooks';
 const {connect} = KalturaPlayer.ui.redux;
 
@@ -53,6 +52,11 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   const entriesPerPage = getPageSize(sizeBreakpoint);
   const getEntriesByPage = (page: number) => {
     const firstPageSize = entriesPerPage - 1;
+    if (page < 0) {
+      return [];
+    } else if (page === 0) {
+      return data.slice(1, firstPageSize);
+    }
     return data.slice(firstPageSize + (page - 1) * entriesPerPage, firstPageSize + page * entriesPerPage);
   };
 
@@ -73,84 +77,38 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
       <></>
     );
 
+  const firstPageEntryDimensions = getEntryDimensions(sizeBreakpoint);
   const entryDimensions = getExpandedEntryDimensions(sizeBreakpoint);
-
-  if (currPage < 2) {
-    return (
-      <div className={getSizeClass(sizeBreakpoint, styles)}>
-        {arrowLeft}
-        <div className={`${styles.relatedGrid} ${pageAnimation}`} onAnimationEnd={onAnimationEnd}>
-          <div className={`${styles.gridPages}`}>
-            {currPage === 0 ? (
-              <>
-                <GridPage />
-                <FirstPage {...{data, countdown, sizeBreakpoint, isActive: true}} />
-                <GridPage>
-                  <RelatedGridEntries
-                    sizeBreakpoint={sizeBreakpoint}
-                    data={getEntriesByPage(1)}
-                    entriesPerPage={entriesPerPage}
-                    entryDimensions={entryDimensions}
-                  />
-                </GridPage>
-              </>
-            ) : (
-              <>
-                <FirstPage {...{data, countdown, sizeBreakpoint}} />
-                <GridPage isActive={true}>
-                  <RelatedGridEntries
-                    sizeBreakpoint={sizeBreakpoint}
-                    data={getEntriesByPage(1)}
-                    entriesPerPage={entriesPerPage}
-                    entryDimensions={entryDimensions}
-                  />
-                </GridPage>
-                <GridPage>
-                  <RelatedGridEntries
-                    sizeBreakpoint={sizeBreakpoint}
-                    data={getEntriesByPage(2)}
-                    entriesPerPage={entriesPerPage}
-                    entryDimensions={entryDimensions}
-                  />
-                </GridPage>
-              </>
-            )}
-          </div>
-        </div>
-        {arrowRight}
-      </div>
-    );
-  }
 
   return (
     <div className={getSizeClass(sizeBreakpoint, styles)}>
       {arrowLeft}
       <div className={`${styles.relatedGrid} ${pageAnimation}`} onAnimationEnd={onAnimationEnd}>
         <div className={`${styles.gridPages}`}>
-          <GridPage>
-            <RelatedGridEntries
-              sizeBreakpoint={sizeBreakpoint}
-              data={getEntriesByPage(prevPage)}
-              entriesPerPage={entriesPerPage}
-              entryDimensions={entryDimensions}
-            />
-          </GridPage>
-          <GridPage isActive={true}>
-            <RelatedGridEntries
-              sizeBreakpoint={sizeBreakpoint}
-              data={getEntriesByPage(currPage)}
-              entriesPerPage={entriesPerPage}
-              entryDimensions={entryDimensions}
-            />
-          </GridPage>
-          <GridPage>
-            <RelatedGridEntries
-              sizeBreakpoint={sizeBreakpoint}
-              data={getEntriesByPage(nextPage)}
-              entriesPerPage={entriesPerPage}
-              entryDimensions={entryDimensions}
-            />
-          </GridPage>
+          <GridPage
+            key={prevPage}
+            isFirstPage={currPage === 1}
+            countdown={countdown}
+            sizeBreakpoint={sizeBreakpoint}
+            data={getEntriesByPage(prevPage)}
+            entryDimensions={currPage === 1 ? firstPageEntryDimensions : entryDimensions}
+          />
+          <GridPage
+            key={currPage}
+            isFirstPage={currPage === 0}
+            isActive={true}
+            countdown={countdown}
+            sizeBreakpoint={sizeBreakpoint}
+            data={getEntriesByPage(currPage)}
+            entryDimensions={currPage === 0 ? firstPageEntryDimensions : entryDimensions}
+          />
+          <GridPage
+            key={nextPage}
+            sizeBreakpoint={sizeBreakpoint}
+            countdown={countdown}
+            data={getEntriesByPage(nextPage)}
+            entryDimensions={entryDimensions}
+          />
         </div>
       </div>
       {arrowRight}
@@ -158,50 +116,24 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
   );
 });
 
-const GridPage = ({children, isActive = false}: {children?: ComponentChildren; isActive?: boolean}) =>
-  isActive ? <div className={`${styles.gridPage} ${styles.active}`}>{children}</div> : <div className={`${styles.gridPage}`}>{children}</div>;
-
-const FirstPage = ({
-  data,
-  countdown,
+const GridPage = ({
+  isFirstPage = false,
+  isActive = false,
+  entryDimensions,
   sizeBreakpoint,
-  isActive = false
+  data,
+  countdown
 }: {
-  data: Sources[];
-  countdown: number;
-  sizeBreakpoint: string;
+  isFirstPage?: boolean;
   isActive?: boolean;
-}) => {
-  const entryDimensions = getEntryDimensions(sizeBreakpoint);
-  const pageSize = getPageSize(sizeBreakpoint);
-
-  return (
-    <GridPage isActive={isActive}>
-      {getNextEntry(sizeBreakpoint, countdown, data[0])}
-      <RelatedGridEntries
-        sizeBreakpoint={sizeBreakpoint}
-        data={data.slice(1, pageSize - 1)}
-        entriesPerPage={pageSize - 2}
-        entryDimensions={entryDimensions}
-      />
-    </GridPage>
-  );
-};
-
-const RelatedGridEntries = ({
-  sizeBreakpoint,
-  data,
-  entriesPerPage,
-  entryDimensions
-}: {
-  sizeBreakpoint: string;
-  data: Sources[];
-  entriesPerPage: number;
   entryDimensions: EntryDimensions;
+  sizeBreakpoint: string;
+  countdown: number;
+  data: Sources[];
 }) => {
   const entries = [];
 
-  for (let i = 0; i < entriesPerPage; ++i) {
+  for (let i = 0; i < data.length; ++i) {
     const row = i % 2;
     const col = (i - row) / 2;
 
@@ -213,7 +145,12 @@ const RelatedGridEntries = ({
     );
   }
 
-  return <div className={styles.relatedGridEntries}>{entries}</div>;
+  return (
+    <div className={`${styles.gridPage} ${isActive ? styles.active : ''}`}>
+      {isFirstPage ? getNextEntry(sizeBreakpoint, countdown, data[0]) : undefined}
+      {entries.length ? <div className={styles.relatedGridEntries}>{entries}</div> : undefined}
+    </div>
+  );
 };
 
 export {RelatedGrid};

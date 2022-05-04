@@ -1,28 +1,25 @@
-import {useState, useEffect} from 'preact/hooks';
+import {RelatedContext} from 'components/related-context/related-context';
+import {useState, useEffect, useContext} from 'preact/hooks';
 import * as styles from './thumbnail.scss';
 
-const Thumbnail = ({src = '', height, width}: {src?: string; height: number; width: number}) => {
-  const [showImage, setShowImage] = useState(!!src);
-  const [thumbnailSrc, setThumbnailSrc] = useState(`${src}/width/${width}/height/${height}`);
-  const [retryLoad, setRetryLoad] = useState(true);
+const Thumbnail = ({src = '', width, height}: {src?: string; width: number; height: number}) => {
+  const {imageService} = useContext(RelatedContext);
+  const [showImage, setShowImage] = useState(false);
+  const [finalizedSrc, setFinalizedSrc] = useState('');
 
   useEffect(() => {
-    if (showImage) {
-      const imageToLoad = new Image();
-      imageToLoad.src = thumbnailSrc;
-      imageToLoad.onerror = () => {
-        if (retryLoad) {
-          setRetryLoad(false);
-          setThumbnailSrc(src);
-        } else {
-          setShowImage(false);
-        }
-      };
-    }
-  }, [retryLoad, showImage, thumbnailSrc]);
+    imageService?.getImageUrl(src, width, height).then((imageUrl: string | null) => {
+      if (imageUrl) {
+        setFinalizedSrc(imageUrl);
+        setShowImage(true);
+      } else {
+        setShowImage(false);
+      }
+    });
+  }, [src, width, height]);
 
   return showImage ? (
-    <img className={styles.image} src={thumbnailSrc} style={{width, height}} alt="" />
+    <img className={styles.image} src={finalizedSrc} style={{width, height}} alt="" />
   ) : (
     <div className={styles.noImage} style={{width, height}} />
   );
