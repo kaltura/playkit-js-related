@@ -63,7 +63,12 @@ const BaseNextEntry = withText({
       className={`${styles.entry} ${styles.nextEntry} ${sizeClass}`}
       style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       disabled={alwaysShowButtons || (countdown > 0 && showButtons)}
-      onClick={onEntryClick}>
+      onClick={onEntryClick}
+      onKeyDown={({keyCode}: {keyCode: number}) => {
+        if (keyCode === 13 || keyCode === 32) {
+          onEntryClick();
+        }
+      }}>
       <EntryImage {...{poster, duration, type, width, height: imageHeight}}>
         {alwaysShowButtons || (countdown > 0 && showButtons) ? (
           <div className={styles.buttons}>
