@@ -50,6 +50,8 @@ button {
 
 /* specific entries */
 .next-entry {
+   flex-shrink: 0;
+
   .entry-content {
     padding: 8px 16px 16px;
 
