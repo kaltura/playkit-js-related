@@ -29,6 +29,11 @@ const MinimalGridEntry = withText({
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {
         relatedManager?.playSelected(id);
+      }}
+      onKeyDown={({keyCode}: {keyCode: number}) => {
+        if (keyCode === 13 || keyCode === 32) {
+          relatedManager?.playSelected(id);
+        }
       }}>
       <EntryImage {...{poster, duration, type, width: width / 2 - 10, height: imageHeight}} />
       <div className={styles.entryContent} style={{width: width / 2 + 10, height: contentHeight}}>

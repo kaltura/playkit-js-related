@@ -41,6 +41,11 @@ const GridEntry = withText({
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {
         relatedManager?.playSelected(id);
+      }}
+      onKeyDown={({keyCode}: {keyCode: number}) => {
+        if (keyCode === 13 || keyCode === 32) {
+          relatedManager?.playSelected(id);
+        }
       }}>
       <EntryImage {...{poster, duration, type, width, height: imageHeight}} />
       <div className={styles.entryContent} style={{width, height: contentHeight}}>
