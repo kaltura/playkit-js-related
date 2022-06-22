@@ -55,7 +55,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
     if (page < 0) {
       return [];
     } else if (page === 0) {
-      return data.slice(1, firstPageSize);
+      return data.slice(0, firstPageSize);
     }
     return data.slice(firstPageSize + (page - 1) * entriesPerPage, firstPageSize + page * entriesPerPage);
   };
@@ -131,6 +131,16 @@ const GridPage = ({
   countdown: number;
   data: Sources[];
 }) => {
+  if (!data.length) {
+    return <div className={`${styles.gridPage} ${isActive ? styles.active : ''}`} />;
+  }
+
+  let nextEntry;
+  if (isFirstPage) {
+    nextEntry = getNextEntry(sizeBreakpoint, countdown, data[0]);
+    data = data.slice(1);
+  }
+
   const entries = [];
 
   for (let i = 0; i < data.length; ++i) {
@@ -147,8 +157,8 @@ const GridPage = ({
 
   return (
     <div className={`${styles.gridPage} ${isActive ? styles.active : ''}`}>
-      {isFirstPage ? getNextEntry(sizeBreakpoint, countdown, data[0]) : undefined}
-      {entries.length ? <div className={styles.relatedGridEntries}>{entries}</div> : undefined}
+      {nextEntry}
+      <div className={styles.relatedGridEntries}>{entries}</div>
     </div>
   );
 };
