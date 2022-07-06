@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/kaltura/playkit-js-related/compare/v0.1.2...v0.1.3) (2022-07-06)
+
+
+### Bug Fixes
+
+* **FEC-12310:** Related grid responsiveness: System displays 2 similar videos for any EntryList ([c7fc826](https://github.com/kaltura/playkit-js-related/commit/c7fc82623dc47289eae202782f3d8a1f86f09b9e))
+
 ### [0.1.2](https://github.com/kaltura/playkit-js-related/compare/v0.1.1...v0.1.2) (2022-05-12)
 
 ### 0.1.1 (2022-05-12)
