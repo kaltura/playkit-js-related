@@ -2,6 +2,7 @@
   "name": "@playkit-js/related",
   "version": "0.1.3",
   "main": "dist/playkit-related.js",
+  "homepage":"https://github.com/kaltura/playkit-js-related#readme",
   "scripts": {
     "clean": "rm -rf ./dist",
     "prebuild": "npm run clean",
