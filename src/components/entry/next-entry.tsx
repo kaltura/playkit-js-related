@@ -19,7 +19,7 @@ interface NextEntryProps extends GridEntryProps {
 
 const NextEntry = withText({
   upNext: 'playlist.up_next',
-  upNextIn: 'related.upNextIn',
+  upNextIn: 'playlist.up_next_in',
   live: 'controls.live'
 })((props: NextEntryProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
