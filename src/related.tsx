@@ -56,7 +56,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   private injectUIComponents() {
     const {relatedManager} = this;
-    const imageService = new ImageService();
+    const imageService = new ImageService(this.player);
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',

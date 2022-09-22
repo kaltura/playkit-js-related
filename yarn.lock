@@ -3016,19 +3016,19 @@ jsonparse@^1.2.0:
     object.assign "^4.1.2"
 
 "kaltura-player-js@https://github.com/kaltura/kaltura-player-js.git#master":
-  version "3.1.0"
-  resolved "https://github.com/kaltura/kaltura-player-js.git#908d652fc8543f20bb09ffdca3fa2b77a88e275d"
+  version "3.6.1"
+  resolved "https://github.com/kaltura/kaltura-player-js.git#04b163bde38905513e0ffbf0487af3c5ad40d94d"
   dependencies:
     "@babel/polyfill" "^7.0.0"
-    "@playkit-js/playkit-js" "0.79.0"
-    "@playkit-js/playkit-js-dash" "1.30.0"
-    "@playkit-js/playkit-js-hls" "1.30.1"
-    "@playkit-js/playkit-js-ui" "0.70.1"
-    hls.js "^1.1.5"
+    "@playkit-js/playkit-js" "0.80.5"
+    "@playkit-js/playkit-js-dash" "1.31.0"
+    "@playkit-js/playkit-js-hls" "1.30.2"
+    "@playkit-js/playkit-js-ui" "0.72.2"
+    hls.js "1.2.3"
     intersection-observer "^0.12.0"
-    playkit-js-providers "https://github.com/kaltura/playkit-js-providers.git#v2.34.0"
+    playkit-js-providers "https://github.com/kaltura/playkit-js-providers.git#v2.36.0"
     proxy-polyfill "^0.3.0"
-    shaka-player "3.3.0"
+    shaka-player "4.2.1"
 
 kind-of@^6.0.2, kind-of@^6.0.3:
   version "6.0.3"

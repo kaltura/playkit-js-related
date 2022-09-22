@@ -5,15 +5,18 @@ enum IMAGE_STATE {
 
 class ImageService {
   private imageStateMap = new Map<string, IMAGE_STATE>();
+  private player: KalturaPlayerTypes.Player;
+  constructor(player: KalturaPlayerTypes.Player) {
+    this.player = player;
+  }
 
   async getImageUrl(url: string, width: number, height: number) {
     if (!url) return null;
 
-    const fullUrl = `${url}/width/${width}/height/${height}`;
-    if (await this.imageFound(fullUrl)) {
-      return fullUrl;
-    } else if (await this.imageFound(url)) {
-      return url;
+    const posterData = {poster: url};
+    this.player.updateKalturaPoster(posterData, posterData, {width, height});
+    if (await this.imageFound(posterData.poster)) {
+      return posterData.poster;
     }
     return null;
   }
