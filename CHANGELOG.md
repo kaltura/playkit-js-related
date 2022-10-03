@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/kaltura/playkit-js-related/compare/v0.1.3...v0.1.4) (2022-10-03)
+
+
+### Bug Fixes
+
+* **FEC-12233:** Related should take the poster from kaltura-player  ([#29](https://github.com/kaltura/playkit-js-related/issues/29)) ([73120b2](https://github.com/kaltura/playkit-js-related/commit/73120b27f4fd71960fba5f14c74eccdd1c7107c7)), closes [kaltura/kaltura-player-js#571](https://github.com/kaltura/kaltura-player-js/issues/571)
+* **FEC-12257:** remove 'play next in' strings from related and take them from ui ([#28](https://github.com/kaltura/playkit-js-related/issues/28)) ([a9fd321](https://github.com/kaltura/playkit-js-related/commit/a9fd321ffe100ae7d616619b3a4c9182d6bdd579))
+
 ### [0.1.3](https://github.com/kaltura/playkit-js-related/compare/v0.1.2...v0.1.3) (2022-07-06)
 
 
