@@ -111,7 +111,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     });
   }
 
-  load Media() {
+  loadMedia() {
     const {ks, config, relatedManager} = this;
     const {useContext, playlistId, entryList, sourcesList} = config;
     const newKs = this.config?.ks;
