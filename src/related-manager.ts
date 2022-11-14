@@ -60,7 +60,9 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
     let entries: Sources[] = [];
 
-    if (playlistId) {
+    if (this.plugin.player.playlist?.items?.length) {
+      // disable plugin if the player is in playlist playback mode
+    } else if (playlistId) {
       entries = await this.entryService.getByPlaylist({ks, playlistId});
     } else if (entryList?.length) {
       entries = await this.entryService.getByEntryList({entries: entryList, ks});
