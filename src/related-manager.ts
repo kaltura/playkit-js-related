@@ -1,9 +1,10 @@
-import {Related} from 'related';
-import {EntryService} from 'services/entry-service';
-import {RelatedConfig} from 'types/config';
-import {RelatedEvent} from 'types/related-event';
-import {Sources} from 'types/sources';
+import {EntryService} from 'services';
+import {RelatedConfig, RelatedEvent, Sources} from 'types';
 class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
+  private player: KalturaPlayerTypes.Player;
+  private logger: KalturaPlayerTypes.Logger;
+  private eventManager: KalturaPlayerTypes.EventManager;
+
   private entryService: EntryService;
 
   private _entries: Sources[] = [];
@@ -11,16 +12,18 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private ks = '';
   private _isInitialized = false;
   private _isHiddenByUser = false;
-  private plugin: Related;
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
   private nextEntryTimeoutId = -1;
 
-  constructor(plugin: Related) {
+  constructor({player, logger, eventManager}: KalturaPlayer.core.BasePlugin) {
     super();
-    this.plugin = plugin;
 
     this.playNext = this.playNext.bind(this);
-    this.entryService = new EntryService(plugin.player, plugin.logger);
+    this.player = player;
+    this.logger = logger;
+    this.eventManager = eventManager;
+
+    this.entryService = new EntryService(player, logger);
   }
 
   private cycleEntries(lastPlayedIndex: number) {
@@ -33,20 +36,20 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.clearNextEntryTimeout();
     this.isHiddenByUser = false;
     if (this.entryService.isPlayable(this.entries[index])) {
-      this.plugin.player.setMedia({sources: this.entries[index]});
-      this.plugin.player.play();
+      this.player.setMedia({sources: this.entries[index]});
+      this.player.play();
     } else {
       const entryId = this.entries[index].id;
       const mediaInfo = this.mediaInfoMap?.has(entryId) ? this.mediaInfoMap.get(entryId) : {entryId};
 
-      this.plugin.player
+      this.player
         .loadMedia({...mediaInfo, ks: this.ks})
         .then(() => {
           this.logger.info('loadMedia success');
-          this.plugin.player.play();
+          this.player.play();
         })
         .catch(() => {
-          this.logger.warning('loadMedia failed');
+          this.logger.warn('loadMedia failed');
         });
     }
     this.cycleEntries(index);
@@ -60,7 +63,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
     let entries: Sources[] = [];
 
-    if (this.plugin.player.playlist?.items?.length) {
+    if (this.player.playlist?.items?.length) {
       // disable plugin if the player is in playlist playback mode
     } else if (playlistId) {
       entries = await this.entryService.getByPlaylist({ks, playlistId});
@@ -74,7 +77,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     } else if (sourcesList?.length) {
       entries = this.entryService.getBySourcesList(sourcesList);
     } else if (useContext) {
-      entries = await this.entryService.getByContext(this.plugin.player.sources.id, ks, entriesByContextLimit);
+      entries = await this.entryService.getByContext(this.player.sources.id, ks, entriesByContextLimit);
     } else {
       this.logger.warn('no source configured');
     }
@@ -89,7 +92,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   startOver() {
     this.isHiddenByUser = false;
-    this.plugin.player.play();
+    this.player.play();
   }
 
   playNext(seconds?: number) {
@@ -116,11 +119,11 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   listen(name: string, listener: any) {
-    this.plugin.eventManager.listen(this, name, listener);
+    this.eventManager.listen(this, name, listener);
   }
 
   unlisten(name: string, listener: any) {
-    this.plugin.eventManager.unlisten(this, name, listener);
+    this.eventManager.unlisten(this, name, listener);
   }
 
   set isHiddenByUser(isHiddenByUser: boolean) {
@@ -148,10 +151,6 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   get isInitialized(): boolean {
     return this._isInitialized;
-  }
-
-  get logger(): any {
-    return this.plugin.logger;
   }
 }
 
