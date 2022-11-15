@@ -15,7 +15,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
   private nextEntryTimeoutId = -1;
 
-  constructor({player, logger, eventManager}: KalturaPlayer.core.BasePlugin) {
+  constructor({player, logger, eventManager}: KalturaPlayerTypes.BasePlugin) {
     super();
 
     this.playNext = this.playNext.bind(this);
