@@ -1,5 +1,5 @@
 import {RelatedContext} from 'components/related-context/related-context';
-import {useState} from 'preact/hooks';
+import {useState, useEffect} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
 import {RelatedGrid} from '../related-grid/related-grid';
 import {getNextEntry} from '../related-grid/grid-utils';
@@ -34,13 +34,17 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, imageService, 
   const [countdown, setCountdown] = useState(-1);
   const [isHiddenByUser, setIsHiddenByUser] = useState(false);
 
+  useEffect(() => {
+    relatedManager.isGridVisible = isVisible;
+  }, [relatedManager, isVisible]);
+
   const onCancel = () => {
     setIsHiddenByUser(true);
     relatedManager.isHiddenByUser = true;
     setIsVisible(false);
   };
 
-  if (!relatedManager.entries.length) {
+  if (!relatedManager.entries.length || relatedManager.isListVisible) {
     setIsVisible(false);
     setCountdown(-1);
     return <></>;

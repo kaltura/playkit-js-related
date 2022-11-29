@@ -1,9 +1,14 @@
 const {Icon, IconState} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
-const ToggleButton = ({active}: {active: boolean}) => {
+import * as styles from './toggle-button.scss';
+
+const ToggleButton = ({active, disabled}: {active: boolean; disabled: boolean}) => {
   return (
-    <button tabIndex={0} style={{cursor: 'pointer', background: active ? '#444' : ''}} className={`${KalturaPlayer.ui.style.controlButton}`}>
+    <button
+      tabIndex={0}
+      disabled={disabled}
+      className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.upperBarIcon} ${active ? styles.active : ''}}`}>
       <Icon
         activeColor={KalturaPlayer.ui.style.white}
         id={`related-toggle-icon`}

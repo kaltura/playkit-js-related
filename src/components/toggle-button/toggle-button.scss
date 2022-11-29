@@ -1,3 +1,12 @@
-button.active {
-    border-radius: 4px;
+button {
+    &.active {
+        background-color: #444;
+    }
+    
+    &:disabled {
+        &:hover {
+            background-color: transparent;
+        }
+    }
 }
+

@@ -14,6 +14,8 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isHiddenByUser = false;
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
   private nextEntryTimeoutId = -1;
+  private _isGridVisible = false;
+  private _isListVisible = false;
 
   constructor({player, logger, eventManager}: KalturaPlayerTypes.BasePlugin) {
     super();
@@ -151,6 +153,23 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   get isInitialized(): boolean {
     return this._isInitialized;
+  }
+
+  get isGridVisible(): boolean {
+    return this._isGridVisible;
+  }
+
+  set isGridVisible(isGridVisible: boolean) {
+    this._isGridVisible = isGridVisible;
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.GRID_VISIBILITY_CHANGED, this._isGridVisible));
+  }
+
+  get isListVisible(): boolean {
+    return this._isListVisible;
+  }
+
+  set isListVisible(isListVisible: boolean) {
+    this._isListVisible = isListVisible;
   }
 }
 
