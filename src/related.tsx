@@ -1,7 +1,7 @@
 import {ui} from 'kaltura-player-js';
 
 import {RelatedManager} from 'related-manager';
-import {Next, PrePlaybackPlayOverlayWrapper, RelatedOverlay, ToggleButton} from 'components';
+import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton} from 'components';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
 import {ImageService} from 'services';
@@ -35,6 +35,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
   private ks = '';
   private iconId = -1;
   private panelId = -1;
+  imageService: ImageService;
 
   /**
    * @static
@@ -54,6 +55,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
     this.relatedManager = new RelatedManager(this);
+    this.imageService = new ImageService(this.player);
     this.injectUIComponents();
   }
 
@@ -66,8 +68,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   private async injectUIComponents() {
-    const {relatedManager} = this;
-    const imageService = new ImageService(this.player);
+    const {relatedManager, imageService} = this;
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',
@@ -127,8 +128,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
     const {useContext, playlistId, entryList, sourcesList} = config;
     const newKs = this.config?.ks;
 
-    relatedManager.isHiddenByUser = false;
-
     if (!relatedManager.isInitialized) {
       await relatedManager.load(config, newKs);
     } else if (playlistId || entryList?.length) {
@@ -158,27 +157,30 @@ class Related extends KalturaPlayer.core.BasePlugin {
       onClick: () => {
         if (!this.relatedManager.isGridVisible) {
           this.relatedManager.isListVisible = !this.relatedManager.isListVisible;
-          this.sidePanelsManager[this.relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
-          this.upperBarManager?.update(this.iconId);
         }
       },
       component: () => {
-        return <ToggleButton active={this.relatedManager.isListVisible} disabled={this.relatedManager.isGridVisible} />;
+        return <ListToggleButton active={this.relatedManager.isListVisible} disabled={this.relatedManager.isGridVisible} />;
       }
     }) as number;
 
     this.panelId = this.sidePanelsManager.add({
       label: 'Related',
       panelComponent: () => {
-        return <div>aaa</div>;
+        return <RelatedList relatedManager={this.relatedManager} imageService={this.imageService} />;
       },
       presets: [ui.ReservedPresetNames.Playback],
       position: 'right',
-      expandMode: 'alongside'
+      expandMode: 'over'
     }) as number;
 
     this.relatedManager.listen(RelatedEvent.GRID_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
+    });
+
+    this.relatedManager.listen(RelatedEvent.LIST_VISIBILITY_CHANGED, () => {
+      this.upperBarManager?.update(this.iconId);
+      this.sidePanelsManager[this.relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
     });
   }
 
@@ -187,6 +189,8 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.upperBarManager?.remove(this.iconId);
     this.sidePanelsManager?.remove(this.panelId);
     this.relatedManager.isListVisible = false;
+    this.relatedManager.isGridVisible = false;
+    this.relatedManager.isHiddenByUser = false;
     this.iconId = -1;
     this.panelId = -1;
   }

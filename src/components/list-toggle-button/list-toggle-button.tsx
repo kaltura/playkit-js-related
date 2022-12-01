@@ -3,7 +3,7 @@ import {Icon as IconPath} from 'types';
 
 import * as styles from './toggle-button.scss';
 
-const ToggleButton = ({active, disabled}: {active: boolean; disabled: boolean}) => {
+const ListToggleButton = ({active, disabled}: {active: boolean; disabled: boolean}) => {
   return (
     <button
       tabIndex={0}
@@ -20,4 +20,4 @@ const ToggleButton = ({active, disabled}: {active: boolean; disabled: boolean}) 
   );
 };
 
-export {ToggleButton};
+export {ListToggleButton};
