@@ -28,6 +28,20 @@ button {
   white-space: nowrap;
 }
 
+.entry-image {
+  position: relative;
+
+  .thumbnail * {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .duration {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+  }
+}
+
 /* entry */
 .entry {
   position: relative;
@@ -167,6 +181,28 @@ button {
 
   .entry-text {
     margin: 8px 16px;
+  }
+}
+
+.list-entry {
+  background-color: transparent;
+  display: flex;
+  position: relative;
+  align-items: center;
+
+  &:hover .entry-content {
+    background: transparent;
+  }
+
+  .entry-content {
+    background-color: transparent;
+    margin-left: 8px;
+  }
+
+  .entry-image {
+    .thumbnail * {
+      border-radius: 8px;
+    }
   }
 }
 

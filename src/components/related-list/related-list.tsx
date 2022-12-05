@@ -2,8 +2,11 @@ const {PLAYER_SIZE} = KalturaPlayer.ui.components;
 
 import {CloseButton, RelatedContext} from 'components';
 import {RelatedManager} from 'related-manager';
+
 import * as styles from './related-list.scss';
-import {getGridEntry, getEntryDimensions} from 'components/related-grid/grid-utils';
+import * as entryStyle from '../entry/entry.scss';
+
+import {getListEntry} from 'components/related-grid/grid-utils';
 import {ImageService} from 'services';
 
 const RelatedList = ({relatedManager, imageService}: {relatedManager: RelatedManager; imageService: ImageService}) => {
@@ -12,11 +15,7 @@ const RelatedList = ({relatedManager, imageService}: {relatedManager: RelatedMan
 
   for (let i = 0; i < data.length; ++i) {
     const entryData = data[i];
-    entries.push(
-      // <div className={`${styles.listEntry}`}>
-      entryData ? getGridEntry(PLAYER_SIZE.MEDIUM, entryData, getEntryDimensions(PLAYER_SIZE.MEDIUM)) : <></>
-      // </div>
-    );
+    entries.push(<div className={`${entryStyle.listEntry}`}>{entryData ? getListEntry(PLAYER_SIZE.MEDIUM, entryData) : <></>}</div>);
   }
 
   return (

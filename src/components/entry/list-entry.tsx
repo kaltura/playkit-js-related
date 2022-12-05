@@ -10,7 +10,7 @@ const {withText} = KalturaPlayer.ui.preacti18n;
 
 import * as styles from './entry.scss';
 
-const MinimalGridEntry = withText({
+const ListEntry = withText({
   live: 'controls.live'
 })((props: GridEntryProps) => {
   const {relatedManager} = useContext(RelatedContext);
@@ -24,7 +24,7 @@ const MinimalGridEntry = withText({
     <a
       key={id}
       tabIndex={0}
-      className={`${styles.entry} ${styles.gridEntry} ${styles.minimal} ${styles.clickable}`}
+      className={`${styles.entry} ${styles.listEntry} ${styles.clickable}`}
       style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {
@@ -35,7 +35,7 @@ const MinimalGridEntry = withText({
           relatedManager?.playSelected(id);
         }
       }}>
-      <EntryImage {...{poster, duration, type, width: width / 2 - 10, height: imageHeight}} />
+      <EntryImage {...{poster, duration, type, width: 99, height: imageHeight}} />
       <div className={styles.entryContent} style={{width: width / 2 + 10, height: contentHeight}}>
         <div className={styles.text}>
           <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
@@ -45,4 +45,4 @@ const MinimalGridEntry = withText({
   );
 });
 
-export {MinimalGridEntry};
+export {ListEntry};

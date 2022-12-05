@@ -1,6 +1,7 @@
 const {PLAYER_SIZE} = KalturaPlayer.ui.components;
 
 import {GridEntry} from 'components/entry/grid-entry';
+import {ListEntry} from 'components/entry/list-entry';
 import {MinimalGridEntry} from 'components/entry/minimal-grid-entry';
 import {MinimalNextEntry} from 'components/entry/minimal-next-entry';
 import {NextEntry} from 'components/entry/next-entry';
@@ -104,6 +105,20 @@ const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: En
 
   return sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <MinimalGridEntry {...props} /> : <GridEntry {...props} />;
 };
+const getListEntry = (sizeBreakpoint: string, data: Sources) => {
+  const props = {
+    id: data.internalIndex,
+    duration: data.duration,
+    durationText: data.durationText,
+    type: data.type,
+    poster: data.poster,
+    title: data.metadata?.name,
+    entryDimensions: {width: 269, imageHeight: 56, contentHeight: 'auto'}
+  };
+
+  //return; sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <ListEntry {...props} /> :
+  return <ListEntry {...props} />;
+};
 const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, onCancel?: () => void) => {
   const {duration, type, poster, metadata, durationText} = data;
   const props = {
@@ -128,4 +143,4 @@ const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, 
   );
 };
 
-export {getEntryDimensions, getExpandedEntryDimensions, getNextEntry, getGridEntry, getSizeClass, getPageSize};
+export {getEntryDimensions, getExpandedEntryDimensions, getNextEntry, getGridEntry, getListEntry, getSizeClass, getPageSize};
