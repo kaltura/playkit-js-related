@@ -15,7 +15,8 @@
 }
 
 .related-list {
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
     background: rgba(0, 0, 0, 0.6);
     font-family: sans-serif;
     height: 100%;
