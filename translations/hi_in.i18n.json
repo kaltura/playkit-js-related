@@ -1,7 +1,8 @@
 {
   "hi_in": {
     "related": {
-      "playNow": "अभी चलाएं"
+      "playNow": "अभी चलाएं",
+      "relatedVideos": "संबंधित वीडियो"
     }
   }
 }

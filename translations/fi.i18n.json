@@ -1,7 +1,8 @@
 {
   "fi": {
     "related": {
-      "playNow": "Toista nyt"
+      "playNow": "Toista nyt",
+      "relatedVideos": "Liittyvät videot"
     }
   }
 }

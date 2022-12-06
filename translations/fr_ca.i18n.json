@@ -1,7 +1,8 @@
 {
   "fr_ca": {
     "related": {
-      "playNow": "Lire maintenant"
+      "playNow": "Lire maintenant",
+      "relatedVideos": "Vidéos similaires"
     }
   }
 }

@@ -1,7 +1,8 @@
 {
   "ar": {
     "related": {
-      "playNow": "تشغيل الآن"
+      "playNow": "تشغيل الآن",
+      "relatedVideos": "الفيديوهات ذات الصلة"
     }
   }
 }

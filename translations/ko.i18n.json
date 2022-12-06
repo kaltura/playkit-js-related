@@ -1,7 +1,8 @@
 {
   "ko": {
     "related": {
-      "playNow": "지금 재생"
+      "playNow": "지금 재생",
+      "relatedVideos": "관련 비디오"
     }
   }
 }

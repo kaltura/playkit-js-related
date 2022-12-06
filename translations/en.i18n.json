@@ -1,7 +1,8 @@
 {
   "en": {
     "related": {
-      "playNow": "Play Now"
+      "playNow": "Play Now",
+      "relatedVideos": "Related Videos"
     }
   }
 }

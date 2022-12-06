@@ -1,7 +1,8 @@
 {
   "ja": {
     "related": {
-      "playNow": "すぐ再生"
+      "playNow": "すぐ再生",
+      "relatedVideos": "関連ビデオ"
     }
   }
 }
