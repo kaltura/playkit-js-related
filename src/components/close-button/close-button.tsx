@@ -1,12 +1,12 @@
+const {withText} = KalturaPlayer.ui.preacti18n;
 const {Icon, IconState} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as styles from './close-button.scss';
-
-const CloseButton = ({onClick}: {onClick: () => void}) => {
+const CloseButton = withText({
+  closeText: 'overlay.close'
+})(({onClick, closeText}: {closeText: string; onClick: () => void}) => {
   return (
-    <button tabIndex={0} className={`${KalturaPlayer.ui.style.controlButton}`} onClick={onClick}>
+    <button aria-label={closeText} tabIndex={0} className={`${KalturaPlayer.ui.style.controlButton}`} onClick={onClick}>
       <Icon
         activeColor={KalturaPlayer.ui.style.white}
         id={`related-close-icon`}
@@ -16,6 +16,6 @@ const CloseButton = ({onClick}: {onClick: () => void}) => {
       />
     </button>
   );
-};
+});
 
 export {CloseButton};

@@ -34,6 +34,9 @@
             font-style: normal;
             font-weight: 700;
             line-height: 21px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 
