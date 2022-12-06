@@ -115,8 +115,6 @@ const getListEntry = (sizeBreakpoint: string, data: Sources) => {
     title: data.metadata?.name,
     entryDimensions: {width: 269, imageHeight: 56, contentHeight: 'auto'}
   };
-
-  //return; sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <ListEntry {...props} /> :
   return <ListEntry {...props} />;
 };
 const getNextEntry = (sizeBreakpoint: string, countdown: number, data: Sources, onCancel?: () => void) => {

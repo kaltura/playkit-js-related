@@ -16,7 +16,7 @@ const ListEntry = withText({
   const {relatedManager} = useContext(RelatedContext);
 
   const {id, title, duration, durationText, type, poster, entryDimensions, live} = props;
-  const {width, imageHeight, contentHeight} = entryDimensions;
+  const {width} = entryDimensions;
 
   const liveOrDurationText = type === KalturaPlayer.core.MediaType.LIVE ? live : durationText;
 
@@ -35,8 +35,8 @@ const ListEntry = withText({
           relatedManager?.playSelected(id);
         }
       }}>
-      <EntryImage {...{poster, duration, type, width: 99, height: imageHeight}} />
-      <div className={styles.entryContent} style={{width: width / 2 + 10, height: contentHeight}}>
+      <EntryImage {...{poster, duration, type, width: 99, height: 56}} />
+      <div className={styles.entryContent}>
         <div className={styles.text}>
           <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
         </div>
