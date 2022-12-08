@@ -113,7 +113,7 @@ const getListEntry = (sizeBreakpoint: string, data: Sources) => {
     type: data.type,
     poster: data.poster,
     title: data.metadata?.name,
-    entryDimensions: {width: 269, imageHeight: 56, contentHeight: 'auto'}
+    entryDimensions: {width: 'auto', imageHeight: 56, contentHeight: 'auto'}
   };
   return <ListEntry {...props} />;
 };

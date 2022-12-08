@@ -185,13 +185,19 @@ button {
 }
 
 .list-entry {
-  background-color: transparent;
-  display: flex;
-  position: relative;
   align-items: center;
+  background-color: transparent;
+  border-radius: 4px;
+  display: flex;
+  padding: 8px;
+  position: relative;
 
-  &:hover .entry-content {
-    background: transparent;
+  &:hover {
+    background-color: rgba(255, 255, 255, .12);
+
+    .entry-content {
+      background-color: transparent;
+    }
   }
 
   .entry-content {
@@ -201,7 +207,7 @@ button {
 
   .entry-image {
     .thumbnail * {
-      border-radius: 8px;
+      border-radius: 4px;
     }
   }
 }

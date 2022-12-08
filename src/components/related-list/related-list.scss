@@ -47,11 +47,8 @@
         color: red;
         display: flex;
         flex-direction: column;
-        gap: 16px;
         height: calc(100% - 32px);
         overflow: auto;
-        padding: 0;
-        padding-left: 8px;
         width: calc(100% - 24px);
     }
 }
