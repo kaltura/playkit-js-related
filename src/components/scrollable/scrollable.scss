@@ -1,0 +1,28 @@
+.scrollable {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+    
+    &::-webkit-scrollbar {
+        height: 4px;
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: rgba(33, 33, 33, 0.9);
+        visibility: hidden;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+        visibility: hidden;
+    }
+    &.scrolling::-webkit-scrollbar-track,
+    &.scrolling::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+    .content {
+        width: 100%;
+        height: 100%;
+    }
+}
+
