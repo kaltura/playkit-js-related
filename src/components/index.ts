@@ -6,5 +6,18 @@ import {RelatedList} from './related-list/related-list';
 import {CloseButton} from './close-button/close-button';
 import {RelatedContext} from './related-context/related-context';
 import {Scrollable} from './scrollable/scrollable';
+import {RelatedCountdownPreview} from './related-countdown-preview/related-countdown-preview';
+import {Thumbnail} from './thumbnail/thumbnail';
 
-export {Next, PrePlaybackPlayOverlayWrapper, RelatedOverlay, ListToggleButton, RelatedList, CloseButton, RelatedContext, Scrollable};
+export {
+  CloseButton,
+  ListToggleButton,
+  Next,
+  PrePlaybackPlayOverlayWrapper,
+  RelatedContext,
+  RelatedCountdownPreview,
+  RelatedList,
+  RelatedOverlay,
+  Scrollable,
+  Thumbnail
+};

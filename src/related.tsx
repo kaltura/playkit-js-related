@@ -1,10 +1,9 @@
 import {ui} from 'kaltura-player-js';
 
 import {RelatedManager} from 'related-manager';
-import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton} from 'components';
+import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton, RelatedCountdownPreview} from 'components';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
-import {ImageService} from 'services';
 import {Icon, RelatedConfig, RelatedEvent} from 'types';
 
 const PRESETS = ['Playback', 'Live'];
@@ -35,7 +34,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
   private ks = '';
   private iconId = -1;
   private panelId = -1;
-  imageService: ImageService;
 
   /**
    * @static
@@ -55,7 +53,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
     this.relatedManager = new RelatedManager(this);
-    this.imageService = new ImageService(this.player);
     this.injectUIComponents();
   }
 
@@ -68,13 +65,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   private async injectUIComponents() {
-    const {relatedManager, imageService} = this;
+    const {relatedManager} = this;
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay relatedManager={relatedManager} imageService={imageService} />
+      get: () => <RelatedOverlay relatedManager={relatedManager} />
     });
 
     const preplayBackPlayOverlayProps = {
@@ -120,6 +117,14 @@ class Related extends KalturaPlayer.core.BasePlugin {
       presets: PRESETS,
       area: 'BottomBarPlaybackControls',
       get: () => <Next {...{...nextProps, showPreview: true}} />
+    });
+
+    this.player.ui.addComponent({
+      label: 'kaltura-related-preview',
+      presets: PRESETS,
+      area: 'InteractiveArea',
+      replaceComponent: 'PlaylistCountdown',
+      get: () => <RelatedCountdownPreview relatedManager={this.relatedManager} />
     });
   }
 
@@ -167,7 +172,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.panelId = this.sidePanelsManager.add({
       label: 'Related',
       panelComponent: () => {
-        return <RelatedList relatedManager={this.relatedManager} imageService={this.imageService} />;
+        return <RelatedList relatedManager={this.relatedManager} />;
       },
       presets: [ui.ReservedPresetNames.Playback],
       position: 'right',

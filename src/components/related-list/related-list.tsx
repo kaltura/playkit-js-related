@@ -7,11 +7,9 @@ import {RelatedManager} from 'related-manager';
 
 import * as styles from './related-list.scss';
 
-import {ImageService} from 'services';
-
 const RelatedList = withText({
   relatedVideosText: 'related.relatedVideos'
-})(({relatedManager, imageService, relatedVideosText}: {relatedManager: RelatedManager; imageService: ImageService; relatedVideosText: string}) => {
+})(({relatedManager, relatedVideosText}: {relatedManager: RelatedManager; relatedVideosText: string}) => {
   const data = relatedManager.entries;
   const entries = [];
 
@@ -22,7 +20,7 @@ const RelatedList = withText({
 
   return (
     <div className={styles.relatedList}>
-      <RelatedContext.Provider value={{relatedManager, imageService}}>
+      <RelatedContext.Provider value={{relatedManager}}>
         <div className={styles.header}>
           <div className={styles.title}>{relatedVideosText}</div>
           <CloseButton

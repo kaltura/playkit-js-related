@@ -1,4 +1,4 @@
-import {EntryService} from 'services';
+import {EntryService, ImageService} from 'services';
 import {RelatedConfig, RelatedEvent, Sources} from 'types';
 class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private player: KalturaPlayerTypes.Player;
@@ -16,6 +16,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private nextEntryTimeoutId = -1;
   private _isGridVisible = false;
   private _isListVisible = false;
+  private imageService: ImageService;
 
   constructor({player, logger, eventManager}: KalturaPlayerTypes.BasePlugin) {
     super();
@@ -26,6 +27,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.eventManager = eventManager;
 
     this.entryService = new EntryService(player, logger);
+    this.imageService = new ImageService(player);
   }
 
   private cycleEntries(lastPlayedIndex: number) {
@@ -126,6 +128,10 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   unlisten(name: string, listener: any) {
     this.eventManager.unlisten(this, name, listener);
+  }
+
+  getImageUrl(url: string, width: number, height: number): Promise<string | null> {
+    return this.imageService.getImageUrl(url, width, height);
   }
 
   set isHiddenByUser(isHiddenByUser: boolean) {
