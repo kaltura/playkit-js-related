@@ -19,14 +19,13 @@
             font-weight: 700;
             line-height: 21px;
             overflow: hidden;
+            padding-top: 2px;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
     }
 
     .content {        
-        border: 1px solid red;
-        color: red;
         display: flex;
         flex-direction: column;
         height: calc(100% - 32px);

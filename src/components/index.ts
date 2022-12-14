@@ -8,10 +8,14 @@ import {RelatedContext} from './related-context/related-context';
 import {Scrollable} from './scrollable/scrollable';
 import {RelatedCountdownPreview} from './related-countdown-preview/related-countdown-preview';
 import {Thumbnail} from './thumbnail/thumbnail';
+import {Countdown} from './countdown/countdown';
+import {MultilineText} from './multiline-text/multiline-text';
 
 export {
   CloseButton,
+  Countdown,
   ListToggleButton,
+  MultilineText,
   Next,
   PrePlaybackPlayOverlayWrapper,
   RelatedContext,

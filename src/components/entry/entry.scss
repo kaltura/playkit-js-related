@@ -1,3 +1,37 @@
+@-webkit-keyframes change-background-color {
+  0% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  25%, 50% {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  75%, 100% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+}
+
+@keyframes change-background-color {
+  0% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  25%, 50% {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  75%, 100% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+}
+
+@mixin animate-background {
+  background-color: rgba(255, 255, 255, .2);
+  -webkit-animation: 2s ease-in-out infinite change-background-color;
+          animation: 2s ease-in-out infinite change-background-color;
+}
+
 button {
   border: 0;
   cursor: pointer;
@@ -191,6 +225,39 @@ button {
   display: flex;
   padding: 8px;
   position: relative;
+
+  &.placeholder {
+    &:hover {
+      background-color: transparent;
+    }
+
+    .entry-image {
+      @include animate-background();
+
+      border-radius: 4px;
+      height: 56px;
+      width: 99px;
+    }
+
+    .entry-content {
+      margin-left: 16px;
+
+      .text-placeholder {
+        @include animate-background();
+
+        border-radius: 4px;
+        height: 12px;
+
+        &:first-child {
+          margin-bottom: 10px;
+          width: 145px;
+        }
+        &:nth-child(2) {
+          width: 75px;
+        }
+      }
+    }
+  }
 
   &:hover {
     background-color: rgba(255, 255, 255, .12);
