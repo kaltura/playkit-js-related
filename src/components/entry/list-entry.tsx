@@ -1,31 +1,30 @@
 import {useContext} from 'preact/hooks';
 
-import {RelatedContext} from 'components/related-context/related-context';
+import {EntryImage, MultilineText, RelatedContext} from 'components';
 
-import {MultilineText} from 'components/multiline-text/multiline-text';
-import {EntryImage} from 'components/entry-image/entry-image';
 import {GridEntryProps} from './grid-entry';
 
 const {withText} = KalturaPlayer.ui.preacti18n;
 
 import * as styles from './entry.scss';
 
+interface ListEntryProps extends GridEntryProps {
+  isVertical: boolean;
+}
+
 const ListEntry = withText({
   live: 'controls.live'
-})((props: GridEntryProps) => {
+})((props: ListEntryProps) => {
   const {relatedManager} = useContext(RelatedContext);
-
-  const {id, title, duration, durationText, type, poster, entryDimensions, live} = props;
-  const {width} = entryDimensions;
-
+  const {id, title, duration, durationText, type, poster, live, isVertical} = props;
   const liveOrDurationText = type === KalturaPlayer.core.MediaType.LIVE ? live : durationText;
 
   return (
     <a
       key={id}
       tabIndex={0}
-      className={`${styles.entry} ${styles.listEntry} ${styles.clickable}`}
-      style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
+      className={`${styles.entry} ${styles.listEntry} ${styles.clickable} ${isVertical ? styles.vertical : styles.horizontal}`}
+      style={{width: 'auto', color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {
         relatedManager?.playSelected(id);
@@ -35,7 +34,7 @@ const ListEntry = withText({
           relatedManager?.playSelected(id);
         }
       }}>
-      <EntryImage {...{poster, duration, type, width: 99, height: 56}} />
+      <EntryImage {...{poster, duration, type, width: isVertical ? 99 : 160, height: isVertical ? 56 : 90}} />
       <div className={styles.entryContent}>
         <div className={styles.text}>
           <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>

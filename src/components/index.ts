@@ -10,10 +10,12 @@ import {RelatedCountdownPreview} from './related-countdown-preview/related-count
 import {Thumbnail} from './thumbnail/thumbnail';
 import {Countdown} from './countdown/countdown';
 import {MultilineText} from './multiline-text/multiline-text';
+import {EntryImage} from './entry-image/entry-image';
 
 export {
   CloseButton,
   Countdown,
+  EntryImage,
   ListToggleButton,
   MultilineText,
   Next,

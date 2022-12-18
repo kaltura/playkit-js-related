@@ -24,12 +24,4 @@
             white-space: nowrap;
         }
     }
-
-    .content {        
-        display: flex;
-        flex-direction: column;
-        height: calc(100% - 32px);
-        overflow: auto;
-        width: calc(100% - 24px);
-    }
 }

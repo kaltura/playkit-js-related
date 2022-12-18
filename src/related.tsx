@@ -1,4 +1,5 @@
 import {ui} from 'kaltura-player-js';
+const {SidePanelModes, SidePanelPositions} = ui;
 
 import {RelatedManager} from 'related-manager';
 import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton, RelatedCountdownPreview} from 'components';
@@ -27,11 +28,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
     sourcesList: [],
     useContext: true,
     entriesByContextLimit: 12,
-    ks: ''
+    position: SidePanelPositions.RIGHT,
+    expandMode: SidePanelModes.ALONGSIDE
   };
 
   private relatedManager: RelatedManager;
-  private ks = '';
   private iconId = -1;
   private panelId = -1;
 
@@ -129,18 +130,21 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   async loadMedia() {
-    const {ks, config, relatedManager} = this;
-    const {useContext, playlistId, entryList, sourcesList} = config;
+    const {config, relatedManager} = this;
+    const {useContext, sourcesList} = config;
     const newKs = this.config?.ks;
 
     if (!relatedManager.isInitialized) {
       await relatedManager.load(config, newKs);
-    } else if (playlistId || entryList?.length) {
-      if (ks && ks !== newKs) {
-        this.logger.info('ks changed - reloading related entries');
-        await relatedManager.load(config, newKs);
-      }
-    } else if (!sourcesList?.length && useContext) {
+    }
+    // TODO
+    // else if (playlistId || entryList?.length) {
+    //   if (ks && ks !== newKs) {
+    //     this.logger.info('ks changed - reloading related entries');
+    //     await relatedManager.load(config, newKs);
+    //   }
+    // }
+    else if (!sourcesList?.length && useContext) {
       // refresh context entries
       await relatedManager.load(config, newKs);
     }
@@ -172,11 +176,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.panelId = this.sidePanelsManager.add({
       label: 'Related',
       panelComponent: () => {
-        return <RelatedList relatedManager={this.relatedManager} />;
+        return <RelatedList relatedManager={this.relatedManager} isVertical={this.config?.position === ('left' || 'right')} />;
       },
       presets: [ui.ReservedPresetNames.Playback],
-      position: 'right',
-      expandMode: 'over'
+      position: this.config.position,
+      expandMode: this.config.expandMode
     }) as number;
 
     this.relatedManager.listen(RelatedEvent.GRID_VISIBILITY_CHANGED, () => {

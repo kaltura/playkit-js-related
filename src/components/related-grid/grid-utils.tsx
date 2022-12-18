@@ -105,7 +105,7 @@ const getGridEntry = (sizeBreakpoint: string, data: Sources, entryDimensions: En
 
   return sizeBreakpoint === PLAYER_SIZE.MEDIUM ? <MinimalGridEntry {...props} /> : <GridEntry {...props} />;
 };
-const getListEntry = (sizeBreakpoint: string, data: Sources) => {
+const getListEntry = (data: Sources, isVertical: boolean) => {
   const props = {
     id: data.internalIndex,
     duration: data.duration,
@@ -113,7 +113,7 @@ const getListEntry = (sizeBreakpoint: string, data: Sources) => {
     type: data.type,
     poster: data.poster,
     title: data.metadata?.name,
-    entryDimensions: {width: 'auto', imageHeight: 56, contentHeight: 'auto'}
+    isVertical
   };
   return <ListEntry {...props} />;
 };

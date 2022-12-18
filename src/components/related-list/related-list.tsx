@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'preact/hooks';
 
 const {withText} = KalturaPlayer.ui.preacti18n;
-const {PLAYER_SIZE} = KalturaPlayer.ui.components;
 
 import {CloseButton, RelatedContext, Scrollable} from 'components';
 import {ListEntryPlaceholder} from 'components/entry/list-entry-placeholder';
@@ -11,10 +10,17 @@ import {RelatedManager} from 'related-manager';
 import * as styles from './related-list.scss';
 import {Sources} from 'types';
 
+interface RelatedListProps {
+  relatedManager: RelatedManager;
+  relatedVideosText: string;
+  isVertical: boolean;
+}
+
 const RelatedList = withText({
   relatedVideosText: 'related.relatedVideos'
-})(({relatedManager, relatedVideosText}: {relatedManager: RelatedManager; relatedVideosText: string}) => {
+})(({relatedManager, relatedVideosText, isVertical}: RelatedListProps) => {
   const [finishedLoading, setFinishedLoading] = useState(false);
+  let entries = [];
 
   useEffect(() => {
     Promise.all(
@@ -26,15 +32,14 @@ const RelatedList = withText({
     });
   }, [relatedManager]);
 
-  let entries = [];
   if (finishedLoading) {
-    entries = relatedManager.entries.map(entry => (entry ? getListEntry(PLAYER_SIZE.MEDIUM, entry) : <></>));
+    entries = relatedManager.entries.map(entry => (entry ? getListEntry(entry, isVertical) : <></>));
   } else {
-    entries = new Array(relatedManager.entries.length).fill(<ListEntryPlaceholder />);
+    entries = new Array(relatedManager.entries.length).fill(<ListEntryPlaceholder isVertical={isVertical} />);
   }
 
   return (
-    <div className={styles.relatedList}>
+    <div className={`${styles.relatedList} ${isVertical ? styles.vertical : styles.horizontal}`}>
       <RelatedContext.Provider value={{relatedManager}}>
         <div className={styles.header}>
           <div className={styles.title}>{relatedVideosText}</div>
@@ -44,7 +49,7 @@ const RelatedList = withText({
             }}
           />
         </div>
-        <Scrollable>{entries}</Scrollable>
+        <Scrollable isVertical={isVertical}>{entries}</Scrollable>
       </RelatedContext.Provider>
     </div>
   );
