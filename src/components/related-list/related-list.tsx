@@ -25,7 +25,7 @@ const RelatedList = withText({
   useEffect(() => {
     Promise.all(
       relatedManager.entries.map((entry: Sources | null) => {
-        return entry?.poster ? relatedManager.getImageUrl(entry.poster, 99, 56) : Promise.resolve();
+        return entry?.poster ? relatedManager.getImageUrl(entry.poster) : Promise.resolve();
       })
     ).then(() => {
       setFinishedLoading(true);

@@ -3,6 +3,9 @@ enum IMAGE_STATE {
   NOT_FOUND
 }
 
+const MAX_WIDTH = 260;
+const MAX_HEIGHT = 147;
+
 class ImageService {
   private imageStateMap = new Map<string, IMAGE_STATE>();
   private player: KalturaPlayerTypes.Player;
@@ -11,11 +14,11 @@ class ImageService {
     this.player = player;
   }
 
-  async getImageUrl(url: string, width: number, height: number): Promise<string | null> {
+  async getImageUrl(url: string): Promise<string | null> {
     if (!url) return null;
 
     const posterData = {poster: url};
-    this.player.updateKalturaPoster(posterData, posterData, {width, height});
+    this.player.updateKalturaPoster(posterData, posterData, {width: MAX_WIDTH, height: MAX_HEIGHT});
     if (await this.imageFound(posterData.poster)) {
       return posterData.poster;
     }

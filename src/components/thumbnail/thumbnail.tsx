@@ -7,7 +7,7 @@ const Thumbnail = ({poster = '', width, height}: {poster?: string; width: number
   const [src, setSrc] = useState('');
 
   useEffect(() => {
-    relatedManager?.getImageUrl(poster, width, height).then((imageUrl: string | null) => setSrc(imageUrl || ''));
+    relatedManager?.getImageUrl(poster).then((imageUrl: string | null) => setSrc(imageUrl || ''));
   }, [relatedManager, poster, width, height]);
 
   return src ? <img src={src} style={{width, height}} alt="" /> : <div className={styles.noImage} style={{width, height}} />;

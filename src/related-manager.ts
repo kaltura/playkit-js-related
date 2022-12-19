@@ -130,8 +130,8 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.eventManager.unlisten(this, name, listener);
   }
 
-  getImageUrl(url: string, width: number, height: number): Promise<string | null> {
-    return this.imageService.getImageUrl(url, width, height);
+  getImageUrl(url: string): Promise<string | null> {
+    return this.imageService.getImageUrl(url);
   }
 
   set isHiddenByUser(isHiddenByUser: boolean) {

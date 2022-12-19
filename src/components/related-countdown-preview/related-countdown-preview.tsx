@@ -35,9 +35,9 @@ const RelatedCountdownPreview = withText({
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-      relatedManager.getImageUrl(relatedManager.entries[1]?.poster || '', 128, 72); // prepare image
+      relatedManager.getImageUrl(relatedManager.entries[1]?.poster || ''); // prepare image
       if (isPlaybackEnded && relatedManager.countdownTime > -1 && relatedManager.isListVisible && !relatedManager.isHiddenByUser) {
-        relatedManager.getImageUrl(relatedManager.entries[1]?.poster || '', 128, 72).then(() => {
+        relatedManager.getImageUrl(relatedManager.entries[1]?.poster || '').then(() => {
           setIsVisible(true);
           relatedManager?.playNext(relatedManager.countdownTime);
         });
