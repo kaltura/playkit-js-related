@@ -176,7 +176,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.panelId = this.sidePanelsManager.add({
       label: 'Related',
       panelComponent: () => {
-        return <RelatedList relatedManager={this.relatedManager} isVertical={this.config?.position === ('left' || 'right')} />;
+        return (
+          <RelatedList
+            relatedManager={this.relatedManager}
+            isVertical={this.config?.position === SidePanelPositions.LEFT || this.config.position === SidePanelPositions.RIGHT}
+          />
+        );
       },
       presets: [ui.ReservedPresetNames.Playback],
       position: this.config.position,
