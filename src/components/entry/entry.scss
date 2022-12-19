@@ -237,10 +237,7 @@ button {
 
   &.vertical {
     flex-direction: row;
-
-    .entry-content {
-      margin-left: 8px;
-    }
+    margin-right: 8px;
   }
 
   &.placeholder {
@@ -311,10 +308,6 @@ button {
       border-radius: 4px;
     }
   }
-}
-
-.clickable {
-  cursor: pointer;
 }
 
 @-webkit-keyframes slide-in {
