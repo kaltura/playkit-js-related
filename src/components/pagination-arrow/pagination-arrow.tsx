@@ -1,5 +1,6 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
 const {Icon, IconState} = KalturaPlayer.ui.components;
+import {Icon as IconPath} from 'types';
 
 enum ARROW_TYPE {
   LEFT = 'left',
@@ -30,7 +31,7 @@ const PaginationArrow = withText({
         activeColor={KalturaPlayer.ui.style.white}
         color={'#888'}
         id={`related-arrow-${type}`}
-        path={type === ARROW_TYPE.LEFT ? Icon.ARROW_LEFT : Icon.ARROW_RIGHT}
+        path={type === ARROW_TYPE.LEFT ? IconPath.ARROW_LEFT : IconPath.ARROW_RIGHT}
         state={disabled ? IconState.INACTIVE : IconState.ACTIVE}
         viewBox={`0 0 32 32`}
       />
