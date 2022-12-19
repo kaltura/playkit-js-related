@@ -39,7 +39,7 @@ const RelatedList = withText({
   }
 
   return (
-    <div className={`${styles.relatedList} ${isVertical ? styles.vertical : styles.horizontal}`}>
+    <div className={`${styles.relatedList}`}>
       <RelatedContext.Provider value={{relatedManager}}>
         <div className={styles.header}>
           <div className={styles.title}>{relatedVideosText}</div>

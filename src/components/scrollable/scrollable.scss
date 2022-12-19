@@ -1,14 +1,15 @@
 .scrollable {
     display: flex;
-    overflow: auto;
     width: 100%;
 
     &.horizontal {
         flex-direction: row;
+        overflow: auto hidden;
     }
     &.vertical {
         flex-direction: column;
         height: 100%;
+        overflow: hidden auto;
     }
     &::-webkit-scrollbar {
         height: 4px;
