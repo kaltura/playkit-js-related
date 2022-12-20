@@ -12,6 +12,11 @@ interface ListEntryProps extends GridEntryProps {
   isVertical: boolean;
 }
 
+const VERTICAL_IMAGE_WIDTH = 99;
+const HORIZONTAL_IMAGE_WIDTH = 160;
+const VERTICAL_IMAGE_HEIGHT = 56;
+const HORITONTAL_IMAGE_HEIGHT = 90;
+
 const ListEntry = withText({
   live: 'controls.live'
 })((props: ListEntryProps) => {
@@ -34,7 +39,15 @@ const ListEntry = withText({
           relatedManager?.playSelected(id);
         }
       }}>
-      <EntryImage {...{poster, duration, type, width: isVertical ? 99 : 160, height: isVertical ? 56 : 90}} />
+      <EntryImage
+        {...{
+          poster,
+          duration,
+          type,
+          width: isVertical ? VERTICAL_IMAGE_WIDTH : HORIZONTAL_IMAGE_WIDTH,
+          height: isVertical ? VERTICAL_IMAGE_HEIGHT : HORITONTAL_IMAGE_HEIGHT
+        }}
+      />
       <div className={styles.entryContent}>
         <div className={styles.text}>
           <div className={styles.entryText}>{title ? <MultilineText text={title} lineHeight={18} lines={2} /> : <></>}</div>
