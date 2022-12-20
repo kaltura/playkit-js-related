@@ -131,22 +131,15 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   async loadMedia() {
     const {config, relatedManager} = this;
-    const {useContext, sourcesList} = config;
-    const newKs = this.config?.ks;
+    const {useContext, sourcesList, playlistId, entryList} = config;
 
     if (!relatedManager.isInitialized) {
-      await relatedManager.load(config, newKs);
-    }
-    // TODO
-    // else if (playlistId || entryList?.length) {
-    //   if (ks && ks !== newKs) {
-    //     this.logger.info('ks changed - reloading related entries');
-    //     await relatedManager.load(config, newKs);
-    //   }
-    // }
-    else if (!sourcesList?.length && useContext) {
+      await relatedManager.load(config);
+    } else if (playlistId || entryList?.length) {
+      // do nothing
+    } else if (!sourcesList?.length && useContext) {
       // refresh context entries
-      await relatedManager.load(config, newKs);
+      await relatedManager.load(config);
     }
 
     await this.ready;

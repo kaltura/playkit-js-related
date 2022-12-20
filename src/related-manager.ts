@@ -9,7 +9,6 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
 
   private _entries: Sources[] = [];
   private config: RelatedConfig | null = null;
-  private ks = '';
   private _isInitialized = false;
   private _isHiddenByUser = false;
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
@@ -47,7 +46,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       const mediaInfo = this.mediaInfoMap?.has(entryId) ? this.mediaInfoMap.get(entryId) : {entryId};
 
       this.player
-        .loadMedia({...mediaInfo, ks: this.ks})
+        .loadMedia({...mediaInfo})
         .then(() => {
           this.logger.info('loadMedia success');
           this.player.play();
@@ -59,9 +58,8 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     this.cycleEntries(index);
   }
 
-  async load(config: RelatedConfig, ks: string) {
+  async load(config: RelatedConfig) {
     this.config = config;
-    this.ks = ks;
     this.mediaInfoMap.clear();
 
     const {playlistId, entryList, sourcesList, useContext, entriesByContextLimit} = config;
@@ -70,9 +68,9 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     if (this.player.playlist?.items?.length) {
       // disable plugin if the player is in playlist playback mode
     } else if (playlistId) {
-      entries = await this.entryService.getByPlaylist({ks, playlistId});
+      entries = await this.entryService.getByPlaylist({playlistId});
     } else if (entryList?.length) {
-      entries = await this.entryService.getByEntryList({entries: entryList, ks});
+      entries = await this.entryService.getByEntryList({entries: entryList});
       entryList.forEach(mediaInfo => {
         if (typeof mediaInfo === 'object' && mediaInfo.entryId && entries.find(entry => entry.id === mediaInfo.entryId)) {
           this.mediaInfoMap.set(mediaInfo.entryId, mediaInfo);
@@ -81,7 +79,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
     } else if (sourcesList?.length) {
       entries = this.entryService.getBySourcesList(sourcesList);
     } else if (useContext) {
-      entries = await this.entryService.getByContext(this.player.sources.id, ks, entriesByContextLimit);
+      entries = await this.entryService.getByContext(this.player.sources.id, entriesByContextLimit);
     } else {
       this.logger.warn('no source configured');
     }
