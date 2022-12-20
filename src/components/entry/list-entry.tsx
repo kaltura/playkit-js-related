@@ -23,7 +23,7 @@ const ListEntry = withText({
     <a
       key={id}
       tabIndex={0}
-      className={`${styles.entry} ${styles.listEntry} ${styles.clickable} ${isVertical ? styles.vertical : styles.horizontal}`}
+      className={`${styles.entry} ${styles.listEntry} ${isVertical ? styles.vertical : styles.horizontal}`}
       style={{width: 'auto', color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {

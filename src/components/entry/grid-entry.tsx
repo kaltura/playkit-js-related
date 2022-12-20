@@ -36,7 +36,7 @@ const GridEntry = withText({
     <a
       key={id}
       tabIndex={0}
-      className={`${styles.entry} ${styles.gridEntry} ${styles.clickable}`}
+      className={`${styles.entry} ${styles.gridEntry}`}
       style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {

@@ -24,7 +24,7 @@ const MinimalGridEntry = withText({
     <a
       key={id}
       tabIndex={0}
-      className={`${styles.entry} ${styles.gridEntry} ${styles.minimal} ${styles.clickable}`}
+      className={`${styles.entry} ${styles.gridEntry} ${styles.minimal}`}
       style={{width, color: KalturaPlayer.ui.style.white, 'line-height': 'normal'}}
       aria-label={`${title} ${liveOrDurationText}`}
       onClick={() => {
