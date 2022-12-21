@@ -1,3 +1,37 @@
+@-webkit-keyframes change-background-color {
+  0% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  25%, 50% {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  75%, 100% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+}
+
+@keyframes change-background-color {
+  0% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  25%, 50% {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  75%, 100% {
+    background-color: rgba(255, 255, 255, .2);
+  }
+}
+
+@mixin animate-background {
+  background-color: rgba(255, 255, 255, .2);
+  -webkit-animation: 2s ease-in-out infinite change-background-color;
+          animation: 2s ease-in-out infinite change-background-color;
+}
+
 button {
   border: 0;
   cursor: pointer;
@@ -26,6 +60,20 @@ button {
   font-weight: 700;
   line-height: 21px;
   white-space: nowrap;
+}
+
+.entry-image {
+  position: relative;
+
+  .thumbnail * {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .duration {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+  }
 }
 
 /* entry */
@@ -170,8 +218,101 @@ button {
   }
 }
 
-.clickable {
-  cursor: pointer;
+.list-entry {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 4px;
+  display: flex;
+  height: fit-content;
+  padding: 8px;
+  position: relative;
+
+  &.horizontal {
+    flex-direction: column;
+
+    .entry-content {
+      margin-top: 4px;
+      height: 35px;
+    }
+  }
+
+  &.vertical {
+    flex-direction: row;
+    margin-right: 8px;
+
+    .entry-content {
+      margin-left: 8px;
+    }
+  }
+
+  &.placeholder {
+    &:hover {
+      background-color: transparent;
+    }
+
+    &.horizontal {
+      .entry-content {
+        margin-left: -16px;
+      }
+
+      .entry-image {
+        height: 90px;
+        width: 160px;
+      }
+    }
+
+    &.vertical {
+      .entry-content {
+        margin-left: 16px;
+      }
+
+      .entry-image {
+        height: 56px;
+        width: 99px;
+      }
+    }
+
+    .entry-image {
+      @include animate-background();
+
+      border-radius: 4px;
+    }
+
+    .entry-content {
+      .text-placeholder {
+        @include animate-background();
+
+        border-radius: 4px;
+        height: 12px;
+
+        &:first-child {
+          margin-bottom: 10px;
+          width: 145px;
+        }
+        &:nth-child(2) {
+          width: 75px;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, .12);
+
+    .entry-content {
+      background-color: transparent;
+    }
+  }
+
+  .entry-content {
+    background-color: transparent;
+  }
+
+  .entry-image {
+    .thumbnail * {
+      border-radius: 4px;
+    }
+  }
 }
 
 @-webkit-keyframes slide-in {

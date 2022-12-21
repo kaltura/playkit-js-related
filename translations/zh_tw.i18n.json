@@ -1,7 +1,8 @@
 {
   "zh_tw": {
     "related": {
-      "playNow": "立即播放"
+      "playNow": "立即播放",
+      "relatedVideos": "相关视频"
     }
   }
 }

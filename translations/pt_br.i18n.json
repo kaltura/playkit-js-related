@@ -1,7 +1,8 @@
 {
   "pt_br": {
     "related": {
-      "playNow": "Reproduzir agora"
+      "playNow": "Reproduzir agora",
+      "relatedVideos": "Vídeos relacionados"
     }
   }
 }

@@ -3,7 +3,7 @@ const {connect} = KalturaPlayer.ui.redux;
 
 import {PageReducer} from './page-reducer';
 import {PageAction} from './page-action';
-import {ArrowLeft, ArrowRight} from 'components/pagination-arrow/pagination-arrow';
+import {ArrowLeft, ArrowLeftDisabled, ArrowRight, ArrowRightDisabled} from 'components/pagination-arrow/pagination-arrow';
 
 import * as styles from './related-grid.scss';
 import {Sources} from 'types/sources';
@@ -60,29 +60,28 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
     return data.slice(firstPageSize + (page - 1) * entriesPerPage, firstPageSize + page * entriesPerPage);
   };
 
-  const arrowLeft =
-    data.length > entriesPerPage - 1 ? (
-      <div className={`${styles.arrow} ${styles.arrowLeft}`}>
-        <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} disabled={currPage === 0} />
-      </div>
-    ) : (
-      <></>
-    );
-  const arrowRight =
-    data.length > entriesPerPage - 1 ? (
-      <div className={`${styles.arrow} ${styles.arrowRight}`}>
-        <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} disabled={currPage > 0 && data.length <= nextPage * entriesPerPage} />
-      </div>
-    ) : (
-      <></>
-    );
+  const arrowLeft = (
+    <div className={`${styles.arrow} ${styles.arrowLeft}`}>
+      {currPage === 0 ? <ArrowLeftDisabled /> : <ArrowLeft onClick={() => setPageAction(PageAction.PREV)} />}
+    </div>
+  );
+
+  const arrowRight = (
+    <div className={`${styles.arrow} ${styles.arrowRight}`}>
+      {currPage > 0 && data.length <= nextPage * entriesPerPage ? (
+        <ArrowRightDisabled />
+      ) : (
+        <ArrowRight onClick={() => setPageAction(PageAction.NEXT)} />
+      )}
+    </div>
+  );
 
   const firstPageEntryDimensions = getEntryDimensions(sizeBreakpoint);
   const entryDimensions = getExpandedEntryDimensions(sizeBreakpoint);
 
   return (
     <div className={getSizeClass(sizeBreakpoint, styles)}>
-      {arrowLeft}
+      {data.length > entriesPerPage - 1 ? arrowLeft : <></>}
       <div className={`${styles.relatedGrid} ${pageAnimation}`} onAnimationEnd={onAnimationEnd}>
         <div className={`${styles.gridPages}`}>
           <GridPage
@@ -111,7 +110,7 @@ const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}:
           />
         </div>
       </div>
-      {arrowRight}
+      {data.length > entriesPerPage - 1 ? arrowRight : <></>}
     </div>
   );
 });

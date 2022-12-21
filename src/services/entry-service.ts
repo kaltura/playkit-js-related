@@ -1,5 +1,4 @@
-import {EntryListResponse} from 'types/entry-list-response';
-import {Sources} from 'types/sources';
+import {EntryListResponse, Sources} from 'types';
 import {RelatedLoader} from './related-loader';
 
 import * as humanizeDuration from 'humanize-duration';
@@ -65,9 +64,9 @@ class EntryService {
     return sourcesList.filter(sources => this.isPlayable(sources)).map(this.mapSources);
   }
 
-  async getByContext(entryId: string, ks: string, limit: number): Promise<Sources[]> {
+  async getByContext(entryId: string, limit: number): Promise<Sources[]> {
     try {
-      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}], ks);
+      const response = await this.player.provider.doRequest([{loader: RelatedLoader, params: {entryId, limit}}]);
       return response.get('related').relatedEntries.map(this.mapSources);
     } catch (e) {
       this.logger.warn(`failed to get related entries by context`);

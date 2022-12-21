@@ -1,0 +1,7 @@
+.list-toggle-button {    
+    &:disabled {
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}

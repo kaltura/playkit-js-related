@@ -7,7 +7,8 @@ interface RelatedConfig {
   sourcesList: Array<KalturaPlayerTypes.Sources>;
   useContext: boolean;
   entriesByContextLimit: number;
-  ks: string;
+  position: string;
+  expandMode: string;
 }
 
 export {RelatedConfig};

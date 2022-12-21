@@ -1,10 +1,11 @@
-import {RelatedConfig} from './types/config';
+import {ui} from 'kaltura-player-js';
+const {SidePanelModes, SidePanelPositions} = ui;
+
 import {RelatedManager} from 'related-manager';
-import {RelatedOverlay} from 'components/related-overlay/related-overlay';
-import {Next} from 'components/next/next';
-import {RelatedEvent} from 'types/related-event';
-import {PrePlaybackPlayOverlayWrapper} from 'components/pre-playback-play-overlay-wrapper/pre-playback-play-overlay-wrapper';
-import {ImageService} from 'services/image-service';
+import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton, RelatedCountdownPreview} from 'components';
+import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
+
+import {Icon, RelatedConfig, RelatedEvent} from 'types';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -27,11 +28,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
     sourcesList: [],
     useContext: true,
     entriesByContextLimit: 12,
-    ks: ''
+    position: SidePanelPositions.RIGHT,
+    expandMode: SidePanelModes.ALONGSIDE
   };
 
   private relatedManager: RelatedManager;
-  private ks = '';
+  private iconId = -1;
+  private panelId = -1;
 
   /**
    * @static
@@ -54,15 +57,22 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.injectUIComponents();
   }
 
-  private injectUIComponents() {
+  private get sidePanelsManager() {
+    return (this.player.getService('sidePanelsManager') as SidePanelsManager) || {};
+  }
+
+  private get upperBarManager() {
+    return (this.player.getService('upperBarManager') as UpperBarManager) || {};
+  }
+
+  private async injectUIComponents() {
     const {relatedManager} = this;
-    const imageService = new ImageService(this.player);
 
     this.player.ui.addComponent({
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay relatedManager={relatedManager} imageService={imageService} />
+      get: () => <RelatedOverlay relatedManager={relatedManager} />
     });
 
     const preplayBackPlayOverlayProps = {
@@ -109,26 +119,87 @@ class Related extends KalturaPlayer.core.BasePlugin {
       area: 'BottomBarPlaybackControls',
       get: () => <Next {...{...nextProps, showPreview: true}} />
     });
+
+    this.player.ui.addComponent({
+      label: 'kaltura-related-preview',
+      presets: PRESETS,
+      area: 'InteractiveArea',
+      replaceComponent: 'PlaylistCountdown',
+      get: () => <RelatedCountdownPreview relatedManager={this.relatedManager} />
+    });
   }
 
-  loadMedia() {
-    const {ks, config, relatedManager} = this;
-    const {useContext, playlistId, entryList, sourcesList} = config;
-    const newKs = this.config?.ks;
-
-    relatedManager.isHiddenByUser = false;
+  async loadMedia() {
+    const {config, relatedManager} = this;
+    const {useContext, sourcesList, playlistId, entryList} = config;
 
     if (!relatedManager.isInitialized) {
-      relatedManager.load(config, newKs);
+      await relatedManager.load(config);
     } else if (playlistId || entryList?.length) {
-      if (ks && ks !== newKs) {
-        this.logger.info('ks changed - reloading related entries');
-        relatedManager.load(config, newKs);
-      }
+      // do nothing
     } else if (!sourcesList?.length && useContext) {
       // refresh context entries
-      relatedManager.load(config, newKs);
+      await relatedManager.load(config);
     }
+
+    await this.ready;
+
+    this.addRelatedListComponents();
+  }
+
+  addRelatedListComponents() {
+    if (this.iconId > 0 || !this.relatedManager.entries.length) return;
+
+    this.iconId = this.upperBarManager.add({
+      label: 'Related',
+      svgIcon: {
+        viewBox: '0 0 32 32',
+        path: Icon.LIST_TOGGLE
+      },
+      onClick: () => {
+        if (!this.relatedManager.isGridVisible) {
+          this.relatedManager.isListVisible = !this.relatedManager.isListVisible;
+        }
+      },
+      component: () => {
+        return <ListToggleButton active={this.relatedManager.isListVisible} disabled={this.relatedManager.isGridVisible} />;
+      }
+    }) as number;
+
+    this.panelId = this.sidePanelsManager.add({
+      label: 'Related',
+      panelComponent: () => {
+        return (
+          <RelatedList
+            relatedManager={this.relatedManager}
+            isVertical={this.config?.position === SidePanelPositions.LEFT || this.config.position === SidePanelPositions.RIGHT}
+          />
+        );
+      },
+      presets: [ui.ReservedPresetNames.Playback],
+      position: this.config.position,
+      expandMode: this.config.expandMode
+    }) as number;
+
+    this.relatedManager.listen(RelatedEvent.GRID_VISIBILITY_CHANGED, () => {
+      this.upperBarManager?.update(this.iconId);
+    });
+
+    this.relatedManager.listen(RelatedEvent.LIST_VISIBILITY_CHANGED, () => {
+      this.upperBarManager?.update(this.iconId);
+      this.sidePanelsManager[this.relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
+    });
+  }
+
+  reset() {
+    this.eventManager.removeAll();
+    this.upperBarManager?.remove(this.iconId);
+    this.sidePanelsManager?.remove(this.panelId);
+    this.relatedManager.isListVisible = false;
+    this.relatedManager.isGridVisible = false;
+    this.relatedManager.isHiddenByUser = false;
+    this.iconId = -1;
+    this.panelId = -1;
   }
 }
 

@@ -1,0 +1,67 @@
+@-webkit-keyframes slideIn {
+    0% {
+        right: -160px;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        right: -160px;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+.related-countdown-preview {
+    -webkit-animation: slideIn 500ms 500ms forwards;
+    animation: slideIn 500ms 500ms forwards;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 4px;
+    bottom: 0;
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 8px 60px -16px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    right: -160px;
+    position: absolute;
+    transition: opacity 400ms, bottom 300ms;
+    width: 280px;
+
+    &.minimal {
+        width: 160px;
+    }
+    
+    &:hover {
+        background-color: #000;
+    }
+    
+    img {
+        border-radius: 4px 0 0 4px;
+    }
+    
+    .content {
+        margin: 8px;
+        
+        .header {
+            color: #ccc;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            
+            .close-button {
+                position: absolute;
+                top: 5px;
+                right: -3px;
+            }
+        }
+        
+        .entry-text {
+            color: #fff;
+            width: 136px;
+        }
+    }
+}
