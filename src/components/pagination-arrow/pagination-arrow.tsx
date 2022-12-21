@@ -1,5 +1,5 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
-const {Icon, IconState} = KalturaPlayer.ui.components;
+const {Icon} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
 enum ARROW_TYPE {
@@ -8,12 +8,14 @@ enum ARROW_TYPE {
 }
 
 interface PaginationArrowProps {
-  onClick: () => void;
-  disabled: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
   type?: ARROW_TYPE;
   prev?: string;
   next?: string;
 }
+
+const DISABLED_COLOR = '#888';
 
 const PaginationArrow = withText({
   prev: 'playlist.prev',
@@ -28,19 +30,18 @@ const PaginationArrow = withText({
       className={`${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.active}`}
       aria-label={type === ARROW_TYPE.LEFT ? prev : next}>
       <Icon
-        activeColor={KalturaPlayer.ui.style.white}
-        color={'#888'}
-        id={`related-arrow-${type}`}
+        color={disabled ? DISABLED_COLOR : KalturaPlayer.ui.style.white}
+        id={`related-arrow-${type}-${disabled ? 'disabled' : ''}`}
         path={type === ARROW_TYPE.LEFT ? IconPath.ARROW_LEFT : IconPath.ARROW_RIGHT}
-        state={disabled ? IconState.INACTIVE : IconState.ACTIVE}
         viewBox={`0 0 32 32`}
       />
     </button>
   );
 });
 
-const ArrowLeft = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.LEFT} />;
+const ArrowLeft = ({onClick}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={false} type={ARROW_TYPE.LEFT} />;
+const ArrowLeftDisabled = () => <PaginationArrow disabled={true} type={ARROW_TYPE.LEFT} />;
+const ArrowRight = ({onClick}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={false} type={ARROW_TYPE.RIGHT} />;
+const ArrowRightDisabled = () => <PaginationArrow disabled={true} type={ARROW_TYPE.RIGHT} />;
 
-const ArrowRight = ({onClick, disabled}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={disabled} type={ARROW_TYPE.RIGHT} />;
-
-export {ArrowLeft, ArrowRight};
+export {ArrowLeft, ArrowLeftDisabled, ArrowRight, ArrowRightDisabled};
