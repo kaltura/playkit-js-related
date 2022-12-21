@@ -6,15 +6,13 @@ import * as styles from './list-toggle-button.scss';
 
 const ListToggleButton = withText({
   relatedVideosText: 'related.relatedVideos'
-})(({active, disabled, relatedVideosText}: {active: boolean; disabled: boolean; relatedVideosText: string}) => {
+})(({disabled, relatedVideosText}: {disabled: boolean; relatedVideosText: string}) => {
   return (
     <button
       aria-label={relatedVideosText}
       tabIndex={0}
       disabled={disabled}
-      className={`${styles.listToggleButton} ${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.upperBarIcon} ${
-        active ? styles.active : ''
-      }`}>
+      className={`${styles.listToggleButton} ${KalturaPlayer.ui.style.upperBarIcon}`}>
       <Icon id={`related-toggle-icon`} path={IconPath.LIST_TOGGLE} viewBox={`0 0 32 32`} />
     </button>
   );
