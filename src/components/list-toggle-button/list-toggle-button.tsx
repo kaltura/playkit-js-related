@@ -1,5 +1,5 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
-const {Icon, IconState} = KalturaPlayer.ui.components;
+const {Icon} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
 import * as styles from './list-toggle-button.scss';
@@ -15,13 +15,7 @@ const ListToggleButton = withText({
       className={`${styles.listToggleButton} ${KalturaPlayer.ui.style.controlButton} ${KalturaPlayer.ui.style.upperBarIcon} ${
         active ? styles.active : ''
       }`}>
-      <Icon
-        activeColor={KalturaPlayer.ui.style.white}
-        id={`related-toggle-icon`}
-        path={IconPath.LIST_TOGGLE}
-        state={IconState.ACTIVE}
-        viewBox={`0 0 32 32`}
-      />
+      <Icon id={`related-toggle-icon`} path={IconPath.LIST_TOGGLE} viewBox={`0 0 32 32`} />
     </button>
   );
 });

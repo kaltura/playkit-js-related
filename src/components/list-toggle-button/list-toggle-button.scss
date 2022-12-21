@@ -1,8 +1,4 @@
-.list-toggle-button {
-    &.active {
-        background-color: #444;
-    }
-    
+.list-toggle-button {    
     &:disabled {
         &:hover {
             background-color: transparent;
