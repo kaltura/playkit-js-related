@@ -10,13 +10,15 @@ import {Icon, RelatedConfig, RelatedEvent} from 'types';
 const PRESETS = ['Playback', 'Live'];
 
 /**
- * Related class.
+ * Related plugin
+ *
  * @classdesc
  */
 class Related extends KalturaPlayer.core.BasePlugin {
   /**
-   * The default configuration of the plugin.
-   * @type {Object}
+   * The default configuration of the plugin
+   *
+   * @type {RelatedConfig}
    * @static
    */
   static defaultConfig: RelatedConfig = {
@@ -46,10 +48,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   /**
-   * @constructor
-   * @param {string} name - The plugin name.
-   * @param {Player} player - The player instance.
-   * @param {Object} config - The plugin config.
+   * Creates an instance of Related.
+   *
+   * @param {string} name plugin name
+   * @param {KalturaPlayerTypes.Player} player current kaltura player instance
+   * @param {RelatedConfig} config related plugin configuation
+   * @memberof Related
    */
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
     super(name, player, config);
@@ -57,14 +61,37 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.injectUIComponents();
   }
 
-  private get sidePanelsManager() {
+  /**
+   * side panel manager service
+   *
+   * @readonly
+   * @private
+   * @type {SidePanelsManager}
+   * @memberof Related
+   */
+  private get sidePanelsManager(): SidePanelsManager {
     return (this.player.getService('sidePanelsManager') as SidePanelsManager) || {};
   }
 
-  private get upperBarManager() {
+  /**
+   * wrapper for upper bar manager service
+   *
+   * @readonly
+   * @private
+   * @type {UpperBarManager}
+   * @memberof Related
+   */
+  private get upperBarManager(): UpperBarManager {
     return (this.player.getService('upperBarManager') as UpperBarManager) || {};
   }
 
+  /**
+   *
+   * inject related grid components into the player ui
+   *
+   * @private
+   * @memberof Related
+   */
   private async injectUIComponents() {
     const {relatedManager} = this;
 
@@ -129,6 +156,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
     });
   }
 
+  /**
+   *
+   * player loadMedia callback
+   *
+   * @memberof Related
+   */
   async loadMedia() {
     const {config, relatedManager} = this;
     const {useContext, sourcesList, playlistId, entryList} = config;
@@ -147,6 +180,12 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.addRelatedListComponents();
   }
 
+  /**
+   *
+   * register related list panel and icon with the player
+   *
+   * @memberof Related
+   */
   addRelatedListComponents() {
     if (this.iconId > 0 || !this.relatedManager.entries.length) return;
 

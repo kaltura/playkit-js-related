@@ -2,9 +2,17 @@ const {withText} = KalturaPlayer.ui.preacti18n;
 const {Icon, Tooltip} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
+/**
+ * close button
+ *
+ * @param {object} props close button props
+ * @param {Function} props.onClick button click handler
+ * @param {string} props.closeText button label
+ * @returns {*} close button component
+ */
 const CloseButton = withText({
   closeText: 'overlay.close'
-})(({onClick, closeText}: {closeText: string; onClick: () => void}) => {
+})(({onClick, closeText}: {onClick: () => void; closeText: string}) => {
   return (
     <div>
       <Tooltip label={closeText}>

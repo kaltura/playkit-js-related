@@ -16,6 +16,15 @@ interface RelatedListProps {
   isVertical: boolean;
 }
 
+/**
+ * displays related entries in horizontal or vertical list
+ *
+ * @param {object} props component props
+ * @param {RelatedManager} relatedManager related manager instance
+ * @param {string} relatedVideosText related videos label text
+ * @param {boolean} isVertical indicates whether the list is vertical
+ * @returns {*} related list component
+ */
 const RelatedList = withText({
   relatedVideosText: 'related.relatedVideos'
 })(({relatedManager, relatedVideosText, isVertical}: RelatedListProps) => {

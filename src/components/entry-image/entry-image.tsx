@@ -14,6 +14,18 @@ interface EntryImageProps {
   children?: ComponentChildren;
 }
 
+/**
+ * entry image component including a thumnbnail and a duration label
+ *
+ * @param {object} props entry image props
+ * @param {string} props.poster entry thumbnail url
+ * @param {string} props.type entry type
+ * @param {number} props.duration entry duration
+ * @param {number} props.width image width
+ * @param {number} props.height image height
+ * @param {object} props.children child components
+ * @returns {object} entry image, including a thumbnail and a duration label
+ */
 const EntryImage = ({poster, type, duration, width, height, children}: EntryImageProps) => {
   return (
     <div className={styles.entryImage} style={{height}}>

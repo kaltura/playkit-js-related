@@ -7,10 +7,21 @@ interface NextProps {
   onUnloaded: (cb: (nextEntries: []) => void) => void;
 }
 
+/**
+ * play next entry button
+ *
+ * @param {object} props component props
+ * @param {boolean} props.showPreview indicates whether next entry preview should be visible
+ * @param {Function} props.onLoaded handler for the component being loaded
+ * @param {Function} props.onUnloaded handler for the component being unloaded
+ * @param {Function} props.onClick handler for button click
+ * @returns {NextProps} play next entry button component
+ */
 const Next = (props: NextProps) => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
+    // eslint-disable-next-line jsdoc/require-jsdoc
     function onEntriesChanged(updatedEntries: []) {
       setEntries(updatedEntries);
     }

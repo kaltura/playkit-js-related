@@ -4,6 +4,14 @@ import * as styles from './scrollable.scss';
 
 const SCROLL_BAR_TIMEOUT = 250;
 
+/**
+ * displays a scrollbar according to dimensions and child components
+ *
+ * @param {object} props component props
+ * @param {ComponentChildren} props.children child components
+ * @param {boolean} props.isVertical whether the scroll is vertical or horizontal
+ * @returns {*} scrollable component
+ */
 const Scrollable = ({children, isVertical}: {children: ComponentChildren; isVertical: boolean}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [scrolling, setScrolling] = useState(false);

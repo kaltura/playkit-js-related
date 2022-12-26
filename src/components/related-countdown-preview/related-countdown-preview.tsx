@@ -28,6 +28,9 @@ interface RelatedCountdownProps {
   sizeBreakpoint: string;
 }
 
+/**
+ * @returns {*} component for next entry preview
+ */
 const RelatedCountdownPreview = withText({
   upNextIn: 'playlist.up_next_in'
 })(

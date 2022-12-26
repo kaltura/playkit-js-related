@@ -28,6 +28,16 @@ interface RelatedOverlayProps {
   sizeBreakpoint: string;
 }
 
+/**
+ * related overlay which contains the related grid and controls its layout and visibility
+ *
+ * @param {object} props component props
+ * @param {RelatedManager} props.relatedManager related manager instance
+ * @param {boolean} props.isPaused indicates whether playback is paused
+ * @param {boolean} props.isPlaybackEnded indicates whether playback has ended
+ * @param {string} props.sizeBreakpoint player size breakpoint
+ * @returns {*} related overlay component
+ */
 const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPlaybackEnded, sizeBreakpoint}: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [countdown, setCountdown] = useState(-1);

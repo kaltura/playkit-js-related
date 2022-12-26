@@ -30,6 +30,19 @@ interface PrePlaybackPlayOverlayWrapperProps {
   startOver: string;
 }
 
+/**
+ * related entries overlay to be shown on playback end instead of the default playback end overlay
+ *
+ * @param {object} props component props
+ * @param {boolean} isPlaybackEnded indicates whether playback has ended
+ * @param {string} props.sizeBreakpoint current player size breakpoint
+ * @param {RelatedManager} props.relatedManager related manager instance
+ * @param {Function} props.onLoaded on loaded callback
+ * @param {Function} props.onUnloaded on unloaded callback
+ * @param {string} props.next next label text
+ * @param {string} props.startOver start over label text
+ * @returns {*} pre playback play overlay component
+ */
 const PrePlaybackPlayOverlayWrapper = withText({
   next: 'playlist.next',
   startOver: 'controls.startOver'
@@ -39,6 +52,11 @@ const PrePlaybackPlayOverlayWrapper = withText({
       const [isHiddenByUser, setIsHiddenByUser] = useState(false);
 
       useEffect(() => {
+        /**
+         * callback for grid / list auto continue being manually cancelled by user
+         *
+         * @param {boolean} isHiddenByUser whether auto continue was cancelled
+         */
         function onHiddenStateChanged(isHiddenByUser: boolean) {
           setIsHiddenByUser(isHiddenByUser);
         }
