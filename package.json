@@ -9,7 +9,6 @@
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --mode development",
     "docs:generate": "documentation build src/** -f md -o docs/api.md",
-    "docs:serve": "documentation serve src/** --watch",
     "watch": "webpack --progress --colors --watch --mode development",
     "test": "NODE_ENV=test karma start --color --mode development",
     "pushTaggedRelease": "git push --follow-tags --no-verify origin master",
