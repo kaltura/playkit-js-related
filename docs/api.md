@@ -418,7 +418,7 @@ Wraps around child components and displays a styled scrollbar with vertical or h
 
 ## Thumbnail
 
-Image with fixed domensions and a fallback option for images which failed to load.
+Image with fixed dimensions and a fallback option for images which failed to load.
 
 ### Parameters
 
