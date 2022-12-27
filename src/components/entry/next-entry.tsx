@@ -17,22 +17,22 @@ interface NextEntryProps extends GridEntryProps {
 }
 
 /**
- * full size next entry, including image, title and description
+ * Full size next entry, with image, title and description.
+ * Wraps BaseNextEntry.
  *
- * @param {object} props component props
- * @param {string} props.title entry title
- * @param {number} props.id entry id
- * @param {object} props.children component children
- * @param {number} props.duration entry duration
- * @param {string} props.type entry type
- * @param {string} props.poster entry poster
- * @param {object} props.entryDimensions dimensions for entry render
- * @param {string} props.live live label
- * @param {string} props.description entry description
- * @param {number} props.countdown countdown for playback of next entry
- * @param {string} props.upNext up next label
- * @param {string} props.upNextIn up next in label
- * @returns {object} next entry component
+ * @param {object} props Component props.
+ * @param {string} props.title Entry title.
+ * @param {number} props.id Entry internal id.
+ * @param {object} props.children Component children.
+ * @param {number} props.duration Entry playback duration.
+ * @param {string} props.type Entry type.
+ * @param {string} props.poster Entry poster.
+ * @param {object} props.entryDimensions Entry render dimensions.
+ * @param {string} props.live Live label.
+ * @param {string} props.description Entry description.
+ * @param {number} props.countdown Countdown for playback of next entry.
+ * @param {string} props.upNext Up next label.
+ * @param {string} props.upNextIn Up next in label.
  */
 const NextEntry = withText({
   upNext: 'playlist.up_next',

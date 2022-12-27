@@ -5,12 +5,11 @@ import {Icon as IconPath} from 'types';
 import * as styles from './list-toggle-button.scss';
 
 /**
- * related list toggle button
+ * Related list toggle button.
  *
- * @param {object} props related list toggle button props
- * @param {boolean} disabled button disabled state
- * @param {string} relatedVideosText button label
- * @returns {object} related list toggle button component
+ * @param {object} props Component props.
+ * @param {boolean} props.disabled Disabled state indication.
+ * @param {string} props.relatedVideosText Button label.
  */
 const ListToggleButton = withText({
   relatedVideosText: 'related.relatedVideos'

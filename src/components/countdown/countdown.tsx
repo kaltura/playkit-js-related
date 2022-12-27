@@ -14,12 +14,12 @@ const useCountDown = (start: number) => {
 };
 
 /**
- * countdown component which displays the current number of seconds remaining
+ * Counts down from an initial number of seconds and renders the number of seconds remaining.
  *
- * @param {object} props countdown props
- * @param {number} props.seconds number of seconds to be count down from
- * @returns {object} countdown component
+ * @param {object} props Countdown props.
+ * @param {number} props.seconds Initial number of seconds.
  */
+
 const Countdown = ({seconds}: {seconds: number}) => {
   const timeLeft = useCountDown(seconds);
   return <span>{timeLeft}</span>;

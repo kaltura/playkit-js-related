@@ -10,13 +10,11 @@ import {Icon, RelatedConfig, RelatedEvent} from 'types';
 const PRESETS = ['Playback', 'Live'];
 
 /**
- * Related plugin
- *
- * @classdesc
+ * @class Related plugin.
  */
 class Related extends KalturaPlayer.core.BasePlugin {
   /**
-   * The default configuration of the plugin
+   * The default configuration of the plugin.
    *
    * @type {RelatedConfig}
    * @static
@@ -33,11 +31,28 @@ class Related extends KalturaPlayer.core.BasePlugin {
     position: SidePanelPositions.RIGHT,
     expandMode: SidePanelModes.ALONGSIDE
   };
-
+  /**
+   * Related Manager instance.
+   *
+   * @private
+   * @type {RelatedManager}
+   * @memberof Related
+   */
   private relatedManager: RelatedManager;
+  /**
+   * Id of the related list toggle icon, set using top bar manager.
+   *
+   * @private
+   * @memberof Related
+   */
   private iconId = -1;
+  /**
+   * Id of the related list side panel, set using side panel manager.
+   *
+   * @private
+   * @memberof Related
+   */
   private panelId = -1;
-
   /**
    * @static
    * @public
@@ -48,11 +63,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   /**
-   * Creates an instance of Related.
+   * Creates an instance of Related plugin.
    *
-   * @param {string} name plugin name
-   * @param {KalturaPlayerTypes.Player} player current kaltura player instance
-   * @param {RelatedConfig} config related plugin configuation
+   * @param {string} name Plugin name.
+   * @param {KalturaPlayerTypes.Player} player Current kaltura player instance.
+   * @param {RelatedConfig} config Related plugin configuation.
    * @memberof Related
    */
   constructor(name: string, player: KalturaPlayerTypes.Player, config: RelatedConfig) {
@@ -62,7 +77,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   /**
-   * side panel manager service
+   * Side panel manager service wrapper.
    *
    * @readonly
    * @private
@@ -74,7 +89,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
   }
 
   /**
-   * wrapper for upper bar manager service
+   * Upper bar manager service wrapper.
    *
    * @readonly
    * @private
@@ -87,7 +102,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   /**
    *
-   * inject related grid components into the player ui
+   * Inject related grid components into the player ui.
    *
    * @private
    * @memberof Related
@@ -158,7 +173,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   /**
    *
-   * player loadMedia callback
+   * Player loadMedia callback.
    *
    * @memberof Related
    */
@@ -182,7 +197,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
 
   /**
    *
-   * register related list panel and icon with the player
+   * Inject related list panel and list toggle icon components into the ui.
    *
    * @memberof Related
    */

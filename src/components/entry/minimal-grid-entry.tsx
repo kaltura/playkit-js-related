@@ -11,18 +11,17 @@ const {withText} = KalturaPlayer.ui.preacti18n;
 import * as styles from './entry.scss';
 
 /**
- * renders a minimal grid entry, including image and title
+ * Minimal grid entry with image and title.
  *
- * @param {object} props component props
- * @param {string} props.title entry title
- * @param {number} props.id entry id
- * @param {object} props.children component children
- * @param {number} props.duration entry duration
- * @param {string} props.type entry type
- * @param {string} props.poster entry poster
- * @param {object} props.entryDimensions dimensions for entry render
- * @param {string} props.live live label
- * @returns {object} minimal grid entry component
+ * @param {object} props Component props.
+ * @param {string} props.title Entry title.
+ * @param {number} props.id Entry internal id.
+ * @param {object} props.children Component children.
+ * @param {number} props.duration Entry duration.
+ * @param {string} props.type Entry type.
+ * @param {string} props.poster Entry poster.
+ * @param {object} props.entryDimensions Dimensions for entry render.
+ * @param {string} props.live Live label.
  */
 const MinimalGridEntry = withText({
   live: 'controls.live'

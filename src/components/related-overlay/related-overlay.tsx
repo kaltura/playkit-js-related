@@ -29,14 +29,14 @@ interface RelatedOverlayProps {
 }
 
 /**
- * related overlay which contains the related grid and controls its layout and visibility
+ * Overlay which wraps the related grid and controls its layout and visibility.
  *
- * @param {object} props component props
- * @param {RelatedManager} props.relatedManager related manager instance
- * @param {boolean} props.isPaused indicates whether playback is paused
- * @param {boolean} props.isPlaybackEnded indicates whether playback has ended
- * @param {string} props.sizeBreakpoint player size breakpoint
- * @returns {*} related overlay component
+
+ * @param {object} props Component props.
+ * @param {RelatedManager} props.relatedManager Related manager instance.
+ * @param {boolean} props.isPaused Indicates whether playback is paused.
+ * @param {boolean} props.isPlaybackEnded Indicates whether playback has ended.
+ * @param {string} props.sizeBreakpoint Player size breakpoint.
  */
 const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPlaybackEnded, sizeBreakpoint}: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);

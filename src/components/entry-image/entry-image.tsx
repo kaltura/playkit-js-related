@@ -15,17 +15,17 @@ interface EntryImageProps {
 }
 
 /**
- * entry image with a duration label
+ * Entry image with a duration label.
  *
- * @param {object} props entry image props
- * @param {string} props.poster entry thumbnail url
- * @param {string} props.type entry type
- * @param {number} props.duration entry duration
- * @param {number} props.width image width
- * @param {number} props.height image height
- * @param {object} props.children child components
- * @returns {object} entry image component
+ * @param {object} props Component props.
+ * @param {string} props.poster Entry thumbnail url.
+ * @param {string} props.type Entry type.
+ * @param {number} props.duration Entry playback duration.
+ * @param {number} props.width Image width.
+ * @param {number} props.height Image height.
+ * @param {object} props.children Child components.
  */
+
 const EntryImage = ({poster, type, duration, width, height, children}: EntryImageProps) => {
   return (
     <div className={styles.entryImage} style={{height}}>

@@ -29,7 +29,7 @@ interface RelatedCountdownProps {
 }
 
 /**
- * @returns {*} component for next entry preview
+ * Shows preview image of the next entry, with title and countdown.
  */
 const RelatedCountdownPreview = withText({
   upNextIn: 'playlist.up_next_in'

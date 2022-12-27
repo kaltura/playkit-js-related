@@ -1,13 +1,12 @@
 /**
- *
- * configuration parameters for related plugin
+ * Configuration parameters for related plugin.
  *
  * @interface RelatedConfig
  */
 interface RelatedConfig {
   /**
    *
-   * if true, continue to to next related entry after playback end
+   * Indicates whether to continue to to next related entry after playback end.
    *
    * @type {boolean}
    * @memberof RelatedConfig
@@ -16,7 +15,7 @@ interface RelatedConfig {
   autoContinue: boolean;
   /**
    *
-   * if autoContinue is true, sets the time in seconds to wait after playback end and before continuing to the next entry
+   * If autoContinue is true, indicates the time in seconds to wait after playback end and before continuing to the next entry.
    *
    * @type {number}
    * @memberof RelatedConfig
@@ -25,7 +24,7 @@ interface RelatedConfig {
   autoContinueTime: number;
   /**
    *
-   * if true, show related grid on playback paused
+   * Indicates whether the related grid should be visible on playback paused.
    *
    * @type {boolean}
    * @memberof RelatedConfig
@@ -34,7 +33,7 @@ interface RelatedConfig {
   showOnPlaybackPaused: boolean;
   /**
    *
-   * if set, related entries will fetched according to this playlist
+   * If set, related entries will fetched according to this playlist.
    *
    * @type {(string | null)}
    * @memberof RelatedConfig
@@ -42,8 +41,7 @@ interface RelatedConfig {
    */
   playlistId: string | null;
   /**
-   *
-   * if set, and playlistId is not set, related entries will be fetched according to the items in this list
+   * If set, and playlistId is not set, related entries will be fetched according to the items in this list.
    *
    * @type {Array<KalturaPlayerTypes.MediaInfo>}
    * @memberof RelatedConfig
@@ -51,8 +49,7 @@ interface RelatedConfig {
    */
   entryList: Array<KalturaPlayerTypes.MediaInfo>;
   /**
-   *
-   * if set, and playlistId and entryList are not set, explicitly defines the Sources to be used as related entries
+   * If set, and playlistId and entryList are not set, this data will be used to set the related entries, without fetching any additional information.
    *
    * @type {Array<KalturaPlayerTypes.Sources>}
    * @memberof RelatedConfig
@@ -61,7 +58,7 @@ interface RelatedConfig {
   sourcesList: Array<KalturaPlayerTypes.Sources>;
   /**
    *
-   * if true, and the other 3 options for related entries were not set, fetch related entries using the metadata of the current entry
+   * If true, and the three other options for related entries were not set, related entries will be fetched using the metadata of the current entry.
    *
    * @type {boolean}
    * @memberof RelatedConfig
@@ -70,7 +67,7 @@ interface RelatedConfig {
   useContext: boolean;
   /**
    *
-   * limits the number of entries to be fetched when fetching related entries by context
+   * Max number of entries which can be fetched when fetching related entries by context.
    *
    * @type {number}
    * @memberof RelatedConfig
@@ -79,7 +76,7 @@ interface RelatedConfig {
   entriesByContextLimit: number;
   /**
    *
-   * position of the related list (top, down, left, right)
+   * Position of the related list (top, down, left, right).
    *
    * @type {string}
    * @memberof RelatedConfig
@@ -88,7 +85,7 @@ interface RelatedConfig {
   position: string;
   /**
    *
-   * defines the relation between the position of the player and of the related list (over, alongside, hidden)
+   * The relation between the position of the player and of the related list (over, alongside).
    *
    * @type {string}
    * @memberof RelatedConfig

@@ -8,15 +8,15 @@ interface NextProps {
 }
 
 /**
- * play next entry button
+ * Play next entry button.
  *
- * @param {object} props component props
- * @param {boolean} props.showPreview indicates whether next entry preview should be visible
- * @param {Function} props.onLoaded handler for the component being loaded
- * @param {Function} props.onUnloaded handler for the component being unloaded
- * @param {Function} props.onClick handler for button click
- * @returns {NextProps} play next entry button component
+ * @param {object} props Component props.
+ * @param {boolean} props.showPreview Indicates whether next entry preview should be visible.
+ * @param {Function} props.onLoaded Handler for component loaded event.
+ * @param {Function} props.onUnloaded Handler for component loaded event.
+ * @param {Function} props.onClick onClick event handler.
  */
+
 const Next = (props: NextProps) => {
   const [entries, setEntries] = useState([]);
 

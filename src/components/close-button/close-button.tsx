@@ -3,12 +3,11 @@ const {Icon, Tooltip} = KalturaPlayer.ui.components;
 import {Icon as IconPath} from 'types';
 
 /**
- * close button
+ * Button to toggle off related list visibility.
  *
- * @param {object} props close button props
- * @param {Function} props.onClick button click handler
- * @param {string} props.closeText button label
- * @returns {*} close button component
+ * @param {object} props Component props.
+ * @param {Function} props.onClick onClick event handler.
+ * @param {string} props.closeText Button label.
  */
 const CloseButton = withText({
   closeText: 'overlay.close'

@@ -31,17 +31,16 @@ interface PrePlaybackPlayOverlayWrapperProps {
 }
 
 /**
- * related entries overlay to be shown on playback end instead of the default playback end overlay
+ * Overlay which is displayed on playback end instead of the default playback end overlay.
  *
- * @param {object} props component props
- * @param {boolean} isPlaybackEnded indicates whether playback has ended
- * @param {string} props.sizeBreakpoint current player size breakpoint
- * @param {RelatedManager} props.relatedManager related manager instance
- * @param {Function} props.onLoaded on loaded callback
- * @param {Function} props.onUnloaded on unloaded callback
- * @param {string} props.next next label text
- * @param {string} props.startOver start over label text
- * @returns {*} pre playback play overlay component
+ * @param {object} props Component props.
+ * @param {boolean} props.isPlaybackEnded Indicates whether playback has ended.
+ * @param {string} props.sizeBreakpoint Player size breakpoint.
+ * @param {RelatedManager} props.relatedManager Related manager instance.
+ * @param {Function} props.onLoaded Handler for component loaded event.
+ * @param {Function} props.onUnloaded Handler for component unloaded event.
+ * @param {string} props.next Next label text.
+ * @param {string} props.startOver Start over label text.
  */
 const PrePlaybackPlayOverlayWrapper = withText({
   next: 'playlist.next',
@@ -52,11 +51,7 @@ const PrePlaybackPlayOverlayWrapper = withText({
       const [isHiddenByUser, setIsHiddenByUser] = useState(false);
 
       useEffect(() => {
-        /**
-         * callback for grid / list auto continue being manually cancelled by user
-         *
-         * @param {boolean} isHiddenByUser whether auto continue was cancelled
-         */
+        // eslint-disable-next-line jsdoc/require-jsdoc
         function onHiddenStateChanged(isHiddenByUser: boolean) {
           setIsHiddenByUser(isHiddenByUser);
         }

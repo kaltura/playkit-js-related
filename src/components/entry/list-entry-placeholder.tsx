@@ -1,12 +1,12 @@
 import * as styles from './entry.scss';
 
 /**
- * animated placeholder for a list entry
+ * Animated placeholder for a list entry.
  *
- * @param {object} props component props
- * @param {boolean} props.isVertical indicates whether the entry is vertical
- * @returns {object} list entry placeholder component
+ * @param {object} props Component props.
+ * @param {boolean} props.isVertical If true, indicates that the entry placeholder is vertical, otherwise it's horizontal.
  */
+
 const ListEntryPlaceholder = ({isVertical}: {isVertical: boolean}) => {
   return (
     <div className={`${styles.listEntry} ${styles.placeholder} ${isVertical ? styles.vertical : styles.horizontal}`}>

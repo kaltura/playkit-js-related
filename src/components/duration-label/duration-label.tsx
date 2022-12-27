@@ -4,13 +4,12 @@ const {toHHMMSS} = KalturaPlayer.ui.utils;
 import * as styles from './duration-label.scss';
 
 /**
- * label which shows the duration of an entry or a live label for live entries
+ * Displays formatted duration of entry playback, or a live label for live entries.
  *
- * @param {object} props duration label props
- * @param {string} type entry type
- * @param {number} duration entry duration
- * @param {string} liveText text for live label
- * @returns {object} duration label compoent
+ * @param {object} props Duration label props.
+ * @param {string} type Entry type.
+ * @param {number} duration Entry playack duration.
+ * @param {string} liveText Live label text.
  */
 const DurationLabel = withText({
   liveText: 'controls.live'

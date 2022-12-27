@@ -9,14 +9,14 @@ interface MultilineTextProps {
 }
 
 /**
- * shows multiple lines of text, trimmed to a set number of lines with an ellipsis in case of overflow
+ * Displays text truncated to a set number of lines, with an ellipsis in case of overflow.
  *
- * @param {object} props multiline text props
- * @param {string} props.text the text to be displayed
- * @param {number} props.lineHeight the line height of a single line of text
- * @param {number} props.lines the number of visible lines
- * @returns {object} multiline text component
+ * @param {object} props Component props.
+ * @param {string} props.text Text to be displayed.
+ * @param {number} props.lineHeight Line height for a single line of text.
+ * @param {number} props.lines Max number of visible lines.
  */
+
 const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   const [minLength, setMinLength] = useState(0);
   const [maxLength, setMaxLength] = useState(text.length);

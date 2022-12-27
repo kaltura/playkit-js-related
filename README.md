@@ -10,9 +10,10 @@ PlayKit JS Related is written in [ECMAScript6], statically analysed using [Types
 
 ### Prerequisites
 
-The plugin requires [Kaltura Player] to be loaded first.
+The plugin requires [Kaltura Player] and [playkit-ui-managers] to be loaded first.
 
 [kaltura player]: https://github.com/kaltura/kaltura-player-js
+[playkit-ui-managers]: https://github.com/kaltura/playkit-js-ui-managers
 
 ### Installing
 
@@ -41,6 +42,8 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 ```html
 <script type="text/javascript" src="/PATH/TO/FILE/kaltura-player.js"></script>
 <!--Kaltura player-->
+<script type="text/javascript" src="/PATH/TO/FILE/kaltura-player.js"></script>
+<!--Playkit ui managers plugin -->
 <script type="text/javascript" src="/PATH/TO/FILE/playkit-related.js"></script>
 <!--PlayKit related plugin-->
 <div id="player-placeholder" style="height:360px; width:640px">
@@ -50,8 +53,18 @@ Finally, add the bundle as a script tag in your page, and initialize the player
      ...
      targetId: 'player-placeholder',
      plugins: {
+       uiManagers: {},
        related: {
-         playlistId: ...
+         playlistId: "", // Fetch related entries by this playlist id.
+         entryList: [], // Fetch related entries by list of entry metadata.
+         sourcesList: [], // Manually set related entries data, without fetching them from another source.
+         useContext: true, // fetch entries by context API, unless other options are not set.
+         autoContinue: true, // Indicates whether to continue to to next related entry after playback end.
+         autoContinueTime: 5, // If autoContinue is true, indicates the time in seconds to wait after playback end and before continuing to the next entry.
+         showOnPlaybackPaused: false, // Indicates whether the related grid should be visible on playback paused.
+         entriesByContextLimit: 12 // Max number of entries which can be fetched when fetching related entries by context.
+         position: "right" // Position of the related list (top, down, left, right).
+         expandMode: "alongside" // The relation between the position of the player and of the related list (over, alongside).
        }
      },
      ui: {
@@ -74,9 +87,7 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 
 ## Documentation
 
-Related plugin configuration can been found here:
-
-TBD
+- **[Configuration & API](docs/api.md)**
 
 ## Running the tests
 

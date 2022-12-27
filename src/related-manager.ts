@@ -1,13 +1,13 @@
 import {EntryService, ImageService} from 'services';
 import {RelatedConfig, RelatedEvent, Sources} from 'types';
 /**
- * related manager is used to hold the state of the plugin and control its behavior
+ * Manages the plugin state.
  *
  * @class RelatedManager
  */
 class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   /**
-   * kaltura player instance
+   * Kaltura player instance.
    *
    * @private
    * @type {KalturaPlayerTypes.Player}
@@ -16,7 +16,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private player: KalturaPlayerTypes.Player;
 
   /**
-   * logger object
+   * Logger instance.
    *
    * @private
    * @type {KalturaPlayerTypes.Logger}
@@ -25,7 +25,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private logger: KalturaPlayerTypes.Logger;
 
   /**
-   * event manager instance
+   * Event manager instance.
    *
    * @private
    * @type {KalturaPlayerTypes.EventManager}
@@ -34,7 +34,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private eventManager: KalturaPlayerTypes.EventManager;
 
   /**
-   * service used to fetch related entries
+   * Service used to fetch related entries.
    *
    * @private
    * @type {EntryService}
@@ -43,7 +43,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private entryService: EntryService;
 
   /**
-   * related entries array
+   * Related entries data.
    *
    * @private
    * @type {Sources[]}
@@ -52,7 +52,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _entries: Sources[] = [];
 
   /**
-   * related plugin configuration
+   * Related plugin configuration.
    *
    * @private
    * @type {(RelatedConfig | null)}
@@ -61,7 +61,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private config: RelatedConfig | null = null;
 
   /**
-   * indicates whether the related manager has already been initialized by calling load() at least once
+   * Indicates whether the related manager has already been initialized, by calling load() at least once.
    *
    * @private
    * @memberof RelatedManager
@@ -69,7 +69,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isInitialized = false;
 
   /**
-   * indicates whether the next entry preview has been manually hidden by the user
+   * Indicates whether the next entry preview has been manually hidden by the user.
    *
    * @private
    * @memberof RelatedManager
@@ -77,7 +77,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isHiddenByUser = false;
 
   /**
-   * cache for media info entry metadata objecys
+   * Cache for entry metadata by entry id.
    *
    * @private
    * @type {Map<string, KalturaPlayerTypes.MediaInfo>}
@@ -86,7 +86,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private mediaInfoMap: Map<string, KalturaPlayerTypes.MediaInfo> = new Map();
 
   /**
-   * handle for a setTimeout used during auto continue
+   * Timeout handle of for the autocontinue timeout handler.
    *
    * @private
    * @memberof RelatedManager
@@ -94,7 +94,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private nextEntryTimeoutId = -1;
 
   /**
-   * indicates whether the related grid is visible or not
+   * Indicates whether the related grid is visible or not.
    *
    * @private
    * @memberof RelatedManager
@@ -102,7 +102,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isGridVisible = false;
 
   /**
-   * indicates whether the related list is visible or not
+   * Indicates whether the related list is visible or not.
    *
    * @private
    * @memberof RelatedManager
@@ -110,7 +110,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isListVisible = false;
 
   /**
-   * service used to fetch entry thumbnails
+   * Service used to fetch entry thumbnails.
    *
    * @private
    * @type {ImageService}
@@ -131,7 +131,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * cycle the related entries by pushing the index of the selected entry to the end of the list
+   * Cycle the related entries by pushing the index of the selected entry to the end of the list.
    *
    * @private
    * @param {number} lastPlayedIndex index of the last played entry
@@ -144,7 +144,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * play a selected entry
+   * Play a selected entry.
    *
    * @private
    * @param {number} index index of the selected entry to play
@@ -174,7 +174,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * load related entries list according to the configuration options
+   * Load related entries list according to the configuration options.
    *
    * @param {RelatedConfig} config related plugin config
    * @memberof RelatedManager
@@ -214,7 +214,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * restart current entry playback
+   * Restart current entry playback.
    *
    * @memberof RelatedManager
    */
@@ -224,7 +224,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * play the next entry in the list
+   * Play the next entry in the list.
    *
    * @param {number} [seconds] seconds to wait before next entry playback
    * @memberof RelatedManager
@@ -243,7 +243,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * playByIndex wrapper function
+   * Wrapper for playByIndex.
    *
    * @param {number} internalIndex index of the entry to be played
    * @memberof RelatedManager
@@ -254,7 +254,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * clear timeout for next entry auto continue
+   * Clear next entry auto continue timeout.
    *
    * @memberof RelatedManager
    */
@@ -264,7 +264,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * register an event listener
+   * Register an event listener for a plugin event.
    *
    * @param {string} name event name
    * @param {*} listener callback function
@@ -275,7 +275,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * unregister an event listener
+   * Unregister an event listener for a plugin event.
    *
    * @param {string} name event name
    * @param {*} listener callback function
@@ -286,7 +286,8 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * get full url of an entry thumbnail image, including dimensions - if it's a kaltura image which supports custom dimensions
+   * Get url of an entry thumbnail image.
+   * If possible, get an entry with specific dimensions.
    *
    * @param {string} url initial thumbnail url
    * @returns {*}  {(Promise<string | null>)} promise which returns the full url or null if failed to load
@@ -297,7 +298,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * indicates whether the next entry preview has been manually hidden by the user
+   * Indicates whether the next entry preview has been manually hidden by the user.
    *
    * @memberof RelatedManager
    */
@@ -307,7 +308,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * indicates whether the related grid should be visible on playback paused
+   * Indicates whether the related grid should be visible on playback paused.
    *
    * @readonly
    * @type {boolean}
@@ -318,7 +319,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * if autoContinue is true, returns the time to wait after playback and before playing the next entry
+   * If autoContinue is true, returns the time to wait after playback and before playing the next entry.
    *
    * @readonly
    * @type {number}
@@ -329,7 +330,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * set related entries and fire RELATED_ENTRIES_CHANGED event
+   * Set related entries array and fire RELATED_ENTRIES_CHANGED event.
    *
    * @memberof RelatedManager
    */
@@ -340,7 +341,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * get related entries
+   * Get related entries array.
    *
    * @type {Sources[]}
    * @memberof RelatedManager
@@ -350,7 +351,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * indicates whether the related manager has already been initialized by calling load() at least once
+   * Indicates whether the related manager has already been initialized by calling load() at least once.
    *
    * @readonly
    * @type {boolean}
@@ -361,7 +362,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * get grid visibility indication
+   * Indicates whether the grid is crrently visible.
    *
    * @type {boolean}
    * @memberof RelatedManager
@@ -371,7 +372,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * set related grid visibility inidication and fire GRID_VISIBILITY_CHANGED event
+   * Set grid visibility inidication and fire GRID_VISIBILITY_CHANGED event.
    *
    * @memberof RelatedManager
    */
@@ -381,7 +382,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * get related list visibility indication
+   * Indicates whether the list is currently visible.
    *
    * @type {boolean}
    * @memberof RelatedManager
@@ -391,7 +392,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * set related list visibility indication
+   * Set list visibility indication.
    *
    * @memberof RelatedManager
    */

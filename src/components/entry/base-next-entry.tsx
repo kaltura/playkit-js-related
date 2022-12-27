@@ -18,24 +18,23 @@ interface NextEntryProps extends GridEntryProps {
 }
 
 /**
- * base next entry component, including image
+ * Base next entry component with entry image.
  *
- * @param {object} props component props
- * @param {string} props.title entry title
- * @param {number} props.id entry id
- * @param {object} props.children component children
- * @param {number} props.duration entry duration
- * @param {string} props.type entry type
- * @param {string} props.poster entry poster
- * @param {object} props.entryDimensions dimensions for entry render
- * @param {string} props.live live label
- * @param {string} props.description entry description
- * @param {number} props.countdown countdown for playback of next entry
- * @param {string} props.sizeClass class for display of entry in specific size
- * @param {string} props.cancelLabel cancel button label
- * @param {string} props.playNowLabel play now button label
- * @param {boolean} props.alwaysShowButtons indicates whether cancel and play now buttons should be visible even when countdown is not in progress
- * @returns {object} base next entry component
+ * @param {object} props Component props.
+ * @param {string} props.title Entry title.
+ * @param {number} props.id Internal id.
+ * @param {object} props.children Component children.
+ * @param {number} props.duration Entry playback duration.
+ * @param {string} props.type Entry type.
+ * @param {string} props.poster Entry poster
+ * @param {object} props.entryDimensions Entry render dimensions.
+ * @param {string} props.live Live label.
+ * @param {string} props.description Entry description.
+ * @param {number} props.countdown Countdown for playback of next entry.
+ * @param {string} props.sizeClass CSS Class for entry of specific size.
+ * @param {string} props.cancelLabel Cancel button label.
+ * @param {string} props.playNowLabel Play now button label.
+ * @param {boolean} props.alwaysShowButtons If true indicates that buttons should be visible even when countdown is not in progress.
  */
 const BaseNextEntry = withText({
   playNowLabel: 'related.playNow',
