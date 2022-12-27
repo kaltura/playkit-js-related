@@ -22,6 +22,20 @@ interface GridEntryProps {
   live: string;
 }
 
+/**
+ * full size grid entry, including image and title
+ *
+ * @param {object} props component props
+ * @param {string} props.title entry title
+ * @param {number} props.id entry id
+ * @param {ComponentChildren} props.children component children
+ * @param {number} props.duration entry duration
+ * @param {string} props.type entry type
+ * @param {string} props.poster entry poster
+ * @param {object} props.entryDimensions dimensions for entry render
+ * @param {string} props.live live label
+ * @returns {object} grid entry component
+ */
 const GridEntry = withText({
   live: 'controls.live'
 })((props: GridEntryProps) => {

@@ -15,7 +15,7 @@ interface EntryImageProps {
 }
 
 /**
- * entry image component including a thumnbnail and a duration label
+ * entry image with a duration label
  *
  * @param {object} props entry image props
  * @param {string} props.poster entry thumbnail url
@@ -24,7 +24,7 @@ interface EntryImageProps {
  * @param {number} props.width image width
  * @param {number} props.height image height
  * @param {object} props.children child components
- * @returns {object} entry image, including a thumbnail and a duration label
+ * @returns {object} entry image component
  */
 const EntryImage = ({poster, type, duration, width, height, children}: EntryImageProps) => {
   return (

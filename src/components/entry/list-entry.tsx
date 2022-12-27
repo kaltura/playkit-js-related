@@ -17,6 +17,20 @@ const HORIZONTAL_IMAGE_WIDTH = 160;
 const VERTICAL_IMAGE_HEIGHT = 56;
 const HORITONTAL_IMAGE_HEIGHT = 90;
 
+/**
+ * list entry, including image and title
+ *
+ * @param {object} props component props
+ * @param {string} props.title entry title
+ * @param {number} props.id entry id
+ * @param {number} props.duration entry duration
+ * @param {string} props.type entry type
+ * @param {string} props.poster entry poster
+ * @param {object} props.entryDimensions dimensions for entry render
+ * @param {string} props.live live label
+ * @param {boolean} props.isVertical if true, indicates that the list entry is vertical, if false indicates that it's horizontal
+ * @returns {object} grid entry component
+ */
 const ListEntry = withText({
   live: 'controls.live'
 })((props: ListEntryProps) => {
