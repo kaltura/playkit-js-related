@@ -29,7 +29,7 @@ yarn install
 
 ### Building
 
-Then, build the player
+Then, build the plugin
 
 ```javascript
 yarn run build
