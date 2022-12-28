@@ -62,8 +62,8 @@ Finally, add the bundle as a script tag in your page, and initialize the player
          autoContinue: true, // Indicates whether to continue to to next related entry after playback end.
          autoContinueTime: 5, // If autoContinue is true, indicates the time in seconds to wait after playback end and before continuing to the next entry.
          showOnPlaybackPaused: false, // Indicates whether the related grid should be visible on playback paused.
-         entriesByContextLimit: 12 // Max number of entries which can be fetched when fetching related entries by context.
-         position: "right" // Position of the related list (top, down, left, right).
+         entriesByContextLimit: 12, // Max number of entries which can be fetched when fetching related entries by context.
+         position: "right", // Position of the related list (top, down, left, right).
          expandMode: "alongside" // The relation between the position of the player and of the related list (over, alongside).
        }
      },
