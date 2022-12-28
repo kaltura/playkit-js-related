@@ -1,8 +1,8 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "preact"],
+  "plugins": ["@typescript-eslint", "prettier", "jsdoc"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "preact", "plugin:jsdoc/recommended"],
   "globals": {
     "KalturaPlayer": true,
     "KalturaPlayerTypes": true

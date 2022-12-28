@@ -39,9 +39,34 @@ const PaginationArrow = withText({
   );
 });
 
+/**
+ * Left pagination arrow.
+ *
+ * @param {object} props Component props.
+ * @param {Function} props.onClick onClick event handler.
+ */
+
 const ArrowLeft = ({onClick}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={false} type={ARROW_TYPE.LEFT} />;
+
+/**
+ * Disabled left pagination arrow.
+ */
+
 const ArrowLeftDisabled = () => <PaginationArrow disabled={true} type={ARROW_TYPE.LEFT} />;
+
+/**
+ * Right pagination arrow.
+ *
+ * @param {object} props Component props.
+ * @param {Function} props.onClick onClick event handler.
+ */
+
 const ArrowRight = ({onClick}: PaginationArrowProps) => <PaginationArrow onClick={onClick} disabled={false} type={ARROW_TYPE.RIGHT} />;
+
+/**
+ * Disabled Right pagination arrow.
+ */
+
 const ArrowRightDisabled = () => <PaginationArrow disabled={true} type={ARROW_TYPE.RIGHT} />;
 
 export {ArrowLeft, ArrowLeftDisabled, ArrowRight, ArrowRightDisabled};

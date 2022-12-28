@@ -28,6 +28,9 @@ interface RelatedCountdownProps {
   sizeBreakpoint: string;
 }
 
+/**
+ * Shows preview image of the next entry, with title and countdown.
+ */
 const RelatedCountdownPreview = withText({
   upNextIn: 'playlist.up_next_in'
 })(

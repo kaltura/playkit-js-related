@@ -1,4 +1,3 @@
-import {ComponentChildren} from 'preact';
 import {useContext, useEffect, useState} from 'preact/hooks';
 const {withText} = KalturaPlayer.ui.preacti18n;
 
@@ -11,7 +10,6 @@ import * as styles from './entry.scss';
 interface NextEntryProps extends GridEntryProps {
   description?: string;
   countdown: number;
-  children?: ComponentChildren;
   sizeClass: string;
   cancelLabel: string;
   playNowLabel: string;
@@ -19,6 +17,25 @@ interface NextEntryProps extends GridEntryProps {
   onCancel: () => void;
 }
 
+/**
+ * Base next entry component with entry image.
+ *
+ * @param {object} props Component props.
+ * @param {string} props.title Entry title.
+ * @param {number} props.id Internal id.
+ * @param {object} props.children Component children.
+ * @param {number} props.duration Entry playback duration.
+ * @param {string} props.type Entry type.
+ * @param {string} props.poster Entry poster
+ * @param {object} props.entryDimensions Entry render dimensions.
+ * @param {string} props.live Live label.
+ * @param {string} props.description Entry description.
+ * @param {number} props.countdown Countdown for playback of next entry.
+ * @param {string} props.sizeClass CSS Class for entry of specific size.
+ * @param {string} props.cancelLabel Cancel button label.
+ * @param {string} props.playNowLabel Play now button label.
+ * @param {boolean} props.alwaysShowButtons If true indicates that buttons should be visible even when countdown is not in progress.
+ */
 const BaseNextEntry = withText({
   playNowLabel: 'related.playNow',
   cancelLabel: 'playlist.cancel'

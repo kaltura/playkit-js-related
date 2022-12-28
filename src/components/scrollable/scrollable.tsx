@@ -4,6 +4,14 @@ import * as styles from './scrollable.scss';
 
 const SCROLL_BAR_TIMEOUT = 250;
 
+/**
+ * Wraps around child components and displays a styled scrollbar with vertical or horizontal orientation.
+ *
+ * @param {object} props Component props.
+ * @param {ComponentChildren} props.children Child components.
+ * @param {boolean} props.isVertical If true, scrollbar has vertical orientation, otherwise - it has horizontal orientation.
+ */
+
 const Scrollable = ({children, isVertical}: {children: ComponentChildren; isVertical: boolean}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [scrolling, setScrolling] = useState(false);

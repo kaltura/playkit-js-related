@@ -9,9 +9,14 @@ interface MultilineTextProps {
 }
 
 /**
- * Text container with multiline ellipsis.
- * Workaround for line-clamp property which isn't supported by IE11.
+ * Displays text truncated to a set number of lines, with an ellipsis in case of overflow.
+ *
+ * @param {object} props Component props.
+ * @param {string} props.text Text to be displayed.
+ * @param {number} props.lineHeight Line height for a single line of text.
+ * @param {number} props.lines Max number of visible lines.
  */
+
 const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   const [minLength, setMinLength] = useState(0);
   const [maxLength, setMaxLength] = useState(text.length);
