@@ -3,6 +3,7 @@ const {withText} = KalturaPlayer.ui.preacti18n;
 
 const {Tooltip} = KalturaPlayer.ui.components;
 import {RelatedManager} from 'related-manager';
+import {RelatedEvent} from 'types';
 
 import * as styles from './pre-playback-play-overlay-wrapper.scss';
 
@@ -34,46 +35,43 @@ const PrePlaybackPlayOverlayWrapper = withText({
   next: 'playlist.next',
   startOver: 'controls.startOver'
 })(
-  connect(mapStateToProps)(
-    ({isPlaybackEnded, sizeBreakpoint, relatedManager, onLoaded, onUnloaded, next, startOver}: PrePlaybackPlayOverlayWrapperProps) => {
-      const [isHiddenByUser, setIsHiddenByUser] = useState(false);
+  connect(mapStateToProps)(({isPlaybackEnded, sizeBreakpoint, relatedManager, next, startOver}: PrePlaybackPlayOverlayWrapperProps) => {
+    const [isHiddenByUser, setIsHiddenByUser] = useState(false);
 
-      useEffect(() => {
-        function onHiddenStateChanged(isHiddenByUser: boolean) {
-          setIsHiddenByUser(isHiddenByUser);
-        }
-
-        onLoaded(onHiddenStateChanged);
-
-        return () => {
-          // clear listener on component unmount
-          onUnloaded(onHiddenStateChanged);
-        };
-      }, []);
-
-      if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
-      else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
-        return (
-          <div className={styles.minimalPrePlaybackPlayOverlay}>
-            <div className={styles.buttonContainer}>
-              <Tooltip label={startOver}>
-                <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
-                  <Icon type={IconType.StartOver} />
-                </button>
-              </Tooltip>
-              <Tooltip label={next}>
-                <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
-                  <Icon type={IconType.Next} />
-                </button>
-              </Tooltip>
-              <div />
-            </div>
-          </div>
-        );
+    useEffect(() => {
+      function onHiddenStateChanged({payload}: {payload: boolean}) {
+        setIsHiddenByUser(payload);
       }
-      return <></>;
+
+      relatedManager.listen(RelatedEvent.HIDDEN_STATE_CHANGED, onHiddenStateChanged);
+
+      return () => {
+        relatedManager.unlisten(RelatedEvent.HIDDEN_STATE_CHANGED, onHiddenStateChanged);
+      };
+    }, []);
+
+    if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
+    else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
+      return (
+        <div className={styles.minimalPrePlaybackPlayOverlay}>
+          <div className={styles.buttonContainer}>
+            <Tooltip label={startOver}>
+              <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
+                <Icon type={IconType.StartOver} />
+              </button>
+            </Tooltip>
+            <Tooltip label={next}>
+              <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
+                <Icon type={IconType.Next} />
+              </button>
+            </Tooltip>
+            <div />
+          </div>
+        </div>
+      );
     }
-  )
+    return <></>;
+  })
 );
 
 export {PrePlaybackPlayOverlayWrapper};

@@ -4,6 +4,7 @@ import {CloseButton, RelatedContext, Thumbnail, Countdown, MultilineText} from '
 import {RelatedManager} from 'related-manager';
 
 import * as styles from './related-countdown-preview.scss';
+import {RelatedEvent} from 'types';
 
 const {connect} = KalturaPlayer.ui.redux;
 const {withText} = KalturaPlayer.ui.preacti18n;
@@ -33,28 +34,48 @@ const RelatedCountdownPreview = withText({
 })(
   connect(mapStateToProps)(({relatedManager, isPlaybackEnded, upNextIn, sizeBreakpoint}: RelatedCountdownProps) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [isListVisible, setIsListVisible] = useState(relatedManager.isListVisible);
+    const [isHiddenByUser, setIsHiddenByUser] = useState(relatedManager.isHiddenByUser);
+
+    const showPreview = isPlaybackEnded && relatedManager.countdownTime > -1 && isListVisible && !isHiddenByUser;
 
     useEffect(() => {
-      if (isPlaybackEnded && relatedManager.countdownTime > -1 && relatedManager.isListVisible && !relatedManager.isHiddenByUser) {
+      function onListVisibilityChanged({payload}: {payload: boolean}) {
+        setIsListVisible(payload);
+      }
+
+      function onHiddenStateChanged({payload}: {payload: boolean}) {
+        setIsHiddenByUser(payload);
+      }
+
+      relatedManager.listen(RelatedEvent.LIST_VISIBILITY_CHANGED, onListVisibilityChanged);
+      relatedManager.listen(RelatedEvent.HIDDEN_STATE_CHANGED, onHiddenStateChanged);
+
+      return () => {
+        relatedManager.unlisten(RelatedEvent.LIST_VISIBILITY_CHANGED, onListVisibilityChanged);
+        relatedManager.unlisten(RelatedEvent.HIDDEN_STATE_CHANGED, onHiddenStateChanged);
+      };
+    }, []);
+
+    useEffect(() => {
+      if (showPreview) {
         relatedManager.getImageUrl(relatedManager.entries[1]?.poster || '').then(() => {
           setIsVisible(true);
           relatedManager?.playNext(relatedManager.countdownTime);
         });
-      } else {
-        setIsVisible(false);
       }
-    }, [isPlaybackEnded, relatedManager]);
+    }, [relatedManager, showPreview]);
 
-    const onClose = (e: MouseEvent) => {
-      relatedManager.clearNextEntryTimeout();
-      relatedManager.isHiddenByUser = true;
-      setIsVisible(false);
-      e.stopPropagation();
-    };
-
-    if (isVisible && sizeBreakpoint !== PLAYER_SIZE.TINY) {
+    if (showPreview && isVisible && sizeBreakpoint !== PLAYER_SIZE.TINY) {
       const entryText = relatedManager.entries[1]?.metadata?.name;
       const isMinimal = [PLAYER_SIZE.EXTRA_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint);
+
+      const onClose = (e: MouseEvent) => {
+        relatedManager.clearNextEntryTimeout();
+        relatedManager.isHiddenByUser = true;
+        setIsVisible(false);
+        e.stopPropagation();
+      };
 
       return (
         <RelatedContext.Provider value={{relatedManager}}>

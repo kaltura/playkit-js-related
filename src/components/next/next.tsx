@@ -1,29 +1,30 @@
 const {PrevNext} = KalturaPlayer.ui.components;
 import {useState, useEffect} from 'preact/hooks';
+import {RelatedManager} from 'related-manager';
+import {RelatedEvent, Sources} from 'types';
 interface NextProps {
   showPreview: boolean;
   onClick: (cb: () => void) => void;
-  onLoaded: (cb: (nextEntries: []) => void) => void;
-  onUnloaded: (cb: (nextEntries: []) => void) => void;
+  relatedManager: RelatedManager;
 }
 
-const Next = (props: NextProps) => {
-  const [entries, setEntries] = useState([]);
+const Next = ({showPreview, onClick, relatedManager}: NextProps) => {
+  const [entries, setEntries] = useState<Sources[]>([]);
 
   useEffect(() => {
-    function onEntriesChanged(updatedEntries: []) {
-      setEntries(updatedEntries);
+    function onEntriesChanged({payload}: {payload: Sources[]}) {
+      setEntries(payload);
     }
 
-    props.onLoaded(onEntriesChanged);
+    relatedManager.listen(RelatedEvent.RELATED_ENTRIES_CHANGED, onEntriesChanged);
+    setEntries(relatedManager.entries);
 
     return () => {
-      // clear listener on component unmount
-      props.onUnloaded(onEntriesChanged);
+      relatedManager.unlisten(RelatedEvent.RELATED_ENTRIES_CHANGED, onEntriesChanged);
     };
   }, []);
 
-  return entries.length ? <PrevNext type={'next'} item={{sources: entries[0]}} onClick={props.onClick} showPreview={props.showPreview} /> : <></>;
+  return entries.length ? <PrevNext type={'next'} item={{sources: entries[0]}} onClick={onClick} showPreview={showPreview} /> : <></>;
 };
 
 export {Next};
