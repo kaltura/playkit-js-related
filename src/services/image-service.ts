@@ -3,8 +3,8 @@ enum IMAGE_STATE {
   NOT_FOUND
 }
 
-const MAX_WIDTH = 260;
-const MAX_HEIGHT = 147;
+const MAX_WIDTH = 400;
+const MAX_HEIGHT = 225;
 
 class ImageService {
   private imageStateMap = new Map<string, IMAGE_STATE>();
