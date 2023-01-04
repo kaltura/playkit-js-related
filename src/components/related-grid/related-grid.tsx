@@ -19,11 +19,19 @@ const mapStateToProps = (state: any) => {
 
 interface RelatedGridProps {
   data: Sources[];
-  pages: number[];
   countdown: number;
   sizeBreakpoint: string;
 }
 
+/**
+ * Displays related entries in grid form with pagination.
+ * The grid view changes according to player size.
+ *
+ * @param {object} props Component props.
+ * @param {object} props.data Related entries data.
+ * @param {number} props.countdown Next entry auto continue countdown time.
+ * @param {string} props.sizeBreakpoint Player size breakpoint.
+ */
 const RelatedGrid = connect(mapStateToProps)(({data, countdown, sizeBreakpoint}: RelatedGridProps) => {
   if (!data.length) return <></>;
 

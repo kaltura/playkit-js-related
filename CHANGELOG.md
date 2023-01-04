@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/kaltura/playkit-js-related/compare/v0.1.4...v0.1.5) (2022-12-28)
+
+
+### Features
+
+* **FEC-11564:** Related List ([305ed9e](https://github.com/kaltura/playkit-js-related/commit/305ed9e795c0603c7c51edeeb991aeca47905aa1))
+
 ### [0.1.4](https://github.com/kaltura/playkit-js-related/compare/v0.1.3...v0.1.4) (2022-10-03)
 
 

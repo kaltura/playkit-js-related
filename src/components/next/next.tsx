@@ -8,6 +8,15 @@ interface NextProps {
   relatedManager: RelatedManager;
 }
 
+/**
+ * Play next entry button.
+ *
+ * @param {object} props Component props.
+ * @param {boolean} props.showPreview Indicates whether next entry preview should be visible.
+ * @param {Function} props.onLoaded Handler for component loaded event.
+ * @param {Function} props.onUnloaded Handler for component loaded event.
+ * @param {Function} props.onClick onClick event handler.
+ */
 const Next = ({showPreview, onClick, relatedManager}: NextProps) => {
   const [entries, setEntries] = useState<Sources[]>([]);
 

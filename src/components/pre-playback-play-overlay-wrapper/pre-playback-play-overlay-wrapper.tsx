@@ -31,6 +31,18 @@ interface PrePlaybackPlayOverlayWrapperProps {
   startOver: string;
 }
 
+/**
+ * Overlay which is displayed on playback end instead of the default playback end overlay.
+ *
+ * @param {object} props Component props.
+ * @param {boolean} props.isPlaybackEnded Indicates whether playback has ended.
+ * @param {string} props.sizeBreakpoint Player size breakpoint.
+ * @param {RelatedManager} props.relatedManager Related manager instance.
+ * @param {Function} props.onLoaded Handler for component loaded event.
+ * @param {Function} props.onUnloaded Handler for component unloaded event.
+ * @param {string} props.next Next label text.
+ * @param {string} props.startOver Start over label text.
+ */
 const PrePlaybackPlayOverlayWrapper = withText({
   next: 'playlist.next',
   startOver: 'controls.startOver'
