@@ -1,9 +1,23 @@
 /**
- * Internal related plugin events enum.
+ * Related plugin events which are dispatched externally through the player.
+ */
+enum RelatedEvent {
+  /**
+   * Fired when the user toggles list visibility on.
+   */
+  RELATED_CLICKED = 'relatedClicked',
+  /**
+   * Fired when the user clicks on a grid or list entry.
+   */
+  RELATED_SELECTED = 'relatedSelected'
+}
+
+/**
+ * Related plugin events which are dispatched internally inside the plugin.
  *
  * @enum {string}
  */
-enum RelatedEvent {
+enum RelatedInternalEvent {
   /**
    * Fired every time the list of related entries is changed.
    */
@@ -22,4 +36,4 @@ enum RelatedEvent {
   LIST_VISIBILITY_CHANGED = 'listvisibilitychanged'
 }
 
-export {RelatedEvent};
+export {RelatedInternalEvent, RelatedEvent};

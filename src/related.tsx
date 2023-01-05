@@ -5,7 +5,7 @@ import {RelatedManager} from 'related-manager';
 import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton, RelatedCountdownPreview} from 'components';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
-import {Icon, RelatedConfig, RelatedEvent} from 'types';
+import {Icon, RelatedConfig, RelatedInternalEvent} from 'types';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -120,10 +120,10 @@ class Related extends KalturaPlayer.core.BasePlugin {
     const preplayBackPlayOverlayProps = {
       relatedManager,
       onLoaded: (callback: (nextEntries: []) => void) => {
-        relatedManager.listen(RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: []}) => callback(payload));
+        relatedManager.listen(RelatedInternalEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: []}) => callback(payload));
       },
       onUnloaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.unlisten(RelatedEvent.HIDDEN_STATE_CHANGED, cb);
+        relatedManager.unlisten(RelatedInternalEvent.HIDDEN_STATE_CHANGED, cb);
       }
     };
 
@@ -138,13 +138,13 @@ class Related extends KalturaPlayer.core.BasePlugin {
     const nextProps = {
       onClick: () => relatedManager.playNext(),
       onLoaded: (callback: (nextEntries: []) => void) => {
-        relatedManager.listen(RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
+        relatedManager.listen(RelatedInternalEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
         // in case entries were set before the handler was registered
         // eslint-disable-next-line no-self-assign
         relatedManager.entries = relatedManager.entries;
       },
       onUnloaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.unlisten(RelatedEvent.RELATED_ENTRIES_CHANGED, cb);
+        relatedManager.unlisten(RelatedInternalEvent.RELATED_ENTRIES_CHANGED, cb);
       }
     };
 
@@ -235,11 +235,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
       expandMode: this.config.expandMode
     }) as number;
 
-    this.relatedManager.listen(RelatedEvent.GRID_VISIBILITY_CHANGED, () => {
+    this.relatedManager.listen(RelatedInternalEvent.GRID_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
     });
 
-    this.relatedManager.listen(RelatedEvent.LIST_VISIBILITY_CHANGED, () => {
+    this.relatedManager.listen(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
       this.sidePanelsManager[this.relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
     });

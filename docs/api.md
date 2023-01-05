@@ -85,25 +85,28 @@
     *   [isValid][81]
     *   [loadMedia][82]
     *   [addRelatedListComponents][83]
-*   [RelatedConfig][84]
-    *   [autoContinue][85]
-    *   [autoContinueTime][86]
-    *   [showOnPlaybackPaused][87]
-    *   [playlistId][88]
-    *   [entryList][89]
-    *   [sourcesList][90]
-    *   [useContext][91]
-    *   [entriesByContextLimit][92]
-    *   [position][93]
-    *   [expandMode][94]
-*   [RelatedEvent][95]
-    *   [RELATED\_ENTRIES\_CHANGED][96]
-    *   [HIDDEN\_STATE\_CHANGED][97]
-    *   [GRID\_VISIBILITY\_CHANGED][98]
-    *   [LIST\_VISIBILITY\_CHANGED][99]
-*   [Sources][100]
-    *   [internalIndex][101]
-    *   [durationText][102]
+*   [RelatedEvent][84]
+    *   [RELATED\_CLICKED][85]
+    *   [RELATED\_SELECTED][86]
+*   [RelatedInternalEvent][87]
+    *   [RELATED\_ENTRIES\_CHANGED][88]
+    *   [HIDDEN\_STATE\_CHANGED][89]
+    *   [GRID\_VISIBILITY\_CHANGED][90]
+    *   [LIST\_VISIBILITY\_CHANGED][91]
+*   [RelatedConfig][92]
+    *   [autoContinue][93]
+    *   [autoContinueTime][94]
+    *   [showOnPlaybackPaused][95]
+    *   [playlistId][96]
+    *   [entryList][97]
+    *   [sourcesList][98]
+    *   [useContext][99]
+    *   [entriesByContextLimit][100]
+    *   [position][101]
+    *   [expandMode][102]
+*   [Sources][103]
+    *   [internalIndex][104]
+    *   [durationText][105]
 
 ## CloseButton
 
@@ -111,10 +114,10 @@ Button to toggle off related list visibility.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.onClick` **[Function][104]** onClick event handler.
-    *   `props.closeText` **[string][105]** Button label.
+    *   `props.onClick` **[Function][107]** onClick event handler.
+    *   `props.closeText` **[string][108]** Button label.
 
 ## Countdown
 
@@ -122,9 +125,9 @@ Counts down from an initial number of seconds and renders the number of seconds 
 
 ### Parameters
 
-*   `props` **[object][103]** Countdown props.
+*   `props` **[object][106]** Countdown props.
 
-    *   `props.seconds` **[number][106]** Initial number of seconds.
+    *   `props.seconds` **[number][109]** Initial number of seconds.
 
 ## DurationLabel
 
@@ -132,10 +135,10 @@ Displays formatted duration of entry playback, or a live label for live entries.
 
 ### Parameters
 
-*   `props` **[object][103]** Duration label props.
-*   `type` **[string][105]** Entry type.
-*   `duration` **[number][106]** Entry playack duration.
-*   `liveText` **[string][105]** Live label text.
+*   `props` **[object][106]** Duration label props.
+*   `type` **[string][108]** Entry type.
+*   `duration` **[number][109]** Entry playack duration.
+*   `liveText` **[string][108]** Live label text.
 
 ## EntryImage
 
@@ -143,14 +146,14 @@ Entry image with a duration label.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.poster` **[string][105]** Entry thumbnail url.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.duration` **[number][106]** Entry playback duration.
-    *   `props.width` **[number][106]** Image width.
-    *   `props.height` **[number][106]** Image height.
-    *   `props.children` **[object][103]** Child components.
+    *   `props.poster` **[string][108]** Entry thumbnail url.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.duration` **[number][109]** Entry playback duration.
+    *   `props.width` **[number][109]** Image width.
+    *   `props.height` **[number][109]** Image height.
+    *   `props.children` **[object][106]** Child components.
 
 ## BaseNextEntry
 
@@ -158,22 +161,22 @@ Base next entry component with entry image.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Internal id.
-    *   `props.children` **[object][103]** Component children.
-    *   `props.duration` **[number][106]** Entry playback duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster
-    *   `props.entryDimensions` **[object][103]** Entry render dimensions.
-    *   `props.live` **[string][105]** Live label.
-    *   `props.description` **[string][105]** Entry description.
-    *   `props.countdown` **[number][106]** Countdown for playback of next entry.
-    *   `props.sizeClass` **[string][105]** CSS Class for entry of specific size.
-    *   `props.cancelLabel` **[string][105]** Cancel button label.
-    *   `props.playNowLabel` **[string][105]** Play now button label.
-    *   `props.alwaysShowButtons` **[boolean][107]** If true indicates that buttons should be visible even when countdown is not in progress.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Internal id.
+    *   `props.children` **[object][106]** Component children.
+    *   `props.duration` **[number][109]** Entry playback duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster
+    *   `props.entryDimensions` **[object][106]** Entry render dimensions.
+    *   `props.live` **[string][108]** Live label.
+    *   `props.description` **[string][108]** Entry description.
+    *   `props.countdown` **[number][109]** Countdown for playback of next entry.
+    *   `props.sizeClass` **[string][108]** CSS Class for entry of specific size.
+    *   `props.cancelLabel` **[string][108]** Cancel button label.
+    *   `props.playNowLabel` **[string][108]** Play now button label.
+    *   `props.alwaysShowButtons` **[boolean][110]** If true indicates that buttons should be visible even when countdown is not in progress.
 
 ## GridEntry
 
@@ -181,16 +184,16 @@ Full size grid entry with image and title.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Internal entry id.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Internal entry id.
     *   `props.children` **ComponentChildren** Component children.
-    *   `props.duration` **[number][106]** Entry duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster.
-    *   `props.entryDimensions` **[object][103]** Dimensions for entry render.
-    *   `props.live` **[string][105]** Live label.
+    *   `props.duration` **[number][109]** Entry duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster.
+    *   `props.entryDimensions` **[object][106]** Dimensions for entry render.
+    *   `props.live` **[string][108]** Live label.
 
 ## ListEntryPlaceholder
 
@@ -198,9 +201,9 @@ Animated placeholder for a list entry.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.isVertical` **[boolean][107]** If true, indicates that the entry placeholder is vertical, otherwise it's horizontal.
+    *   `props.isVertical` **[boolean][110]** If true, indicates that the entry placeholder is vertical, otherwise it's horizontal.
 
 ## ListEntry
 
@@ -208,16 +211,16 @@ List entry with image and title.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Entry internal id.
-    *   `props.duration` **[number][106]** Entry duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster.
-    *   `props.entryDimensions` **[object][103]** Dimensions for entry render.
-    *   `props.live` **[string][105]** Live label.
-    *   `props.isVertical` **[boolean][107]** If true, indicates that the list entry is vertical, if false indicates that it's horizontal.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Entry internal id.
+    *   `props.duration` **[number][109]** Entry duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster.
+    *   `props.entryDimensions` **[object][106]** Dimensions for entry render.
+    *   `props.live` **[string][108]** Live label.
+    *   `props.isVertical` **[boolean][110]** If true, indicates that the list entry is vertical, if false indicates that it's horizontal.
 
 ## MinimalGridEntry
 
@@ -225,16 +228,16 @@ Minimal grid entry with image and title.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Entry internal id.
-    *   `props.children` **[object][103]** Component children.
-    *   `props.duration` **[number][106]** Entry duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster.
-    *   `props.entryDimensions` **[object][103]** Dimensions for entry render.
-    *   `props.live` **[string][105]** Live label.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Entry internal id.
+    *   `props.children` **[object][106]** Component children.
+    *   `props.duration` **[number][109]** Entry duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster.
+    *   `props.entryDimensions` **[object][106]** Dimensions for entry render.
+    *   `props.live` **[string][108]** Live label.
 
 ## MinimalNextEntry
 
@@ -243,20 +246,20 @@ Wraps BaseNextEntry.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Entry internal id.
-    *   `props.children` **[object][103]** Component children.
-    *   `props.duration` **[number][106]** Entry playback duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster.
-    *   `props.entryDimensions` **[object][103]** Entry render dimensions.
-    *   `props.live` **[string][105]** Live label.
-    *   `props.description` **[string][105]** Entry description.
-    *   `props.countdown` **[number][106]** Countdown for playback of next entry.
-    *   `props.upNext` **[string][105]** Up next label.
-    *   `props.upNextIn` **[string][105]** Up next in label.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Entry internal id.
+    *   `props.children` **[object][106]** Component children.
+    *   `props.duration` **[number][109]** Entry playback duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster.
+    *   `props.entryDimensions` **[object][106]** Entry render dimensions.
+    *   `props.live` **[string][108]** Live label.
+    *   `props.description` **[string][108]** Entry description.
+    *   `props.countdown` **[number][109]** Countdown for playback of next entry.
+    *   `props.upNext` **[string][108]** Up next label.
+    *   `props.upNextIn` **[string][108]** Up next in label.
 
 ## NextEntry
 
@@ -265,20 +268,20 @@ Wraps BaseNextEntry.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.title` **[string][105]** Entry title.
-    *   `props.id` **[number][106]** Entry internal id.
-    *   `props.children` **[object][103]** Component children.
-    *   `props.duration` **[number][106]** Entry playback duration.
-    *   `props.type` **[string][105]** Entry type.
-    *   `props.poster` **[string][105]** Entry poster.
-    *   `props.entryDimensions` **[object][103]** Entry render dimensions.
-    *   `props.live` **[string][105]** Live label.
-    *   `props.description` **[string][105]** Entry description.
-    *   `props.countdown` **[number][106]** Countdown for playback of next entry.
-    *   `props.upNext` **[string][105]** Up next label.
-    *   `props.upNextIn` **[string][105]** Up next in label.
+    *   `props.title` **[string][108]** Entry title.
+    *   `props.id` **[number][109]** Entry internal id.
+    *   `props.children` **[object][106]** Component children.
+    *   `props.duration` **[number][109]** Entry playback duration.
+    *   `props.type` **[string][108]** Entry type.
+    *   `props.poster` **[string][108]** Entry poster.
+    *   `props.entryDimensions` **[object][106]** Entry render dimensions.
+    *   `props.live` **[string][108]** Live label.
+    *   `props.description` **[string][108]** Entry description.
+    *   `props.countdown` **[number][109]** Countdown for playback of next entry.
+    *   `props.upNext` **[string][108]** Up next label.
+    *   `props.upNextIn` **[string][108]** Up next in label.
 
 ## ListToggleButton
 
@@ -286,10 +289,10 @@ Related list toggle button.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.disabled` **[boolean][107]** Disabled state indication.
-    *   `props.relatedVideosText` **[string][105]** Button label.
+    *   `props.disabled` **[boolean][110]** Disabled state indication.
+    *   `props.relatedVideosText` **[string][108]** Button label.
 
 ## MultilineText
 
@@ -297,11 +300,11 @@ Displays text truncated to a set number of lines, with an ellipsis in case of ov
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.text` **[string][105]** Text to be displayed.
-    *   `props.lineHeight` **[number][106]** Line height for a single line of text.
-    *   `props.lines` **[number][106]** Max number of visible lines.
+    *   `props.text` **[string][108]** Text to be displayed.
+    *   `props.lineHeight` **[number][109]** Line height for a single line of text.
+    *   `props.lines` **[number][109]** Max number of visible lines.
 
 ## Next
 
@@ -309,12 +312,12 @@ Play next entry button.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.showPreview` **[boolean][107]** Indicates whether next entry preview should be visible.
-    *   `props.onLoaded` **[Function][104]** Handler for component loaded event.
-    *   `props.onUnloaded` **[Function][104]** Handler for component loaded event.
-    *   `props.onClick` **[Function][104]** onClick event handler.
+    *   `props.showPreview` **[boolean][110]** Indicates whether next entry preview should be visible.
+    *   `props.onLoaded` **[Function][107]** Handler for component loaded event.
+    *   `props.onUnloaded` **[Function][107]** Handler for component loaded event.
+    *   `props.onClick` **[Function][107]** onClick event handler.
 
 ## ArrowLeft
 
@@ -322,9 +325,9 @@ Left pagination arrow.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.onClick` **[Function][104]** onClick event handler.
+    *   `props.onClick` **[Function][107]** onClick event handler.
 
 ## ArrowLeftDisabled
 
@@ -336,9 +339,9 @@ Right pagination arrow.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.onClick` **[Function][104]** onClick event handler.
+    *   `props.onClick` **[Function][107]** onClick event handler.
 
 ## ArrowRightDisabled
 
@@ -350,15 +353,15 @@ Overlay which is displayed on playback end instead of the default playback end o
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.isPlaybackEnded` **[boolean][107]** Indicates whether playback has ended.
-    *   `props.sizeBreakpoint` **[string][105]** Player size breakpoint.
+    *   `props.isPlaybackEnded` **[boolean][110]** Indicates whether playback has ended.
+    *   `props.sizeBreakpoint` **[string][108]** Player size breakpoint.
     *   `props.relatedManager` **[RelatedManager][49]** Related manager instance.
-    *   `props.onLoaded` **[Function][104]** Handler for component loaded event.
-    *   `props.onUnloaded` **[Function][104]** Handler for component unloaded event.
-    *   `props.next` **[string][105]** Next label text.
-    *   `props.startOver` **[string][105]** Start over label text.
+    *   `props.onLoaded` **[Function][107]** Handler for component loaded event.
+    *   `props.onUnloaded` **[Function][107]** Handler for component unloaded event.
+    *   `props.next` **[string][108]** Next label text.
+    *   `props.startOver` **[string][108]** Start over label text.
 
 ## RelatedCountdownPreview
 
@@ -371,11 +374,11 @@ The grid view changes according to player size.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.data` **[object][103]** Related entries data.
-    *   `props.countdown` **[number][106]** Next entry auto continue countdown time.
-    *   `props.sizeBreakpoint` **[string][105]** Player size breakpoint.
+    *   `props.data` **[object][106]** Related entries data.
+    *   `props.countdown` **[number][109]** Next entry auto continue countdown time.
+    *   `props.sizeBreakpoint` **[string][108]** Player size breakpoint.
 
 ## RelatedListHeader
 
@@ -387,10 +390,10 @@ Displays related entries in horizontal or vertical list.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 *   `relatedManager` **[RelatedManager][49]** Related manager instance.
-*   `relatedVideosText` **[string][105]** Related videos label text.
-*   `isVertical` **[boolean][107]** Indicates whether the list is vertical.
+*   `relatedVideosText` **[string][108]** Related videos label text.
+*   `isVertical` **[boolean][110]** Indicates whether the list is vertical.
 
 ## RelatedOverlay
 
@@ -398,12 +401,12 @@ Overlay which wraps the related grid and controls its layout and visibility.
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
     *   `props.relatedManager` **[RelatedManager][49]** Related manager instance.
-    *   `props.isPaused` **[boolean][107]** Indicates whether playback is paused.
-    *   `props.isPlaybackEnded` **[boolean][107]** Indicates whether playback has ended.
-    *   `props.sizeBreakpoint` **[string][105]** Player size breakpoint.
+    *   `props.isPaused` **[boolean][110]** Indicates whether playback is paused.
+    *   `props.isPlaybackEnded` **[boolean][110]** Indicates whether playback has ended.
+    *   `props.sizeBreakpoint` **[string][108]** Player size breakpoint.
 
 ## Scrollable
 
@@ -411,10 +414,10 @@ Wraps around child components and displays a styled scrollbar with vertical or h
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
     *   `props.children` **ComponentChildren** Child components.
-    *   `props.isVertical` **[boolean][107]** If true, scrollbar has vertical orientation, otherwise - it has horizontal orientation.
+    *   `props.isVertical` **[boolean][110]** If true, scrollbar has vertical orientation, otherwise - it has horizontal orientation.
 
 ## Thumbnail
 
@@ -422,11 +425,11 @@ Image with fixed dimensions and a fallback option for images which failed to loa
 
 ### Parameters
 
-*   `props` **[object][103]** Component props.
+*   `props` **[object][106]** Component props.
 
-    *   `props.poster` **[string][105]** Base image url. (optional, default `''`)
-    *   `props.width` **[number][106]** Image width.
-    *   `props.height` **[number][106]** Image height.
+    *   `props.poster` **[string][108]** Base image url. (optional, default `''`)
+    *   `props.width` **[number][109]** Image width.
+    *   `props.height` **[number][109]** Image height.
 
 ## RelatedManager
 
@@ -438,7 +441,7 @@ Load related entries list according to the configuration options.
 
 #### Parameters
 
-*   `config` **[RelatedConfig][84]** related plugin config
+*   `config` **[RelatedConfig][92]** related plugin config
 
 ### startOver
 
@@ -450,15 +453,15 @@ Play the next entry in the list.
 
 #### Parameters
 
-*   `seconds` **[number][106]?** seconds to wait before next entry playback
+*   `seconds` **[number][109]?** seconds to wait before next entry playback
 
 ### playSelected
 
-Wrapper for playByIndex.
+Play the selected entry.
 
 #### Parameters
 
-*   `internalIndex` **[number][106]** index of the entry to be played
+*   `internalIndex` **[number][109]** index of the entry to be played
 
 ### clearNextEntryTimeout
 
@@ -470,7 +473,7 @@ Register an event listener for a plugin event.
 
 #### Parameters
 
-*   `name` **[string][105]** event name
+*   `name` **[string][108]** event name
 *   `listener` **any** callback function
 
 ### unlisten
@@ -479,7 +482,7 @@ Unregister an event listener for a plugin event.
 
 #### Parameters
 
-*   `name` **[string][105]** event name
+*   `name` **[string][108]** event name
 *   `listener` **any** callback function
 
 ### getImageUrl
@@ -489,7 +492,7 @@ If possible, get an entry with specific dimensions.
 
 #### Parameters
 
-*   `url` **[string][105]** initial thumbnail url
+*   `url` **[string][108]** initial thumbnail url
 
 Returns **any** {(Promise\<string | null>)} promise which returns the full url or null if failed to load
 
@@ -497,89 +500,89 @@ Returns **any** {(Promise\<string | null>)} promise which returns the full url o
 
 Indicates whether the next entry preview has been manually hidden by the user.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 #### Parameters
 
-*   `isHiddenByUser` **[boolean][107]**&#x20;
+*   `isHiddenByUser` **[boolean][110]**&#x20;
 
 ### showOnPlaybackPaused
 
 Indicates whether the related grid should be visible on playback paused.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
-Returns **[boolean][107]**&#x20;
+Returns **[boolean][110]**&#x20;
 
 ### countdownTime
 
 If autoContinue is true, returns the time to wait after playback and before playing the next entry.
 
-Type: [number][106]
+Type: [number][109]
 
-Returns **[number][106]**&#x20;
+Returns **[number][109]**&#x20;
 
 ### entries
 
 Set related entries array and fire RELATED\_ENTRIES\_CHANGED event.
 
-Type: [Array][108]<[Sources][100]>
+Type: [Array][111]<[Sources][103]>
 
 #### Parameters
 
-*   `entries` **[Array][108]<[Sources][100]>**&#x20;
+*   `entries` **[Array][111]<[Sources][103]>**&#x20;
 
 ### entries
 
 Get related entries array.
 
-Type: [Array][108]<[Sources][100]>
+Type: [Array][111]<[Sources][103]>
 
-Returns **[Array][108]<[Sources][100]>**&#x20;
+Returns **[Array][111]<[Sources][103]>**&#x20;
 
 ### isInitialized
 
 Indicates whether the related manager has already been initialized by calling load() at least once.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
-Returns **[boolean][107]**&#x20;
+Returns **[boolean][110]**&#x20;
 
 ### isGridVisible
 
 Indicates whether the grid is crrently visible.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
-Returns **[boolean][107]**&#x20;
+Returns **[boolean][110]**&#x20;
 
 ### isGridVisible
 
 Set grid visibility inidication and fire GRID\_VISIBILITY\_CHANGED event.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 #### Parameters
 
-*   `isGridVisible` **[boolean][107]**&#x20;
+*   `isGridVisible` **[boolean][110]**&#x20;
 
 ### isListVisible
 
 Indicates whether the list is currently visible.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
-Returns **[boolean][107]**&#x20;
+Returns **[boolean][110]**&#x20;
 
 ### isListVisible
 
 Set list visibility indication.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 #### Parameters
 
-*   `isListVisible` **[boolean][107]**&#x20;
+*   `isListVisible` **[boolean][110]**&#x20;
 
 ## Related
 
@@ -587,19 +590,19 @@ Type: [boolean][107]
 
 ### Parameters
 
-*   `name` **[string][105]** Plugin name.
+*   `name` **[string][108]** Plugin name.
 *   `player` **KalturaPlayerTypes.Player** Current kaltura player instance.
-*   `config` **[RelatedConfig][84]** Related plugin configuation.
+*   `config` **[RelatedConfig][92]** Related plugin configuation.
 
 ### defaultConfig
 
 The default configuration of the plugin.
 
-Type: [RelatedConfig][84]
+Type: [RelatedConfig][92]
 
 ### isValid
 
-Returns **[boolean][107]** Whether the plugin is valid.
+Returns **[boolean][110]** Whether the plugin is valid.
 
 ### loadMedia
 
@@ -609,6 +612,52 @@ Player loadMedia callback.
 
 Inject related list panel and list toggle icon components into the ui.
 
+## RelatedEvent
+
+Related plugin events which are dispatched externally through the player.
+
+### RELATED\_CLICKED
+
+Fired when the user toggles list visibility on.
+
+Type: [string][108]
+
+### RELATED\_SELECTED
+
+Fired when the user clicks on a grid or list entry.
+
+Type: [string][108]
+
+## RelatedInternalEvent
+
+Related plugin events which are dispatched internally inside the plugin.
+
+Type: [string][108]
+
+### RELATED\_ENTRIES\_CHANGED
+
+Fired every time the list of related entries is changed.
+
+Type: [string][108]
+
+### HIDDEN\_STATE\_CHANGED
+
+Fired when the a next entry autoplay is manually cancelled by the user on playback end.
+
+Type: [string][108]
+
+### GRID\_VISIBILITY\_CHANGED
+
+Fired when the related grid is shown or hidden.
+
+Type: [string][108]
+
+### LIST\_VISIBILITY\_CHANGED
+
+Fired when the related list is shown or hidden.
+
+Type: [string][108]
+
 ## RelatedConfig
 
 Configuration parameters for related plugin.
@@ -617,91 +666,61 @@ Configuration parameters for related plugin.
 
 Indicates whether to continue to to next related entry after playback end.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 ### autoContinueTime
 
 If autoContinue is true, indicates the time in seconds to wait after playback end and before continuing to the next entry.
 
-Type: [number][106]
+Type: [number][109]
 
 ### showOnPlaybackPaused
 
 Indicates whether the related grid should be visible on playback paused.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 ### playlistId
 
 If set, related entries will fetched according to this playlist.
 
-Type: ([string][105] | null)
+Type: ([string][108] | null)
 
 ### entryList
 
 If set, and playlistId is not set, related entries will be fetched according to the items in this list.
 
-Type: [Array][108]\<KalturaPlayerTypes.MediaInfo>
+Type: [Array][111]\<KalturaPlayerTypes.MediaInfo>
 
 ### sourcesList
 
 If set, and playlistId and entryList are not set, this data will be used to set the related entries, without fetching any additional information.
 
-Type: [Array][108]\<KalturaPlayerTypes.Sources>
+Type: [Array][111]\<KalturaPlayerTypes.Sources>
 
 ### useContext
 
 If true, and the three other options for related entries were not set, related entries will be fetched using the metadata of the current entry.
 
-Type: [boolean][107]
+Type: [boolean][110]
 
 ### entriesByContextLimit
 
 Max number of entries which can be fetched when fetching related entries by context.
 
-Type: [number][106]
+Type: [number][109]
 
 ### position
 
 Position of the related list (top, down, left, right).
 
-Type: [string][105]
+Type: [string][108]
 
 ### expandMode
 
 The relation between the position of the player and of the related list (over, alongside).
 
-Type: [string][105]
-
-## RelatedEvent
-
-Internal related plugin events enum.
-
-Type: [string][105]
-
-### RELATED\_ENTRIES\_CHANGED
-
-Fired every time the list of related entries is changed.
-
-Type: [string][105]
-
-### HIDDEN\_STATE\_CHANGED
-
-Fired when the a next entry autoplay is manually cancelled by the user on playback end.
-
-Type: [string][105]
-
-### GRID\_VISIBILITY\_CHANGED
-
-Fired when the related grid is shown or hidden.
-
-Type: [string][105]
-
-### LIST\_VISIBILITY\_CHANGED
-
-Fired when the related list is shown or hidden.
-
-Type: [string][105]
+Type: [string][108]
 
 ## Sources
 
@@ -713,13 +732,13 @@ Player sources data, extended with additional fields used for presentation of th
 
 Internal index of the entry, used for managing entry order.
 
-Type: [number][106]
+Type: [number][109]
 
 ### durationText
 
 Formatted entry duration text.
 
-Type: [string][105]
+Type: [string][108]
 
 [1]: #closebutton
 
@@ -887,52 +906,58 @@ Type: [string][105]
 
 [83]: #addrelatedlistcomponents
 
-[84]: #relatedconfig
+[84]: #relatedevent
 
-[85]: #autocontinue
+[85]: #related_clicked
 
-[86]: #autocontinuetime
+[86]: #related_selected
 
-[87]: #showonplaybackpaused-1
+[87]: #relatedinternalevent
 
-[88]: #playlistid
+[88]: #related_entries_changed
 
-[89]: #entrylist
+[89]: #hidden_state_changed
 
-[90]: #sourceslist
+[90]: #grid_visibility_changed
 
-[91]: #usecontext
+[91]: #list_visibility_changed
 
-[92]: #entriesbycontextlimit
+[92]: #relatedconfig
 
-[93]: #position
+[93]: #autocontinue
 
-[94]: #expandmode
+[94]: #autocontinuetime
 
-[95]: #relatedevent
+[95]: #showonplaybackpaused-1
 
-[96]: #related_entries_changed
+[96]: #playlistid
 
-[97]: #hidden_state_changed
+[97]: #entrylist
 
-[98]: #grid_visibility_changed
+[98]: #sourceslist
 
-[99]: #list_visibility_changed
+[99]: #usecontext
 
-[100]: #sources
+[100]: #entriesbycontextlimit
 
-[101]: #internalindex
+[101]: #position
 
-[102]: #durationtext
+[102]: #expandmode
 
-[103]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[103]: #sources
 
-[104]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[104]: #internalindex
 
-[105]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[105]: #durationtext
 
-[106]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[106]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[107]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[107]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[108]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[108]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[109]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[110]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[111]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
