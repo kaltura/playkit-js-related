@@ -1,5 +1,6 @@
+import {RelatedEvent} from 'event';
 import {EntryService, ImageService} from 'services';
-import {RelatedConfig, RelatedEvent, Sources} from 'types';
+import {RelatedConfig, Sources} from 'types';
 /**
  * Manages the plugin state.
  *

@@ -6,7 +6,7 @@ import {CloseButton, RelatedContext, Thumbnail, Countdown, MultilineText} from '
 import {RelatedManager} from 'related-manager';
 
 import * as styles from './related-countdown-preview.scss';
-import {RelatedEvent} from 'types';
+import {RelatedEvent} from 'event';
 
 const {connect} = KalturaPlayer.ui.redux;
 const {withText} = KalturaPlayer.ui.preacti18n;

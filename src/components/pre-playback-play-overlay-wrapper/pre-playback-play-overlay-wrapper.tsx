@@ -1,11 +1,11 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
 const {withEventManager} = KalturaPlayer.ui.Event;
 
+import {RelatedEvent} from 'event';
 import {useEffect, useState} from 'preact/hooks';
 
 const {Tooltip} = KalturaPlayer.ui.components;
 import {RelatedManager} from 'related-manager';
-import {RelatedEvent} from 'types';
 
 import * as styles from './pre-playback-play-overlay-wrapper.scss';
 

@@ -1,9 +1,10 @@
 const {PrevNext} = KalturaPlayer.ui.components;
 const {withEventManager} = KalturaPlayer.ui.Event;
 
+import {RelatedEvent} from 'event';
 import {useState, useEffect} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
-import {RelatedEvent, Sources} from 'types';
+import {Sources} from 'types';
 interface NextProps {
   relatedManager: RelatedManager;
   showPreview: boolean;
