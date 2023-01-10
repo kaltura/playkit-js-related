@@ -121,7 +121,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper {...{relatedManager}} />,
+      get: () => <PrePlaybackPlayOverlayWrapper {...{relatedManager, eventContext: relatedManager}} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
 
@@ -129,14 +129,14 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
-      get: () => <Next {...{showPreview: false, onClick: () => relatedManager.playNext(), relatedManager}} />
+      get: () => <Next {...{showPreview: false, onClick: () => relatedManager.playNext(), relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
       label: 'kaltura-related-bottom-bar-next',
       presets: PRESETS,
       area: 'BottomBarPlaybackControls',
-      get: () => <Next {...{showPreview: true, onClick: () => relatedManager.playNext(), relatedManager}} />
+      get: () => <Next {...{showPreview: true, onClick: () => relatedManager.playNext(), relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
@@ -144,7 +144,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       presets: PRESETS,
       area: 'InteractiveArea',
       replaceComponent: 'PlaylistCountdown',
-      get: () => <RelatedCountdownPreview {...{relatedManager}} />
+      get: () => <RelatedCountdownPreview {...{relatedManager, eventContext: relatedManager}} />
     });
   }
 
