@@ -115,7 +115,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay {...{relatedManager}} />
+      get: () => <RelatedOverlay {...{relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
