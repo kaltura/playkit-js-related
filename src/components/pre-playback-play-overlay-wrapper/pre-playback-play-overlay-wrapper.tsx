@@ -32,7 +32,7 @@ interface PrePlaybackPlayOverlayWrapperProps {
   next: string;
   startOver: string;
   eventManager: KalturaPlayerTypes.EventManager;
-  eventContext: any;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**

@@ -30,7 +30,7 @@ interface RelatedCountdownProps {
   upNextIn: string;
   sizeBreakpoint: string;
   eventManager: KalturaPlayerTypes.EventManager;
-  eventContext: any;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**
