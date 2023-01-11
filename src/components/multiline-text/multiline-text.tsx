@@ -52,7 +52,7 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
   }, [isTextFinalized, cutoffHeight, minLength, text, maxLength, currentLength]);
 
   return (
-    <div className={styles.multilineText}>
+    <div style={{'-webkit-line-clamp': lines}} className={styles.multilineText}>
       <div ref={ref}>{isTextFinalized ? finalizedText : text.slice(0, currentLength)}</div>
     </div>
   );

@@ -1,7 +1,11 @@
 .multiline-text {
-  word-break: break-word;
+  -webkit-box-orient: vertical;  
+  display: -webkit-box;
   height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 100%;
+  word-break: break-word;
 
   div {
     height: 100%;
