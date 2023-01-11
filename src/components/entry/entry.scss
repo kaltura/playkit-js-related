@@ -222,23 +222,45 @@ button {
   align-items: center;
   background-color: transparent;
   border-radius: 4px;
-  display: flex;
-  height: fit-content;
   padding: 8px;
   position: relative;
-
+  
+  .entry-content {
+    background-color: transparent;
+    width: 100%;
+  }
+  
+  .thumbnail-wrapper * {
+    border-radius: 4px;
+  }
+  
   &.horizontal {
-    flex-direction: column;
+    height: 100%;
 
+    .entry-image {
+      height: calc(100% - 35px);
+    }
+
+    .thumbnail-wrapper {
+      height: 100%;
+    }
+    
     .entry-content {
       margin-top: 4px;
       height: 35px;
     }
   }
-
+  
   &.vertical {
+    display: flex;
     flex-direction: row;
+    height: fit-content;
     margin-right: 8px;
+
+    .thumbnail-wrapper {
+      height: 56px;
+      width: 99px;
+    }
 
     .entry-content {
       margin-left: 8px;
@@ -266,10 +288,6 @@ button {
         margin-left: 16px;
       }
 
-      .entry-image {
-        height: 56px;
-        width: 99px;
-      }
     }
 
     .entry-image {
@@ -301,16 +319,6 @@ button {
 
     .entry-content {
       background-color: transparent;
-    }
-  }
-
-  .entry-content {
-    background-color: transparent;
-  }
-
-  .entry-image {
-    .thumbnail * {
-      border-radius: 4px;
     }
   }
 }

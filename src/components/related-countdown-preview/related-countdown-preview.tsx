@@ -62,7 +62,7 @@ const RelatedCountdownPreview = withText({
       return (
         <RelatedContext.Provider value={{relatedManager}}>
           <div className={`${styles.relatedCountdownPreview} ${isMinimal ? styles.minimal : ''}`} onClick={() => relatedManager.playNext()}>
-            {isMinimal ? <></> : <Thumbnail poster={relatedManager.entries[1]?.poster} width={128} height={72} />}
+            {isMinimal ? <></> : <Thumbnail poster={relatedManager.entries[1]?.poster} />}
             <div className={styles.content}>
               <div className={styles.header}>
                 <span>

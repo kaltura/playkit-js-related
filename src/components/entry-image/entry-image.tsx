@@ -9,8 +9,6 @@ interface EntryImageProps {
   poster?: string;
   type: KalturaPlayerTypes.EntryTypes;
   duration?: number;
-  width: number;
-  height: number;
   children?: ComponentChildren;
 }
 
@@ -21,17 +19,15 @@ interface EntryImageProps {
  * @param {string} props.poster Entry thumbnail url.
  * @param {string} props.type Entry type.
  * @param {number} props.duration Entry playback duration.
- * @param {number} props.width Image width.
- * @param {number} props.height Image height.
  * @param {object} props.children Child components.
  */
 
-const EntryImage = ({poster, type, duration, width, height, children}: EntryImageProps) => {
+const EntryImage = ({poster, type, duration, children}: EntryImageProps) => {
   return (
-    <div className={styles.entryImage} style={{height}}>
+    <div className={styles.entryImage}>
       {children}
-      <div className={styles.thumbnail}>
-        <Thumbnail poster={poster} width={width} height={height} />
+      <div className={styles.thumbnailWrapper}>
+        <Thumbnail poster={poster} />
       </div>
       <div className={styles.duration}>
         <DurationLabel type={type} duration={duration} />

@@ -2,24 +2,30 @@ import {RelatedContext} from 'components';
 import {useState, useEffect, useContext} from 'preact/hooks';
 import * as styles from './thumbnail.scss';
 
+const DUMMY_IMG =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII=';
+
 /**
  * Image with fixed dimensions and a fallback option for images which failed to load.
  *
  * @param {object} props Component props.
  * @param {string} props.poster Base image url.
- * @param {number} props.width Image width.
- * @param {number} props.height Image height.
  */
 
-const Thumbnail = ({poster = '', width, height}: {poster?: string; width: number; height: number}) => {
+const Thumbnail = ({poster = ''}: {poster?: string}) => {
   const {relatedManager} = useContext(RelatedContext);
   const [src, setSrc] = useState('');
 
   useEffect(() => {
     relatedManager?.getImageUrl(poster).then((imageUrl: string | null) => setSrc(imageUrl || ''));
-  }, [relatedManager, poster, width, height]);
+  }, [relatedManager, poster]);
 
-  return src ? <img src={src} style={{width, height}} alt="" /> : <div className={styles.noImage} style={{width, height}} />;
+  // use a hidden image so that even blank entries would have dimensions
+  return (
+    <div style={{backgroundImage: `url('${src}')`}} className={styles.thumbnail}>
+      <img src={`${DUMMY_IMG}`} />
+    </div>
+  );
 };
 
 export {Thumbnail};
