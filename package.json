@@ -29,7 +29,7 @@
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-prettier": "^4.0.0",
     "humanize-duration": "^3.27.1",
-    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js#v3.8.1",
+    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js#8e8cd0771e59253797df745eb3cf713950fb9a70",
     "prettier": "^2.5.1",
     "sass": "^1.44.0",
     "sass-loader": "^12.3.0",
@@ -43,7 +43,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {
-    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#3.8.1"
+    "kaltura-player-js": "https://github.com/kaltura/kaltura-player-js.git#8e8cd0771e59253797df745eb3cf713950fb9a70"
   },
   "publishConfig": {
     "access": "public"

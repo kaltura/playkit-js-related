@@ -1,5 +1,8 @@
-import {useEffect, useState} from 'preact/hooks';
 const {withText} = KalturaPlayer.ui.preacti18n;
+const {withEventManager} = KalturaPlayer.ui.Event;
+
+import {RelatedEvent} from 'event';
+import {useEffect, useState} from 'preact/hooks';
 
 const {Tooltip} = KalturaPlayer.ui.components;
 import {RelatedManager} from 'related-manager';
@@ -28,6 +31,8 @@ interface PrePlaybackPlayOverlayWrapperProps {
   onUnloaded: (cb: (isHiddenByUser: boolean) => void) => void;
   next: string;
   startOver: string;
+  eventManager: KalturaPlayerTypes.EventManager;
+  eventContext: any;
 }
 
 /**
@@ -37,55 +42,49 @@ interface PrePlaybackPlayOverlayWrapperProps {
  * @param {boolean} props.isPlaybackEnded Indicates whether playback has ended.
  * @param {string} props.sizeBreakpoint Player size breakpoint.
  * @param {RelatedManager} props.relatedManager Related manager instance.
- * @param {Function} props.onLoaded Handler for component loaded event.
- * @param {Function} props.onUnloaded Handler for component unloaded event.
  * @param {string} props.next Next label text.
  * @param {string} props.startOver Start over label text.
+ * @param {object} props.eventManager Component event manager.
+ * @param {object} props.eventContext Event context.
  */
-const PrePlaybackPlayOverlayWrapper = withText({
-  next: 'playlist.next',
-  startOver: 'controls.startOver'
-})(
-  connect(mapStateToProps)(
-    ({isPlaybackEnded, sizeBreakpoint, relatedManager, onLoaded, onUnloaded, next, startOver}: PrePlaybackPlayOverlayWrapperProps) => {
-      const [isHiddenByUser, setIsHiddenByUser] = useState(false);
+const PrePlaybackPlayOverlayWrapper = withEventManager(
+  withText({
+    next: 'playlist.next',
+    startOver: 'controls.startOver'
+  })(
+    connect(mapStateToProps)(
+      ({isPlaybackEnded, sizeBreakpoint, relatedManager, next, startOver, eventManager, eventContext}: PrePlaybackPlayOverlayWrapperProps) => {
+        const [isHiddenByUser, setIsHiddenByUser] = useState(false);
 
-      useEffect(() => {
-        // eslint-disable-next-line jsdoc/require-jsdoc
-        function onHiddenStateChanged(isHiddenByUser: boolean) {
-          setIsHiddenByUser(isHiddenByUser);
-        }
+        useEffect(() => {
+          eventManager.listen(eventContext, RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: boolean}) => {
+            setIsHiddenByUser(payload);
+          });
+        }, []);
 
-        onLoaded(onHiddenStateChanged);
-
-        return () => {
-          // clear listener on component unmount
-          onUnloaded(onHiddenStateChanged);
-        };
-      }, []);
-
-      if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
-      else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
-        return (
-          <div className={styles.minimalPrePlaybackPlayOverlay}>
-            <div className={styles.buttonContainer}>
-              <Tooltip label={startOver}>
-                <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
-                  <Icon type={IconType.StartOver} />
-                </button>
-              </Tooltip>
-              <Tooltip label={next}>
-                <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
-                  <Icon type={IconType.Next} />
-                </button>
-              </Tooltip>
-              <div />
+        if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
+        else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
+          return (
+            <div className={styles.minimalPrePlaybackPlayOverlay}>
+              <div className={styles.buttonContainer}>
+                <Tooltip label={startOver}>
+                  <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
+                    <Icon type={IconType.StartOver} />
+                  </button>
+                </Tooltip>
+                <Tooltip label={next}>
+                  <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
+                    <Icon type={IconType.Next} />
+                  </button>
+                </Tooltip>
+                <div />
+              </div>
             </div>
-          </div>
-        );
+          );
+        }
+        return <></>;
       }
-      return <></>;
-    }
+    )
   )
 );
 
