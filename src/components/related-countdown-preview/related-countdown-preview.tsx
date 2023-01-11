@@ -51,8 +51,8 @@ const RelatedCountdownPreview = withText({
     connect(mapStateToProps)(({relatedManager, isPlaybackEnded, upNextIn, sizeBreakpoint, eventManager, eventContext}: RelatedCountdownProps) => {
       const [isVisible, setIsVisible] = useState(false);
       const [isListVisible, setIsListVisible] = useState(relatedManager.isListVisible);
-      const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
+      const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
       const showPreview = isPlaybackEnded && relatedManager.countdownTime > -1 && isListVisible && !isAutoContinueCancelled;
 
       useEffect(() => {
