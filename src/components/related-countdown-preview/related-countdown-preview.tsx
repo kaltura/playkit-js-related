@@ -51,16 +51,16 @@ const RelatedCountdownPreview = withText({
     connect(mapStateToProps)(({relatedManager, isPlaybackEnded, upNextIn, sizeBreakpoint, eventManager, eventContext}: RelatedCountdownProps) => {
       const [isVisible, setIsVisible] = useState(false);
       const [isListVisible, setIsListVisible] = useState(relatedManager.isListVisible);
-      const [isHiddenByUser, setIsHiddenByUser] = useState(relatedManager.isHiddenByUser);
+      const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
-      const showPreview = isPlaybackEnded && relatedManager.countdownTime > -1 && isListVisible && !isHiddenByUser;
+      const showPreview = isPlaybackEnded && relatedManager.countdownTime > -1 && isListVisible && !isAutoContinueCancelled;
 
       useEffect(() => {
         eventManager.listen(eventContext, RelatedEvent.LIST_VISIBILITY_CHANGED, ({payload}: {payload: boolean}) => {
           setIsListVisible(payload);
         });
-        eventManager.listen(eventContext, RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: boolean}) => {
-          setIsHiddenByUser(payload);
+        eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+          setIsAutoContinueCancelled(payload);
         });
       }, []);
 
@@ -79,7 +79,7 @@ const RelatedCountdownPreview = withText({
 
         const onClose = (e: MouseEvent) => {
           relatedManager.clearNextEntryTimeout();
-          relatedManager.isHiddenByUser = true;
+          relatedManager.isAutoContinueCancelled = true;
           setIsVisible(false);
           e.stopPropagation();
         };

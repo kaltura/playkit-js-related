@@ -9,9 +9,9 @@ enum RelatedEvent {
    */
   RELATED_ENTRIES_CHANGED = 'relatedentrieschanged',
   /**
-   * Fired when the a next entry autoplay is manually cancelled by the user on playback end.
+   * Fired when auto continue state cancellation state is changed.
    */
-  HIDDEN_STATE_CHANGED = 'hiddenstatechanged',
+  AUTO_CONTINUE_CANCELLED_CHANGED = 'hiddenstatechanged',
   /**
    * Fired when the related grid is shown or hidden.
    */

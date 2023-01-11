@@ -41,15 +41,15 @@ interface RelatedOverlayProps {
 const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPlaybackEnded, sizeBreakpoint}: RelatedOverlayProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [countdown, setCountdown] = useState(-1);
-  const [isHiddenByUser, setIsHiddenByUser] = useState(false);
+  const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
   useEffect(() => {
     relatedManager.isGridVisible = isVisible;
   }, [relatedManager, isVisible]);
 
   const onCancel = () => {
-    setIsHiddenByUser(true);
-    relatedManager.isHiddenByUser = true;
+    setIsAutoContinueCancelled(true);
+    relatedManager.isAutoContinueCancelled = true;
     setIsVisible(false);
   };
 
@@ -63,7 +63,7 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
     );
     setCountdown(-1);
   } else {
-    setIsVisible(sizeBreakpoint !== PLAYER_SIZE.TINY && !isHiddenByUser);
+    setIsVisible(sizeBreakpoint !== PLAYER_SIZE.TINY && !isAutoContinueCancelled);
     setCountdown(relatedManager.countdownTime);
   }
 
@@ -85,5 +85,4 @@ const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPl
     <></>
   );
 });
-
 export {RelatedOverlay};
