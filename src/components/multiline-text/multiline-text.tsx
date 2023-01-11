@@ -43,7 +43,7 @@ const MultilineText = ({text, lineHeight, lines}: MultilineTextProps) => {
       setIsTextFinalized(true);
     } else if (minLength >= maxLength) {
       // this is the longest text that can fit within the line limit
-      setFinalizedText(`${text.slice(0, maxLength - 5)}...`);
+      setFinalizedText(`${text.slice(0, maxLength)}`);
       setIsTextFinalized(true);
     } else {
       // test again with a longer text
