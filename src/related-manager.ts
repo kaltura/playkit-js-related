@@ -70,12 +70,12 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private _isInitialized = false;
 
   /**
-   * Indicates whether the next entry preview has been manually hidden by the user.
+   * Indicates whether auto continue been cancelled.
    *
    * @private
    * @memberof RelatedManager
    */
-  private _isHiddenByUser = false;
+  private _isAutoContinueCancelled = false;
 
   /**
    * Cache for entry metadata by entry id.
@@ -153,7 +153,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    */
   private playByIndex(index: number) {
     this.clearNextEntryTimeout();
-    this.isHiddenByUser = false;
+    this.isAutoContinueCancelled = false;
     if (this.entryService.isPlayable(this.entries[index])) {
       this.player.setMedia({sources: this.entries[index]});
       this.player.play();
@@ -220,7 +220,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    * @memberof RelatedManager
    */
   startOver() {
-    this.isHiddenByUser = false;
+    this.isAutoContinueCancelled = false;
     this.player.play();
   }
 
@@ -299,13 +299,23 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * Indicates whether the next entry preview has been manually hidden by the user.
+   * Set auto continue cancelled state and fire AUTO_CONTINUE_CANCELLED_CHANGED event
    *
    * @memberof RelatedManager
    */
-  set isHiddenByUser(isHiddenByUser: boolean) {
-    this._isHiddenByUser = isHiddenByUser;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.HIDDEN_STATE_CHANGED, isHiddenByUser));
+  set isAutoContinueCancelled(isAutoContinueCancelled: boolean) {
+    this._isAutoContinueCancelled = isAutoContinueCancelled;
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, isAutoContinueCancelled));
+  }
+
+  /**
+   * Indicates whether auto continue has been cancelled.
+   *
+   * @memberof RelatedManager
+   */
+
+  get isAutoContinueCancelled() {
+    return this._isAutoContinueCancelled;
   }
 
   /**

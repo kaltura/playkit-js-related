@@ -115,7 +115,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay {...{relatedManager}} />
+      get: () => <RelatedOverlay {...{relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
@@ -229,7 +229,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.sidePanelsManager?.remove(this.panelId);
     this.relatedManager.isListVisible = false;
     this.relatedManager.isGridVisible = false;
-    this.relatedManager.isHiddenByUser = false;
+    this.relatedManager.isAutoContinueCancelled = false;
     this.iconId = -1;
     this.panelId = -1;
   }

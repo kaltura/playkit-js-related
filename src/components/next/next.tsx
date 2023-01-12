@@ -10,7 +10,7 @@ interface NextProps {
   showPreview: boolean;
   onClick: (cb: () => void) => void;
   eventManager: KalturaPlayerTypes.EventManager;
-  eventContext: any;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**

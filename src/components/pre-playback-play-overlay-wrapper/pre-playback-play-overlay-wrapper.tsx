@@ -27,12 +27,12 @@ interface PrePlaybackPlayOverlayWrapperProps {
   isPlaybackEnded: boolean;
   sizeBreakpoint: string;
   relatedManager: RelatedManager;
-  onLoaded: (cb: (isHiddenByUser: boolean) => void) => void;
-  onUnloaded: (cb: (isHiddenByUser: boolean) => void) => void;
+  onLoaded: (cb: (isAutoContinueCancelled: boolean) => void) => void;
+  onUnloaded: (cb: (isAutoContinueCancelled: boolean) => void) => void;
   next: string;
   startOver: string;
   eventManager: KalturaPlayerTypes.EventManager;
-  eventContext: any;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**
@@ -54,16 +54,16 @@ const PrePlaybackPlayOverlayWrapper = withEventManager(
   })(
     connect(mapStateToProps)(
       ({isPlaybackEnded, sizeBreakpoint, relatedManager, next, startOver, eventManager, eventContext}: PrePlaybackPlayOverlayWrapperProps) => {
-        const [isHiddenByUser, setIsHiddenByUser] = useState(false);
+        const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
         useEffect(() => {
-          eventManager.listen(eventContext, RelatedEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: boolean}) => {
-            setIsHiddenByUser(payload);
+          eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+            setIsAutoContinueCancelled(payload);
           });
         }, []);
 
         if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
-        else if (isHiddenByUser && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
+        else if (isAutoContinueCancelled && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
           return (
             <div className={styles.minimalPrePlaybackPlayOverlay}>
               <div className={styles.buttonContainer}>
