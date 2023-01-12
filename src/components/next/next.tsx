@@ -1,40 +1,41 @@
 const {PrevNext} = KalturaPlayer.ui.components;
+const {withEventManager} = KalturaPlayer.ui.Event;
+
+import {RelatedEvent} from 'event';
 import {useState, useEffect} from 'preact/hooks';
+import {RelatedManager} from 'related-manager';
+import {Sources} from 'types';
 interface NextProps {
+  relatedManager: RelatedManager;
   showPreview: boolean;
   onClick: (cb: () => void) => void;
-  onLoaded: (cb: (nextEntries: []) => void) => void;
-  onUnloaded: (cb: (nextEntries: []) => void) => void;
+  eventManager: KalturaPlayerTypes.EventManager;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**
  * Play next entry button.
  *
  * @param {object} props Component props.
+ * @param {RelatedManager} props.relatedManager Related manager instance.
  * @param {boolean} props.showPreview Indicates whether next entry preview should be visible.
- * @param {Function} props.onLoaded Handler for component loaded event.
- * @param {Function} props.onUnloaded Handler for component loaded event.
  * @param {Function} props.onClick onClick event handler.
+ * @param {object} props.eventManager Component event manager.
+ * @param {object} props.eventContext Event context.
  */
 
-const Next = (props: NextProps) => {
-  const [entries, setEntries] = useState([]);
+const Next = withEventManager(({relatedManager, showPreview, onClick, eventManager, eventContext}: NextProps) => {
+  const [entries, setEntries] = useState<Sources[]>([]);
 
   useEffect(() => {
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    function onEntriesChanged(updatedEntries: []) {
-      setEntries(updatedEntries);
-    }
+    eventManager.listen(eventContext, RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: Sources[]}) => {
+      setEntries(payload);
+    });
 
-    props.onLoaded(onEntriesChanged);
-
-    return () => {
-      // clear listener on component unmount
-      props.onUnloaded(onEntriesChanged);
-    };
+    setEntries(relatedManager.entries);
   }, []);
 
-  return entries.length ? <PrevNext type={'next'} item={{sources: entries[0]}} onClick={props.onClick} showPreview={props.showPreview} /> : <></>;
-};
+  return entries.length ? <PrevNext type={'next'} item={{sources: entries[0]}} onClick={onClick} showPreview={showPreview} /> : <></>;
+});
 
 export {Next};

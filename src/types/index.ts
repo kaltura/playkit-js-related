@@ -5,4 +5,4 @@ import {EntryDimensions} from './entry-dimensions';
 import {Sources} from './sources';
 import {Icon} from './icon';
 
-export {EntryDimensions, EntryListResponse, Icon, RelatedConfig, RelatedEvent, RelatedInternalEvent, Sources};
+export {EntryDimensions, EntryListResponse, Icon, RelatedConfig, Sources};

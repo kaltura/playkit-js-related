@@ -5,7 +5,8 @@ import {RelatedManager} from 'related-manager';
 import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListToggleButton, RelatedCountdownPreview} from 'components';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
-import {Icon, RelatedConfig, RelatedInternalEvent} from 'types';
+import {Icon, RelatedConfig} from 'types';
+import {RelatedEvent} from 'event';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -114,52 +115,29 @@ class Related extends KalturaPlayer.core.BasePlugin {
       label: 'kaltura-related-grid',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <RelatedOverlay relatedManager={relatedManager} />
+      get: () => <RelatedOverlay {...{relatedManager, eventContext: relatedManager}} />
     });
-
-    const preplayBackPlayOverlayProps = {
-      relatedManager,
-      onLoaded: (callback: (nextEntries: []) => void) => {
-        relatedManager.listen(RelatedInternalEvent.HIDDEN_STATE_CHANGED, ({payload}: {payload: []}) => callback(payload));
-      },
-      onUnloaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.unlisten(RelatedInternalEvent.HIDDEN_STATE_CHANGED, cb);
-      }
-    };
 
     this.player.ui.addComponent({
       label: 'kaltura-related-pre-playback-play-overlay',
       presets: PRESETS,
       area: 'GuiArea',
-      get: () => <PrePlaybackPlayOverlayWrapper {...preplayBackPlayOverlayProps} />,
+      get: () => <PrePlaybackPlayOverlayWrapper {...{relatedManager, eventContext: relatedManager}} />,
       replaceComponent: KalturaPlayer.ui.components.PrePlaybackPlayOverlay.displayName
     });
-
-    const nextProps = {
-      onClick: () => relatedManager.playNext(),
-      onLoaded: (callback: (nextEntries: []) => void) => {
-        relatedManager.listen(RelatedInternalEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: []}) => callback(payload));
-        // in case entries were set before the handler was registered
-        // eslint-disable-next-line no-self-assign
-        relatedManager.entries = relatedManager.entries;
-      },
-      onUnloaded: (cb: (nextEntries: []) => void) => {
-        relatedManager.unlisten(RelatedInternalEvent.RELATED_ENTRIES_CHANGED, cb);
-      }
-    };
 
     this.player.ui.addComponent({
       label: 'kaltura-related-overlay-next',
       presets: PRESETS,
       area: 'OverlayPlaybackControls',
-      get: () => <Next {...{...nextProps, showPreview: false}} />
+      get: () => <Next {...{showPreview: false, onClick: () => relatedManager.playNext(), relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
       label: 'kaltura-related-bottom-bar-next',
       presets: PRESETS,
       area: 'BottomBarPlaybackControls',
-      get: () => <Next {...{...nextProps, showPreview: true}} />
+      get: () => <Next {...{showPreview: true, onClick: () => relatedManager.playNext(), relatedManager, eventContext: relatedManager}} />
     });
 
     this.player.ui.addComponent({
@@ -167,7 +145,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       presets: PRESETS,
       area: 'InteractiveArea',
       replaceComponent: 'PlaylistCountdown',
-      get: () => <RelatedCountdownPreview relatedManager={this.relatedManager} />
+      get: () => <RelatedCountdownPreview {...{relatedManager, eventContext: relatedManager}} />
     });
   }
 
@@ -251,7 +229,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     this.sidePanelsManager?.remove(this.panelId);
     this.relatedManager.isListVisible = false;
     this.relatedManager.isGridVisible = false;
-    this.relatedManager.isHiddenByUser = false;
+    this.relatedManager.isAutoContinueCancelled = false;
     this.iconId = -1;
     this.panelId = -1;
   }

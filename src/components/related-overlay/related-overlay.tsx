@@ -5,7 +5,9 @@ import {RelatedGrid} from '../related-grid/related-grid';
 import {getNextEntry} from '../related-grid/grid-utils';
 
 import * as styles from './related-overlay.scss';
+import {RelatedEvent} from 'event';
 
+const {withEventManager} = KalturaPlayer.ui.Event;
 const {connect} = KalturaPlayer.ui.redux;
 const {PLAYER_SIZE} = KalturaPlayer.ui.components;
 
@@ -26,6 +28,8 @@ interface RelatedOverlayProps {
   isPaused: boolean;
   isPlaybackEnded: boolean;
   sizeBreakpoint: string;
+  eventManager: KalturaPlayerTypes.EventManager;
+  eventContext: KalturaPlayerTypes.FakeEventTarget;
 }
 
 /**
@@ -37,53 +41,62 @@ interface RelatedOverlayProps {
  * @param {boolean} props.isPaused Indicates whether playback is paused.
  * @param {boolean} props.isPlaybackEnded Indicates whether playback has ended.
  * @param {string} props.sizeBreakpoint Player size breakpoint.
+ * @param {object} props.eventManager Component event manager.
+ * @param {object} props.eventContext Event context.
  */
-const RelatedOverlay = connect(mapStateToProps)(({relatedManager, isPaused, isPlaybackEnded, sizeBreakpoint}: RelatedOverlayProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [countdown, setCountdown] = useState(-1);
-  const [isHiddenByUser, setIsHiddenByUser] = useState(false);
+const RelatedOverlay = withEventManager(
+  connect(mapStateToProps)(({relatedManager, isPaused, isPlaybackEnded, sizeBreakpoint, eventManager, eventContext}: RelatedOverlayProps) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [countdown, setCountdown] = useState(-1);
+    const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
-  useEffect(() => {
-    relatedManager.isGridVisible = isVisible;
-  }, [relatedManager, isVisible]);
+    useEffect(() => {
+      eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+        setIsAutoContinueCancelled(payload);
+      });
+    }, []);
 
-  const onCancel = () => {
-    setIsHiddenByUser(true);
-    relatedManager.isHiddenByUser = true;
-    setIsVisible(false);
-  };
+    useEffect(() => {
+      relatedManager.isGridVisible = isVisible;
+    }, [relatedManager, isVisible]);
 
-  if (!relatedManager.entries.length || relatedManager.isListVisible) {
-    setIsVisible(false);
-    setCountdown(-1);
-    return <></>;
-  } else if (!isPlaybackEnded) {
-    setIsVisible(
-      isPaused && relatedManager.showOnPlaybackPaused && ![PLAYER_SIZE.TINY, PLAYER_SIZE.EXTRA_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint)
-    );
-    setCountdown(-1);
-  } else {
-    setIsVisible(sizeBreakpoint !== PLAYER_SIZE.TINY && !isHiddenByUser);
-    setCountdown(relatedManager.countdownTime);
-  }
+    const onCancel = () => {
+      setIsAutoContinueCancelled(true);
+      relatedManager.isAutoContinueCancelled = true;
+      setIsVisible(false);
+    };
 
-  return isVisible ? (
-    <div>
-      <div className={styles.relatedOverlay}>
-        <RelatedContext.Provider value={{relatedManager}}>
-          <div className={styles.relatedContent}>
-            {sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL || sizeBreakpoint === PLAYER_SIZE.SMALL ? (
-              getNextEntry(sizeBreakpoint, countdown, relatedManager.entries[0], onCancel)
-            ) : (
-              <RelatedGrid data={relatedManager.entries} countdown={countdown} />
-            )}
-          </div>
-        </RelatedContext.Provider>
+    if (!relatedManager.entries.length || relatedManager.isListVisible) {
+      setIsVisible(false);
+      setCountdown(-1);
+      return <></>;
+    } else if (!isPlaybackEnded) {
+      setIsVisible(
+        isPaused && relatedManager.showOnPlaybackPaused && ![PLAYER_SIZE.TINY, PLAYER_SIZE.EXTRA_SMALL, PLAYER_SIZE.SMALL].includes(sizeBreakpoint)
+      );
+      setCountdown(-1);
+    } else {
+      setIsVisible(sizeBreakpoint !== PLAYER_SIZE.TINY && !isAutoContinueCancelled);
+      setCountdown(relatedManager.countdownTime);
+    }
+
+    return isVisible ? (
+      <div>
+        <div className={styles.relatedOverlay}>
+          <RelatedContext.Provider value={{relatedManager}}>
+            <div className={styles.relatedContent}>
+              {sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL || sizeBreakpoint === PLAYER_SIZE.SMALL ? (
+                getNextEntry(sizeBreakpoint, countdown, relatedManager.entries[0], onCancel)
+              ) : (
+                <RelatedGrid data={relatedManager.entries} countdown={countdown} />
+              )}
+            </div>
+          </RelatedContext.Provider>
+        </div>
       </div>
-    </div>
-  ) : (
-    <></>
-  );
-});
-
+    ) : (
+      <></>
+    );
+  })
+);
 export {RelatedOverlay};
