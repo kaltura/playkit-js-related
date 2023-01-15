@@ -1,4 +1,4 @@
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent, RelatedEvent} from 'event';
 import {EntryService, ImageService} from 'services';
 import {RelatedConfig, Sources} from 'types';
 /**
@@ -145,7 +145,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * Play a selected entry.
+   * Play an entry by index.
    *
    * @private
    * @param {number} index index of the selected entry to play
@@ -244,7 +244,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   }
 
   /**
-   * Wrapper for playByIndex.
+   * Play the selected entry.
    *
    * @param {number} internalIndex index of the entry to be played
    * @memberof RelatedManager
@@ -252,6 +252,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   playSelected(internalIndex: number) {
     this.logger.info('going to play selected entry');
     this.playByIndex(internalIndex);
+    this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_SELECTED));
   }
 
   /**
@@ -305,7 +306,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    */
   set isAutoContinueCancelled(isAutoContinueCancelled: boolean) {
     this._isAutoContinueCancelled = isAutoContinueCancelled;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, isAutoContinueCancelled));
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, isAutoContinueCancelled));
   }
 
   /**
@@ -348,7 +349,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   set entries(entries: Sources[]) {
     this.logger.info(`related entries changed`);
     this._entries = entries;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRIES_CHANGED, this._entries));
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.RELATED_ENTRIES_CHANGED, this._entries));
   }
 
   /**
@@ -389,7 +390,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    */
   set isGridVisible(isGridVisible: boolean) {
     this._isGridVisible = isGridVisible;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.GRID_VISIBILITY_CHANGED, this._isGridVisible));
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.GRID_VISIBILITY_CHANGED, this._isGridVisible));
   }
 
   /**
@@ -409,7 +410,10 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    */
   set isListVisible(isListVisible: boolean) {
     this._isListVisible = isListVisible;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.LIST_VISIBILITY_CHANGED, this._isListVisible));
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, this._isListVisible));
+    if (this._isListVisible) {
+      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_CLICKED));
+    }
   }
 }
 

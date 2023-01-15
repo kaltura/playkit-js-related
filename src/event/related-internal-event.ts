@@ -1,9 +1,7 @@
 /**
- * Internal related plugin events enum.
- *
- * @enum {string}
+ * Internal related plugin event types.
  */
-enum RelatedEvent {
+enum RelatedInternalEvent {
   /**
    * Fired every time the list of related entries is changed.
    */
@@ -22,4 +20,4 @@ enum RelatedEvent {
   LIST_VISIBILITY_CHANGED = 'list_visibility_changed'
 }
 
-export {RelatedEvent};
+export {RelatedInternalEvent};

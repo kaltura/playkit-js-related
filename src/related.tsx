@@ -6,7 +6,7 @@ import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListTo
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
 import {Icon, RelatedConfig} from 'types';
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 
 const PRESETS = ['Playback', 'Live'];
 
@@ -213,11 +213,11 @@ class Related extends KalturaPlayer.core.BasePlugin {
       expandMode: this.config.expandMode
     }) as number;
 
-    this.relatedManager.listen(RelatedEvent.GRID_VISIBILITY_CHANGED, () => {
+    this.relatedManager.listen(RelatedInternalEvent.GRID_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
     });
 
-    this.relatedManager.listen(RelatedEvent.LIST_VISIBILITY_CHANGED, () => {
+    this.relatedManager.listen(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
       this.sidePanelsManager[this.relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
     });

@@ -6,7 +6,7 @@ import {CloseButton, RelatedContext, Thumbnail, Countdown, MultilineText} from '
 import {RelatedManager} from 'related-manager';
 
 import * as styles from './related-countdown-preview.scss';
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 
 const {connect} = KalturaPlayer.ui.redux;
 const {withText} = KalturaPlayer.ui.preacti18n;
@@ -56,10 +56,10 @@ const RelatedCountdownPreview = withText({
       const showPreview = isPlaybackEnded && relatedManager.countdownTime > -1 && isListVisible && !isAutoContinueCancelled;
 
       useEffect(() => {
-        eventManager.listen(eventContext, RelatedEvent.LIST_VISIBILITY_CHANGED, ({payload}: {payload: boolean}) => {
+        eventManager.listen(eventContext, RelatedInternalEvent.LIST_VISIBILITY_CHANGED, ({payload}: {payload: boolean}) => {
           setIsListVisible(payload);
         });
-        eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+        eventManager.listen(eventContext, RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
           setIsAutoContinueCancelled(payload);
         });
       }, []);
