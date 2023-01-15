@@ -65,7 +65,7 @@ button {
 .entry-image {
   position: relative;
 
-  .thumbnail * {
+  .thumbnail-wrapper * {
     border-radius: 8px 8px 0 0;
   }
 
@@ -273,13 +273,8 @@ button {
     }
 
     &.horizontal {
-      .entry-content {
-        margin-left: -16px;
-      }
-
-      .entry-image {
-        height: 90px;
-        width: 160px;
+      .entry-image * {
+        visibility: hidden;
       }
     }
 
@@ -305,10 +300,10 @@ button {
 
         &:first-child {
           margin-bottom: 10px;
-          width: 145px;
+          width: 100%;
         }
         &:nth-child(2) {
-          width: 75px;
+          width: 51.7%;
         }
       }
     }
