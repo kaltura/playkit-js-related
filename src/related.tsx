@@ -6,7 +6,7 @@ import {Next, PrePlaybackPlayOverlayWrapper, RelatedList, RelatedOverlay, ListTo
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
 import {Icon, RelatedConfig} from 'types';
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 
 const PRESETS = ['Playback', 'Live'];
 

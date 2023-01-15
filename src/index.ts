@@ -1,4 +1,3 @@
-import {RelatedEvent} from 'types';
 import {Related} from './related';
 
 declare let __VERSION__: string;
@@ -9,7 +8,6 @@ const NAME = __NAME__;
 
 export {Related as Plugin};
 export {VERSION, NAME};
-export {RelatedEvent};
 
 const pluginName = 'related';
 

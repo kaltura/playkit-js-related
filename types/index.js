@@ -1,1 +1,1 @@
-export {RelatedEvent} from '../src/types/events';
+export {RelatedEvent} from '../src/event/related-event';

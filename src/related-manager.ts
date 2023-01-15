@@ -1,4 +1,4 @@
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent, RelatedEvent} from 'event';
 import {EntryService, ImageService} from 'services';
 import {RelatedConfig, Sources} from 'types';
 /**
@@ -306,7 +306,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    */
   set isAutoContinueCancelled(isAutoContinueCancelled: boolean) {
     this._isAutoContinueCancelled = isAutoContinueCancelled;
-    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, isAutoContinueCancelled));
+    this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, isAutoContinueCancelled));
   }
 
   /**

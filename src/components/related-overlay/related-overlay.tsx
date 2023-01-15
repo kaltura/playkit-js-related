@@ -5,7 +5,7 @@ import {RelatedGrid} from '../related-grid/related-grid';
 import {getNextEntry} from '../related-grid/grid-utils';
 
 import * as styles from './related-overlay.scss';
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 
 const {withEventManager} = KalturaPlayer.ui.Event;
 const {connect} = KalturaPlayer.ui.redux;
@@ -51,7 +51,7 @@ const RelatedOverlay = withEventManager(
     const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
     useEffect(() => {
-      eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+      eventManager.listen(eventContext, RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
         setIsAutoContinueCancelled(payload);
       });
     }, []);

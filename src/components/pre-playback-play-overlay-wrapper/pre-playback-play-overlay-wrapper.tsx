@@ -1,7 +1,7 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
 const {withEventManager} = KalturaPlayer.ui.Event;
 
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 import {useEffect, useState} from 'preact/hooks';
 
 const {Tooltip} = KalturaPlayer.ui.components;
@@ -57,7 +57,7 @@ const PrePlaybackPlayOverlayWrapper = withEventManager(
         const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
         useEffect(() => {
-          eventManager.listen(eventContext, RelatedEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+          eventManager.listen(eventContext, RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
             setIsAutoContinueCancelled(payload);
           });
         }, []);

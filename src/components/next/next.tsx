@@ -1,7 +1,7 @@
 const {PrevNext} = KalturaPlayer.ui.components;
 const {withEventManager} = KalturaPlayer.ui.Event;
 
-import {RelatedEvent} from 'event';
+import {RelatedInternalEvent} from 'event';
 import {useState, useEffect} from 'preact/hooks';
 import {RelatedManager} from 'related-manager';
 import {Sources} from 'types';
@@ -28,7 +28,7 @@ const Next = withEventManager(({relatedManager, showPreview, onClick, eventManag
   const [entries, setEntries] = useState<Sources[]>([]);
 
   useEffect(() => {
-    eventManager.listen(eventContext, RelatedEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: Sources[]}) => {
+    eventManager.listen(eventContext, RelatedInternalEvent.RELATED_ENTRIES_CHANGED, ({payload}: {payload: Sources[]}) => {
       setEntries(payload);
     });
 
