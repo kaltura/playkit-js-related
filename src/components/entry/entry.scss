@@ -65,7 +65,7 @@ button {
 .entry-image {
   position: relative;
 
-  .thumbnail * {
+  .thumbnail-wrapper * {
     border-radius: 8px 8px 0 0;
   }
 
@@ -222,23 +222,45 @@ button {
   align-items: center;
   background-color: transparent;
   border-radius: 4px;
-  display: flex;
-  height: fit-content;
   padding: 8px;
   position: relative;
-
+  
+  .entry-content {
+    background-color: transparent;
+    width: 100%;
+  }
+  
+  .thumbnail-wrapper * {
+    border-radius: 4px;
+  }
+  
   &.horizontal {
-    flex-direction: column;
+    height: 100%;
 
+    .entry-image {
+      height: calc(100% - 35px);
+    }
+
+    .thumbnail-wrapper {
+      height: 100%;
+    }
+    
     .entry-content {
       margin-top: 4px;
       height: 35px;
     }
   }
-
+  
   &.vertical {
+    display: flex;
     flex-direction: row;
+    height: fit-content;
     margin-right: 8px;
+
+    .thumbnail-wrapper {
+      height: 56px;
+      width: 99px;
+    }
 
     .entry-content {
       margin-left: 8px;
@@ -251,13 +273,8 @@ button {
     }
 
     &.horizontal {
-      .entry-content {
-        margin-left: -16px;
-      }
-
-      .entry-image {
-        height: 90px;
-        width: 160px;
+      .entry-image * {
+        visibility: hidden;
       }
     }
 
@@ -266,10 +283,6 @@ button {
         margin-left: 16px;
       }
 
-      .entry-image {
-        height: 56px;
-        width: 99px;
-      }
     }
 
     .entry-image {
@@ -287,10 +300,10 @@ button {
 
         &:first-child {
           margin-bottom: 10px;
-          width: 145px;
+          width: 100%;
         }
         &:nth-child(2) {
-          width: 75px;
+          width: 51.7%;
         }
       }
     }
@@ -301,16 +314,6 @@ button {
 
     .entry-content {
       background-color: transparent;
-    }
-  }
-
-  .entry-content {
-    background-color: transparent;
-  }
-
-  .entry-image {
-    .thumbnail * {
-      border-radius: 4px;
     }
   }
 }
