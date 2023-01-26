@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/kaltura/playkit-js-related/compare/v0.1.5...v0.1.6) (2023-01-26)
+
+
+### Features
+
+* **FEC-11600:** Related grid analytics ([#34](https://github.com/kaltura/playkit-js-related/issues/34)) ([dfcc2df](https://github.com/kaltura/playkit-js-related/commit/dfcc2dff67be8e071553b1f5624ad75e155f206c)), closes [kaltura/playkit-js-kava#133](https://github.com/kaltura/playkit-js-kava/issues/133)
+
+
+### Bug Fixes
+
+* **FEC-12822:** Related videos in the kitchen sink panel on top or on the bottom should be responsive ([27f4fc0](https://github.com/kaltura/playkit-js-related/commit/27f4fc07213181b0e87184c3cd2de9c13833aa86))
+* **FEC-12844:** Related - autoContinue: true - countdown not canceled ([cb75db7](https://github.com/kaltura/playkit-js-related/commit/cb75db7356d56ceecfbfa413e99758b3dc3c2072))
+* **FEC-12844:** Related - autoContinue: true - countdown not canceled ([953f4c3](https://github.com/kaltura/playkit-js-related/commit/953f4c333fa12bb3d2350f27b2e165a3ebc7bdf7))
+* **FEC-12869:** Related - Related plugin blocks "up next in" for playlist ([fd405b7](https://github.com/kaltura/playkit-js-related/commit/fd405b71612661a067b5aaf8c0302cc7fed3487f))
+
 ### [0.1.5](https://github.com/kaltura/playkit-js-related/compare/v0.1.4...v0.1.5) (2022-12-28)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/related",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "dist/playkit-related.js",
   "homepage": "https://github.com/kaltura/playkit-js-related#readme",
   "scripts": {
