@@ -142,14 +142,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
       area: 'BottomBarPlaybackControls',
       get: () => <Next {...{showPreview: true, onClick: () => relatedManager.playNext(), relatedManager, eventContext: relatedManager}} />
     });
-
-    this.player.ui.addComponent({
-      label: 'kaltura-related-preview',
-      presets: PRESETS,
-      area: 'InteractiveArea',
-      replaceComponent: 'PlaylistCountdown',
-      get: () => <RelatedCountdownPreview {...{relatedManager, eventContext: relatedManager}} />
-    });
   }
 
   /**
