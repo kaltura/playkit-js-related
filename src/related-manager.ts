@@ -141,7 +141,13 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   private cycleEntries(lastPlayedIndex: number) {
     const lastPlayedEntry = this._entries[lastPlayedIndex];
     this._entries.splice(lastPlayedIndex, 1);
-    this.entries = [...this._entries, lastPlayedEntry];
+
+    this.entries = [...this._entries, lastPlayedEntry].map((entry, index) => {
+      return {
+        ...entry,
+        internalIndex: index
+      };
+    });
   }
 
   /**
