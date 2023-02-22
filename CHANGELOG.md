@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/kaltura/playkit-js-related/compare/v0.1.6...v0.1.7) (2023-02-22)
+
+
+### Bug Fixes
+
+* **FEC-12869:** Related - Related plugin blocks "up next in" for playlist ([672afd0](https://github.com/kaltura/playkit-js-related/commit/672afd0b6a664c70ef4b0021eaf43e76085278f4))
+* **FEC-12884:** Related Plugin Playing wrong Videos  ([7428207](https://github.com/kaltura/playkit-js-related/commit/7428207bcb55be74902360aa24df530aee8d1f30))
+
 ### [0.1.6](https://github.com/kaltura/playkit-js-related/compare/v0.1.5...v0.1.6) (2023-01-26)
 
 
