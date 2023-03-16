@@ -175,6 +175,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    * @memberof Related
    */
   addRelatedListComponents() {
+    let justEnded = false;
     const {relatedManager} = this;
     if (this.iconId > 0 || !relatedManager.entries.length) return;
 
@@ -228,6 +229,26 @@ class Related extends KalturaPlayer.core.BasePlugin {
     relatedManager.listen(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
       this.sidePanelsManager[relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
+    });
+
+    this.player.addEventListener(this.player.Event.PLAYBACK_ENDED, () => {
+      justEnded = true;
+    });
+
+    this.player.addEventListener(this.player.Event.PLAY, () => {
+      if (justEnded) {
+        relatedManager.isAutoContinueCancelled = false;
+        relatedManager.clearNextEntryTimeout();
+      }
+      justEnded = false;
+    });
+
+    this.player.addEventListener(this.player.Event.SEEKED, () => {
+      if (justEnded) {
+        relatedManager.isAutoContinueCancelled = false;
+        relatedManager.clearNextEntryTimeout();
+      }
+      justEnded = false;
     });
   }
 
