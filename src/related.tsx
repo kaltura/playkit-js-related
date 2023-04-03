@@ -175,7 +175,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    * @memberof Related
    */
   addRelatedListComponents() {
-    let justEnded = false;
+    let isEnded = false;
     const {relatedManager} = this;
     if (this.iconId > 0 || !relatedManager.entries.length) return;
 
@@ -232,23 +232,23 @@ class Related extends KalturaPlayer.core.BasePlugin {
     });
 
     this.player.addEventListener(this.player.Event.PLAYBACK_ENDED, () => {
-      justEnded = true;
+      isEnded = true;
     });
 
     this.player.addEventListener(this.player.Event.PLAY, () => {
-      if (justEnded) {
+      if (isEnded) {
         relatedManager.isAutoContinueCancelled = false;
         relatedManager.clearNextEntryTimeout();
       }
-      justEnded = false;
+      isEnded = false;
     });
 
     this.player.addEventListener(this.player.Event.SEEKED, () => {
-      if (justEnded) {
+      if (isEnded) {
         relatedManager.isAutoContinueCancelled = false;
         relatedManager.clearNextEntryTimeout();
       }
-      justEnded = false;
+      isEnded = false;
     });
   }
 
