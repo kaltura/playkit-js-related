@@ -166,6 +166,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     await this.ready;
 
     this.addRelatedListComponents();
+    this.handleReplayAfterEndOfStream();
   }
 
   /**
@@ -175,7 +176,6 @@ class Related extends KalturaPlayer.core.BasePlugin {
    * @memberof Related
    */
   addRelatedListComponents() {
-    let isEnded = false;
     const {relatedManager} = this;
     if (this.iconId > 0 || !relatedManager.entries.length) return;
 
@@ -230,12 +230,23 @@ class Related extends KalturaPlayer.core.BasePlugin {
       this.upperBarManager?.update(this.iconId);
       this.sidePanelsManager[relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
     });
+  }
 
-    this.player.addEventListener(this.player.Event.PLAYBACK_ENDED, () => {
+  /**
+   *
+   * cancel continue to related entry if play the same stream again
+   *
+   * @memberof Related
+   */
+  handleReplayAfterEndOfStream() {
+    let isEnded = false;
+    const {relatedManager} = this;
+
+    this.eventManager.listen(this.player, this.player.Event.PLAYBACK_ENDED, () => {
       isEnded = true;
     });
 
-    this.player.addEventListener(this.player.Event.PLAY, () => {
+    this.eventManager.listen(this.player, this.player.Event.PLAY, () => {
       if (isEnded) {
         relatedManager.isAutoContinueCancelled = false;
         relatedManager.clearNextEntryTimeout();
@@ -243,7 +254,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       isEnded = false;
     });
 
-    this.player.addEventListener(this.player.Event.SEEKED, () => {
+    this.eventManager.listen(this.player, this.player.Event.SEEKED, () => {
       if (isEnded) {
         relatedManager.isAutoContinueCancelled = false;
         relatedManager.clearNextEntryTimeout();
