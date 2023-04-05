@@ -166,7 +166,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     await this.ready;
 
     this.addRelatedListComponents();
-    this.handleReplayAfterEndOfStream();
+    this.handleStartOver();
   }
 
   /**
@@ -238,7 +238,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    *
    * @memberof Related
    */
-  handleReplayAfterEndOfStream() {
+  handleStartOver() {
     let isEnded = false;
     const {relatedManager} = this;
 
