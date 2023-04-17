@@ -166,6 +166,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     await this.ready;
 
     this.addRelatedListComponents();
+    this.handleStartOver();
   }
 
   /**
@@ -228,6 +229,37 @@ class Related extends KalturaPlayer.core.BasePlugin {
     relatedManager.listen(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, () => {
       this.upperBarManager?.update(this.iconId);
       this.sidePanelsManager[relatedManager.isListVisible ? 'activateItem' : 'deactivateItem'](this.panelId);
+    });
+  }
+
+  /**
+   *
+   * cancel continue to related entry if play the same stream again
+   *
+   * @memberof Related
+   */
+  handleStartOver() {
+    let isEnded = false;
+    const {relatedManager} = this;
+
+    this.eventManager.listen(this.player, this.player.Event.PLAYBACK_ENDED, () => {
+      isEnded = true;
+    });
+
+    this.eventManager.listen(this.player, this.player.Event.PLAY, () => {
+      if (isEnded) {
+        relatedManager.isAutoContinueCancelled = false;
+        relatedManager.clearNextEntryTimeout();
+      }
+      isEnded = false;
+    });
+
+    this.eventManager.listen(this.player, this.player.Event.SEEKED, () => {
+      if (isEnded) {
+        relatedManager.isAutoContinueCancelled = false;
+        relatedManager.clearNextEntryTimeout();
+      }
+      isEnded = false;
     });
   }
 
