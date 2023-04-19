@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/kaltura/playkit-js-related/compare/v0.1.7...v0.1.8) (2023-04-19)
+
+
+### Bug Fixes
+
+* **FEC-13045:** Restart button ignored on related plugin ([#43](https://github.com/kaltura/playkit-js-related/issues/43)) ([6af1d80](https://github.com/kaltura/playkit-js-related/commit/6af1d80feb6f91f6073c41beeb69156836bb787c))
+
 ### [0.1.7](https://github.com/kaltura/playkit-js-related/compare/v0.1.6...v0.1.7) (2023-02-22)
 
 
