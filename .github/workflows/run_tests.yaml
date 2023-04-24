@@ -12,6 +12,7 @@ jobs:
     uses: kaltura/ovp-pipelines-pub/.github/workflows/player_tests.yaml@v1.0.0
     with:
       yarn-run-to-execute: 'eslint'
+      enabled-openssl-legacy-provider: "false"
   notification:
     if: always()
     uses: kaltura/ovp-pipelines-pub/.github/workflows/notification.yaml@v1.0.0
@@ -22,4 +23,3 @@ jobs:
       failure-status: ${{ contains(needs.*.result, 'failure') }}
       cancelled-status: ${{ contains(needs.*.result, 'cancelled') }}
       is-test: 'true'
-      
