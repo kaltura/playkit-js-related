@@ -1,4 +1,4 @@
-import {ui} from 'kaltura-player-js';
+import {ui} from '@playkit-js/kaltura-player-js';
 const {SidePanelModes, SidePanelPositions} = ui;
 
 import {RelatedManager} from 'related-manager';
