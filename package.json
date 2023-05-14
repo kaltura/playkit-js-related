@@ -17,7 +17,7 @@
     "prettier:fix": "prettier --write ."
   },
   "devDependencies": {
-    "@playkit-js/ui-managers": "latest",
+    "@playkit-js/ui-managers": "canary",
     "@playkit-js/kaltura-player-js": "canary",
     "@types/node": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
