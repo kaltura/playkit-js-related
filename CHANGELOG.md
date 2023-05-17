@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.10 (2023-05-17)
+
+
+### Bug Fixes
+
+* **FEC-13123:** replace travis with github actions ([#49](https://github.com/kaltura/playkit-js-related/issues/49)) ([7e7d801](https://github.com/kaltura/playkit-js-related/commit/7e7d801e200765706dd5a544167da73b7df78a72))
+
 ### 0.1.9 (2023-05-03)
 
 ### [0.1.8](https://github.com/kaltura/playkit-js-related/compare/v0.1.7...v0.1.8) (2023-04-19)
