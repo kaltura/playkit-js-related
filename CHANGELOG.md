@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.11 (2023-06-07)
+
+
+### Bug Fixes
+
+* **FEC-13216:** upd dependencies ([#52](https://github.com/kaltura/playkit-js-related/issues/52)) ([4ca8bd7](https://github.com/kaltura/playkit-js-related/commit/4ca8bd742119817c2ba9407b08001b789f5ce9ea))
+
 ### 0.1.10 (2023-05-17)
 
 
