@@ -15,3 +15,4 @@ jobs:
     with:
       schema-type: "playerV3Versions"
       tests-yarn-run-to-execute: 'eslint'
+      enabled-openssl-legacy-provider: 'false'
