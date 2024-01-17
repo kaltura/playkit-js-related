@@ -9,6 +9,6 @@ const NAME = __NAME__;
 export {Related as Plugin};
 export {VERSION, NAME};
 
-const pluginName = 'related';
+export const pluginName = 'related';
 
 KalturaPlayer.core.registerPlugin(pluginName, Related);
