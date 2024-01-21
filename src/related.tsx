@@ -7,7 +7,8 @@ import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 
 import {Icon, RelatedConfig} from 'types';
 import {RelatedInternalEvent} from 'event';
-import { pluginName } from "./index";
+
+export const pluginName = 'related';
 
 const PRESETS = ['Playback', 'Live'];
 

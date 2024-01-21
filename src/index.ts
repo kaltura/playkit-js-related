@@ -1,4 +1,4 @@
-import {Related} from './related';
+import { pluginName, Related } from "./related";
 
 declare let __VERSION__: string;
 declare let __NAME__: string;
@@ -8,7 +8,5 @@ const NAME = __NAME__;
 
 export {Related as Plugin};
 export {VERSION, NAME};
-
-export const pluginName = 'related';
 
 KalturaPlayer.core.registerPlugin(pluginName, Related);
