@@ -1,4 +1,4 @@
-import { pluginName, Related } from "./related";
+import { pluginName, Related } from './related';
 
 declare let __VERSION__: string;
 declare let __NAME__: string;
