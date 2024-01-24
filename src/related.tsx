@@ -8,6 +8,8 @@ import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {Icon, RelatedConfig} from 'types';
 import {RelatedInternalEvent} from 'event';
 
+export const pluginName = 'related';
+
 const PRESETS = ['Playback', 'Live'];
 
 /**
@@ -178,9 +180,14 @@ class Related extends KalturaPlayer.core.BasePlugin {
   addRelatedListComponents() {
     const {relatedManager} = this;
     if (this.iconId > 0 || !relatedManager.entries.length) return;
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.iconId = this.upperBarManager.add({
-      label: 'Related',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      displayName: 'Related',
+      ariaLabel: 'Related',
+      order: 60,
       svgIcon: {
         viewBox: '0 0 32 32',
         path: Icon.LIST_TOGGLE
