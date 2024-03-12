@@ -417,8 +417,10 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   set isListVisible(isListVisible: boolean) {
     this._isListVisible = isListVisible;
     this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, this._isListVisible));
-    if (this._isListVisible) {
-      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_CLICKED));
+    if (isListVisible) {
+      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_OPEN, {expandMode: this.config?.expandMode}));
+    } else {
+      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_CLOSE, {expandMode: this.config?.expandMode}));
     }
   }
 }
