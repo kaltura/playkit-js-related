@@ -243,8 +243,8 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       this.clearNextEntryTimeout();
       this.nextEntryTimeoutId = window.setTimeout(() => {
         this.playByIndex(0);
+        this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRY_AUTO_PLAYED));
       }, seconds * 1000);
-      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRY_AUTO_PLAYED));
     } else {
       this.playByIndex(0);
     }
