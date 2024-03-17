@@ -398,7 +398,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   set isGridVisible(isGridVisible: boolean) {
     this._isGridVisible = isGridVisible;
     this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.GRID_VISIBILITY_CHANGED, this._isGridVisible));
-    if(isGridVisible)  this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_GRID_DISPLAYED));
+    if (isGridVisible) this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_GRID_DISPLAYED));
   }
 
   /**

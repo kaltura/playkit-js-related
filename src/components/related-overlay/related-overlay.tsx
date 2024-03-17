@@ -35,7 +35,7 @@ interface RelatedOverlayProps {
 /**
  * Overlay which wraps the related grid and controls its layout and visibility.
  *
-
+ 
  * @param {object} props Component props.
  * @param {RelatedManager} props.relatedManager Related manager instance.
  * @param {boolean} props.isPaused Indicates whether playback is paused.
