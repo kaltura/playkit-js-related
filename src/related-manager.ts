@@ -243,6 +243,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
       this.clearNextEntryTimeout();
       this.nextEntryTimeoutId = window.setTimeout(() => {
         this.playByIndex(0);
+        this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRY_AUTO_PLAYED));
       }, seconds * 1000);
     } else {
       this.playByIndex(0);
@@ -258,7 +259,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   playSelected(internalIndex: number) {
     this.logger.info('going to play selected entry');
     this.playByIndex(internalIndex);
-    this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_SELECTED));
+    this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_ENTRY_SELECTED));
   }
 
   /**
@@ -397,6 +398,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   set isGridVisible(isGridVisible: boolean) {
     this._isGridVisible = isGridVisible;
     this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.GRID_VISIBILITY_CHANGED, this._isGridVisible));
+    if (isGridVisible) this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_GRID_DISPLAYED));
   }
 
   /**
@@ -417,8 +419,10 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
   set isListVisible(isListVisible: boolean) {
     this._isListVisible = isListVisible;
     this.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedInternalEvent.LIST_VISIBILITY_CHANGED, this._isListVisible));
-    if (this._isListVisible) {
-      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_CLICKED));
+    if (isListVisible) {
+      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_OPEN, {expandMode: this.config?.expandMode}));
+    } else {
+      this.player.dispatchEvent(new KalturaPlayer.core.FakeEvent(RelatedEvent.RELATED_CLOSE, {expandMode: this.config?.expandMode}));
     }
   }
 }
