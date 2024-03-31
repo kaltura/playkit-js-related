@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.18 (2024-03-31)
+
+
+### Bug Fixes
+
+* **FEC-13725:** [Related Plugin]: Add Events (used by kava analytics) ([#63](https://github.com/kaltura/playkit-js-related/issues/63)) ([fda4c3a](https://github.com/kaltura/playkit-js-related/commit/fda4c3aeea7040f44e85d1f9d8e1af9ec0fb86ff))
+
 ### 0.1.17 (2024-02-04)
 
 
