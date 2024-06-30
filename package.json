@@ -52,7 +52,7 @@
   "kaltura": {
     "name": "related",
     "dependencies": {
-      "playkit-ui-managers": "1.5.4"
+      "playkit-ui-managers": "1.5.6"
     }
   },
   "browserslist": [
