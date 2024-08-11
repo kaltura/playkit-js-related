@@ -17,7 +17,7 @@ class ImageService {
   async getImageUrl(url: string): Promise<string | null> {
     if (!url) return null;
 
-    const posterData = {poster: url};
+    const posterData = {poster: url, rawThumbnailUrl: url};
     this.player.updateKalturaPoster(posterData, posterData, {width: MAX_WIDTH, height: MAX_HEIGHT});
     if (await this.imageFound(posterData.poster)) {
       return posterData.poster;
