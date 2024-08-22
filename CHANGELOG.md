@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.23 (2024-08-22)
+
+
+### Bug Fixes
+
+* **FEC-14071:** thumbnail requests append height, width, ks too many times ([#67](https://github.com/kaltura/playkit-js-related/issues/67)) ([c5e3218](https://github.com/kaltura/playkit-js-related/commit/c5e32185b86a93059e119a335c90fb9ba6276dd6))
+
 ### 0.1.22 (2024-08-03)
 
 ### 0.1.21 (2024-06-30)
