@@ -1,5 +1,6 @@
 const {withText} = KalturaPlayer.ui.preacti18n;
 const {withEventManager} = KalturaPlayer.ui.Event;
+const {withPlayer} = KalturaPlayer.ui.components;
 
 import {RelatedInternalEvent} from 'event';
 import {useEffect, useState} from 'preact/hooks';
@@ -31,8 +32,10 @@ interface PrePlaybackPlayOverlayWrapperProps {
   onUnloaded: (cb: (isAutoContinueCancelled: boolean) => void) => void;
   next: string;
   startOver: string;
+  title: string;
   eventManager: KalturaPlayerTypes.EventManager;
   eventContext: KalturaPlayerTypes.FakeEventTarget;
+  player?: any;
 }
 
 /**
@@ -48,42 +51,59 @@ interface PrePlaybackPlayOverlayWrapperProps {
  * @param {object} props.eventContext Event context.
  */
 const PrePlaybackPlayOverlayWrapper = withEventManager(
-  withText({
-    next: 'playlist.next',
-    startOver: 'controls.startOver'
-  })(
-    connect(mapStateToProps)(
-      ({isPlaybackEnded, sizeBreakpoint, relatedManager, next, startOver, eventManager, eventContext}: PrePlaybackPlayOverlayWrapperProps) => {
-        const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
+  withPlayer(
+    withText({
+      next: 'playlist.next',
+      startOver: 'controls.startOver',
+      title: 'controls.title'
+    })(
+      connect(mapStateToProps)(
+        ({
+          isPlaybackEnded,
+          sizeBreakpoint,
+          relatedManager,
+          next,
+          startOver,
+          title,
+          eventManager,
+          player,
+          eventContext
+        }: PrePlaybackPlayOverlayWrapperProps) => {
+          const [isAutoContinueCancelled, setIsAutoContinueCancelled] = useState(relatedManager.isAutoContinueCancelled);
 
-        useEffect(() => {
-          eventManager.listen(eventContext, RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
-            setIsAutoContinueCancelled(payload);
-          });
-        }, []);
+          useEffect(() => {
+            eventManager.listen(eventContext, RelatedInternalEvent.AUTO_CONTINUE_CANCELLED_CHANGED, ({payload}: {payload: boolean}) => {
+              setIsAutoContinueCancelled(payload);
+            });
+          }, []);
 
-        if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
-        else if (isAutoContinueCancelled && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
-          return (
-            <div className={styles.minimalPrePlaybackPlayOverlay}>
-              <div className={styles.buttonContainer}>
-                <Tooltip label={startOver}>
-                  <button tabIndex={0} aria-label={startOver} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.startOver()}>
-                    <Icon type={IconType.StartOver} />
-                  </button>
-                </Tooltip>
-                <Tooltip label={next}>
-                  <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
-                    <Icon type={IconType.Next} />
-                  </button>
-                </Tooltip>
-                <div />
+          if (!isPlaybackEnded) return <PrePlaybackPlayOverlay />;
+          else if (isAutoContinueCancelled && (sizeBreakpoint === PLAYER_SIZE.SMALL || sizeBreakpoint === PLAYER_SIZE.EXTRA_SMALL)) {
+            return (
+              <div className={styles.minimalPrePlaybackPlayOverlay}>
+                <div className={styles.buttonContainer}>
+                  <Tooltip label={startOver}>
+                    <button
+                      tabIndex={0}
+                      aria-label={`${startOver}, ${title}: ${player.sources.metadata?.name}`}
+                      className={styles.prePlaybackPlayButton}
+                      onClick={() => relatedManager.startOver()}>
+                      <Icon type={IconType.StartOver} />
+                    </button>
+                  </Tooltip>
+                  <Tooltip label={next}>
+                    <button tabIndex={0} aria-label={next} className={styles.prePlaybackPlayButton} onClick={() => relatedManager.playNext()}>
+                      <Icon type={IconType.Next} />
+                    </button>
+                  </Tooltip>
+                  <div />
+                </div>
               </div>
-            </div>
-          );
+            );
+          }
+          return <></>;
         }
-        return <></>;
-      }
+      )
     )
   )
 );
