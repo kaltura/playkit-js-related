@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.26 (2024-11-28)
+
+
+### Bug Fixes
+
+* **ADA-17:** Playback button labels are generic and not video specific ([#69](https://github.com/kaltura/playkit-js-related/issues/69)) ([40247cf](https://github.com/kaltura/playkit-js-related/commit/40247cfcd7bb87e714df2bb0cb824df8dd5fe4f9))
+
 ### 0.1.25 (2024-11-14)
 
 ### 0.1.24 (2024-10-13)
