@@ -12,15 +12,15 @@ export const mockRelatedEntries = [
   {
     id: '1',
     name: 'Test Video 1',
-    "poster": "./media/thumbnail1.jpg",
-    "mediaUrl": "./media/video1.mp4",
+    poster: './media/thumbnail1.jpg',
+    mediaUrl: './media/video1.mp4',
     duration: 120
   },
   {
     id: '2',
     name: 'Test Video 2',
-    "poster": "./media/thumbnail2.jpg",
-    "mediaUrl": "./media/video2.mp4",
+    poster: './media/thumbnail2.jpg',
+    mediaUrl: './media/video2.mp4',
     duration: 90
   }
 ];
@@ -79,4 +79,3 @@ export const loadPlayerAndSetMedia = (pluginConf: any, playbackConf: Record<stri
 
 let _player: any = null;
 export const getPlayer = () => _player;
-

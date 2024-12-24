@@ -7,12 +7,7 @@ declare global {
   }
 }
 
-import {
-  clickOnNextButton,
-  clickOnListToggle,
-  clickOnCloseButton,
-  clickOnRelatedEntry
-} from './utils/actions';
+import {clickOnNextButton, clickOnListToggle, clickOnCloseButton, clickOnRelatedEntry} from './utils/actions';
 import {
   expectElementContains,
   expectElementDoesntExist,
@@ -78,10 +73,8 @@ describe('Related plugin', () => {
         id: entry.id,
         duration: entry.duration,
         metadata: {
-          name: entry.name,
-          description: entry.description
+          name: entry.name
         },
-        poster: entry.thumbnailUrl,
         progressive: [
           {
             mimetype: 'video/mp4',
@@ -122,36 +115,46 @@ describe('Related plugin', () => {
         }
       });
 
-      setupAndExpect({
-        playlistId: 'test_playlist',
-        entryList: mockRelatedEntries,
-        sourcesList: mockRelatedEntries,
-        useContext: true
-      }, loadPlayerAndSetMedia, () => {
-        clickOnListToggle();
-        expectElementExists(getRelatedListElement);
-        expectElementContains(getRelatedListElement, [playlistEntries[0].name]);
-        expectElementDoesntExist(() => cy.contains(mockRelatedEntries[0].name));
-      });
+      setupAndExpect(
+        {
+          playlistId: 'test_playlist',
+          entryList: mockRelatedEntries,
+          sourcesList: mockRelatedEntries,
+          useContext: true
+        },
+        loadPlayerAndSetMedia,
+        () => {
+          clickOnListToggle();
+          expectElementExists(getRelatedListElement);
+          expectElementContains(getRelatedListElement, [playlistEntries[0].name]);
+          expectElementDoesntExist(() => cy.contains(mockRelatedEntries[0].name));
+        }
+      );
     });
 
     it('should prioritize entryList over sourcesList and context', () => {
-      const sourcesList = [{
-        id: 'source_1',
-        metadata: { name: 'Source Video' },
-        progressive: [{ mimetype: 'video/mp4', url: 'test.mp4' }]
-      }];
+      const sourcesList = [
+        {
+          id: 'source_1',
+          metadata: {name: 'Source Video'},
+          progressive: [{mimetype: 'video/mp4', url: 'test.mp4'}]
+        }
+      ];
 
-      setupAndExpect({
-        entryList: mockRelatedEntries,
-        sourcesList,
-        useContext: true
-      }, loadPlayerAndSetMedia, () => {
-        clickOnListToggle();
-        expectElementExists(getRelatedListElement);
-        expectElementContains(getRelatedListElement, [mockRelatedEntries[0].name]);
-        expectElementDoesntExist(() => cy.contains('Source Video'));
-      });
+      setupAndExpect(
+        {
+          entryList: mockRelatedEntries,
+          sourcesList,
+          useContext: true
+        },
+        loadPlayerAndSetMedia,
+        () => {
+          clickOnListToggle();
+          expectElementExists(getRelatedListElement);
+          expectElementContains(getRelatedListElement, [mockRelatedEntries[0].name]);
+          expectElementDoesntExist(() => cy.contains('Source Video'));
+        }
+      );
     });
   });
 
@@ -226,18 +229,14 @@ describe('Related plugin', () => {
     });
 
     it('should auto continue to next video after countdown', () => {
-      setupAndExpect(
-        {entryList: mockRelatedEntries, autoContinue: true, autoContinueTime: 1},
-        loadPlayerAndSetMedia,
-        player => {
-          player.currentTime = player.duration;
-          cy.wait(1500).then(() => {
-            cy.window().then(win => {
-              expect((win as any).KalturaPlayer.getPlayer().sources.id).to.equal(mockRelatedEntries[0].id);
-            });
+      setupAndExpect({entryList: mockRelatedEntries, autoContinue: true, autoContinueTime: 1}, loadPlayerAndSetMedia, player => {
+        player.currentTime = player.duration;
+        cy.wait(1500).then(() => {
+          cy.window().then(win => {
+            expect((win as any).KalturaPlayer.getPlayer().sources.id).to.equal(mockRelatedEntries[0].id);
           });
-        }
-      );
+        });
+      });
     });
   });
 

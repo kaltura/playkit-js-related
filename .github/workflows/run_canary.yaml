@@ -17,7 +17,7 @@ jobs:
     uses: kaltura/playkit-js-common/.github/workflows/canary_plugin.yaml@master
     secrets: inherit
     with:
-      schema-type: "playerV3Versions"
+      schema-type: 'playerV3Versions'
       tests-yarn-run-to-execute: 'eslint'
       enabled-openssl-legacy-provider: 'false'
-      node-version: "18.x"
+      node-version: '18.x'
