@@ -11,7 +11,7 @@ jobs:
   test:
     uses: kaltura/playkit-js-common/.github/workflows/cypress.yml@master
     secrets: inherit
-    
+
   canary:
     if: ${{ github.actor != 'PlaykitJs-Bot' }}
     uses: kaltura/playkit-js-common/.github/workflows/canary_plugin.yaml@master
@@ -20,3 +20,4 @@ jobs:
       schema-type: "playerV3Versions"
       tests-yarn-run-to-execute: 'eslint'
       enabled-openssl-legacy-provider: 'false'
+      node-version: "18.x"
