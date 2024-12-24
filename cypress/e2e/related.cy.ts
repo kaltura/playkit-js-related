@@ -30,14 +30,12 @@ import {DEFAULT_COUNTDOWN_TIME, DEFAULT_ENTRIES_LIMIT} from './utils/values';
 describe('Related plugin', () => {
   describe('entry relation methods', () => {
     beforeEach(() => {
-      // Mock playlist API response
       cy.intercept('GET', '**/service/playlist/execute*', {
         body: {
           data: mockRelatedEntries
         }
       });
 
-      // Mock context API response
       cy.intercept('GET', '**/service/playlist*', req => {
         if (req.body?.filter?.objectType === 'KalturaMediaEntryFilterForPlaylist') {
           req.reply({
