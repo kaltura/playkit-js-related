@@ -24,7 +24,7 @@ import {
   getCountdownElement,
   getCloseButtonElement
 } from './utils/getters';
-import {loadPlayerAndSetMedia, mockRelatedEntries, getPlayer} from './utils/setup';
+import {loadPlayerAndSetMedia, mockRelatedEntries} from './utils/setup';
 import {DEFAULT_COUNTDOWN_TIME, DEFAULT_ENTRIES_LIMIT} from './utils/values';
 
 describe('Related plugin', () => {
@@ -228,13 +228,12 @@ describe('Related plugin', () => {
 
     it('should auto continue to next video after countdown', () => {
       setupAndExpect({entryList: mockRelatedEntries, autoContinue: true, autoContinueTime: 1}, loadPlayerAndSetMedia, player => {
-        player.currentTime = player.duration;
-        cy.wait(1500).then(() => {
+          player.currentTime = player.duration;
           cy.window().then(win => {
             expect((win as any).KalturaPlayer.getPlayer().sources.id).to.equal(mockRelatedEntries[0].id);
           });
-        });
-      });
+        }
+      );
     });
   });
 
@@ -257,7 +256,9 @@ describe('Related plugin', () => {
       setupAndExpect({entryList: mockRelatedEntries, showOnPlaybackPaused: true}, loadPlayerAndSetMedia, player => {
         player.pause();
         clickOnRelatedEntry(0);
-        expect(getPlayer().sources.id).to.equal(mockRelatedEntries[0].id);
+        cy.window().then(win => {
+          expect((win as any).KalturaPlayer.getPlayer().sources.id).to.equal(mockRelatedEntries[0].id);
+        });
       });
     });
   });

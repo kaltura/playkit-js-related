@@ -30,7 +30,6 @@ export const loadPlayer = (pluginConf: any, playbackConf: Record<string, any> = 
   return cy.window().then(win => {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const kalturaPlayer = win.KalturaPlayer.setup({
         targetId: 'player-placeholder',
         provider: {
@@ -49,10 +48,8 @@ export const loadPlayer = (pluginConf: any, playbackConf: Record<string, any> = 
 
       kalturaPlayer.configure({plugins: {related: pluginConf}});
 
-      // @ts-ignore
       return Promise.resolve(kalturaPlayer);
     } catch (e: any) {
-      // @ts-ignore
       return Promise.reject(e.message);
     }
   });
@@ -65,7 +62,6 @@ export const setMedia = (player: any, sourcesConfig = defaultSource) => {
 };
 
 export const loadPlayerAndSetMedia = (pluginConf: any, playbackConf: Record<string, any> = {}, sourcesConfig?: any): Promise<any> => {
-  // @ts-ignore
   return new Promise(resolve => {
     loadPlayer(pluginConf, playbackConf).then(kalturaPlayer => {
       setMedia(kalturaPlayer, sourcesConfig);
@@ -76,6 +72,3 @@ export const loadPlayerAndSetMedia = (pluginConf: any, playbackConf: Record<stri
     });
   });
 };
-
-let _player: any = null;
-export const getPlayer = () => _player;
