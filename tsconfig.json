@@ -12,8 +12,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES5",
-    "types": ["node"]
+    "types": ["node", "cypress"]
   },
   "lib": ["dom"],
-  "include": ["src/**/*.tsx", "src/**/*.ts", "node_modules/@playkit-js/kaltura-player-js/ts-typed"]
+  "include": ["src/**/*.tsx", "src/**/*.ts", "cypress/e2e/*.ts", "node_modules/@playkit-js/kaltura-player-js/ts-typed"]
 }
