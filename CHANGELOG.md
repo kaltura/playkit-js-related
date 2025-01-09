@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.29 (2025-01-09)
+
+
+### Bug Fixes
+
+* **FEC-14246:** add cypress tests ([#71](https://github.com/kaltura/playkit-js-related/issues/71)) ([9946417](https://github.com/kaltura/playkit-js-related/commit/99464177259a042decf94a4800a43957d192380c))
+
 ### 0.1.28 (2024-12-19)
 
 ### 0.1.27 (2024-12-01)
