@@ -57,7 +57,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
    */
   private panelId = -1;
 
-  private componentD isposers: Array<typeof Function> = [];
+  private componentDisposers: Array<typeof Function> = [];
 
   /**
    * @static
