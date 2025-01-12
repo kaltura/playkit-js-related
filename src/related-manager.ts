@@ -291,7 +291,7 @@ class RelatedManager extends KalturaPlayer.core.FakeEventTarget {
    * @memberof RelatedManager
    */
   unlisten(name: string, listener: any) {
-    this.eventManager.unlisten(this, name, listener);
+    this.eventMana ger.unlisten(this, name, listener);
   }
 
   /**
