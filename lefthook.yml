@@ -1,0 +1,6 @@
+pre-commit:
+  commands:
+    eslint:
+      run: yarn run eslint
+    test:
+      run: yarn run test:prepare && yarn run cy:run:chrome
