@@ -54,7 +54,7 @@ const RelatedList = withText({
           <div className={styles.title}>{relatedVideosText}</div>
           <CloseButton
             onClick={() => {
-              relatedManager.isListVisible = false;
+              relatedManager.updateListVisibility(false, true);
             }}
           />
         </div>
