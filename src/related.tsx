@@ -194,7 +194,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
       },
       onClick: () => {
         if (!relatedManager.isGridVisible) {
-          relatedManager.isListVisible = !relatedManager.isListVisible;
+          relatedManager.updateListVisibility(!relatedManager.isListVisible, true);
         }
       },
       component: () => {
@@ -280,7 +280,7 @@ class Related extends KalturaPlayer.core.BasePlugin {
     }
     this.componentDisposers = [];
 
-    this.relatedManager.isListVisible = false;
+    this.relatedManager.updateListVisibility(false);
     this.relatedManager.isGridVisible = false;
     this.relatedManager.isAutoContinueCancelled = false;
     this.iconId = -1;
