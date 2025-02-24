@@ -1,4 +1,4 @@
-pre-commit:
+pre-push:
   commands:
     eslint:
       run: yarn run eslint
