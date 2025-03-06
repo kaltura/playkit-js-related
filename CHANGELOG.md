@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.31 (2025-03-06)
+
+
+### Bug Fixes
+
+* **FEC-14031:** RELATED_CLOSE is being sent upon every entry change in playlist ([#75](https://github.com/kaltura/playkit-js-related/issues/75)) ([dbf1018](https://github.com/kaltura/playkit-js-related/commit/dbf10187a14fc5c34dc5a847f5d0319803284926))
+
 ### 0.1.30 (2025-01-23)
 
 ### 0.1.29 (2025-01-09)
