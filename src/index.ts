@@ -1,4 +1,5 @@
 import {pluginName, Related} from './related';
+import {registerPlugin} from '@playkit-js/kaltura-player-js';
 
 declare let __VERSION__: string;
 declare let __NAME__: string;
@@ -9,4 +10,4 @@ const NAME = __NAME__;
 export {Related as Plugin};
 export {VERSION, NAME};
 
-KalturaPlayer.core.registerPlugin(pluginName, Related);
+registerPlugin(pluginName, Related as any);
