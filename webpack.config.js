@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const packageData = require('./package.json');
+const {insertStylesWithNonce} = require('@playkit-js/webpack-common');
 
 const plugins = [
   new webpack.DefinePlugin({
@@ -36,7 +37,15 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader',
+            options: {
+              attributes: {
+                id: `${packageData.name}`
+              },
+              insert: insertStylesWithNonce
+            }
+          },
           {
             loader: 'css-loader',
             options: {
