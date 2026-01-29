@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.39 (2026-01-29)
+
+
+### Features
+
+* **FEC-14869:** Adding nonce support in player plugins style tags ([#79](https://github.com/kaltura/playkit-js-related/issues/79)) ([c81a202](https://github.com/kaltura/playkit-js-related/commit/c81a202984a8d3e5ffea97fed44d50de37340ab5))
+
 ### 0.1.38 (2025-12-18)
 
 
