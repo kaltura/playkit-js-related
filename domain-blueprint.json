@@ -1,0 +1,129 @@
+{
+  "repositoryName": "playkit-js-related",
+  "packageName": "@playkit-js/related",
+  "coreResponsibility": "A PlayKit JS player plugin that displays related video entries in a grid/list UI, enabling end-of-playback recommendations, auto-continue functionality, and contextual content discovery within the Kaltura Player ecosystem.",
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Related entries grid overlay display",
+      "Related entries side panel list display",
+      "Auto-continue to next related entry after playback ends",
+      "Countdown timer before auto-continue",
+      "Fetch related entries by playlist ID",
+      "Fetch related entries by entry list",
+      "Fetch related entries by context API (metadata-based)",
+      "Manual sources list configuration",
+      "Show related grid on playback paused",
+      "Next entry preview on hover",
+      "Pagination for related entries grid",
+      "Responsive grid layout based on player size breakpoints",
+      "Entry thumbnails with duration labels",
+      "List toggle button in upper bar"
+    ],
+    "dataHandling": [
+      "Related entries array (Sources[])",
+      "Entry metadata and thumbnails (via EntryService and ImageService)",
+      "Grid visibility state",
+      "List visibility state",
+      "Auto-continue cancelled state",
+      "Countdown timer state",
+      "Pagination state for grid pages",
+      "MediaInfo cache map for entry metadata"
+    ]
+  },
+  "integrationPoints": {
+    "upstream": [
+      "Kaltura Player JS (@playkit-js/kaltura-player-js) - Core player instance and BasePlugin class",
+      "PlayKit UI Managers (@playkit-js/ui-managers) - SidePanelsManager and UpperBarManager services",
+      "Kaltura Backend API - playlist.execute action for context-based related entries (_KDP_CTXPL)",
+      "Kaltura Provider - getPlaylistConfig, getEntryListConfig, doRequest methods"
+    ],
+    "downstream": [
+      "Kaltura Player UI layer - Injects components into GuiArea, OverlayPlaybackControls, BottomBarPlaybackControls, InteractiveArea",
+      "Player events system - Dispatches RELATED_OPEN, RELATED_CLOSE, RELATED_ENTRY_SELECTED, RELATED_ENTRY_AUTO_PLAYED, RELATED_GRID_DISPLAYED events"
+    ],
+    "externalApis": [
+      "Kaltura API playlist.execute action with _KDP_CTXPL context playlist",
+      "Kaltura Provider API for entry/playlist metadata fetching",
+      "humanize-duration library for localized duration formatting"
+    ]
+  },
+  "technicalStack": {
+    "primaryLanguages": ["TypeScript", "TSX/JSX"],
+    "frameworks": ["Preact (via KalturaPlayer.ui)", "Redux (via KalturaPlayer.ui.redux)"],
+    "buildTools": ["Webpack", "Babel", "SASS"],
+    "testingTools": ["Cypress"],
+    "entryPoints": {
+      "main": "src/index.ts",
+      "pluginClass": "src/related.tsx",
+      "stateManager": "src/related-manager.ts",
+      "entryService": "src/services/entry-service.ts",
+      "relatedLoader": "src/services/related-loader.ts",
+      "configuration": "src/types/related-config.ts",
+      "events": "src/event/related-event.js"
+    },
+    "keyComponents": {
+      "RelatedOverlay": "src/components/related-overlay/related-overlay.tsx",
+      "RelatedGrid": "src/components/related-grid/related-grid.tsx",
+      "RelatedList": "src/components/related-list/",
+      "Next": "src/components/next/",
+      "Countdown": "src/components/countdown/countdown.tsx",
+      "Entry": "src/components/entry/"
+    }
+  },
+  "triageKeywords": [
+    "related entries",
+    "related videos",
+    "related grid",
+    "related list",
+    "related overlay",
+    "auto continue",
+    "autoContinue",
+    "autoContinueTime",
+    "countdown timer",
+    "up next",
+    "play next",
+    "playNext",
+    "next entry",
+    "showOnPlaybackPaused",
+    "entriesByContextLimit",
+    "playlistId related",
+    "entryList related",
+    "sourcesList",
+    "useContext entries",
+    "_KDP_CTXPL",
+    "RELATED_OPEN",
+    "RELATED_CLOSE",
+    "RELATED_ENTRY_SELECTED",
+    "RELATED_ENTRY_AUTO_PLAYED",
+    "RELATED_GRID_DISPLAYED",
+    "related_entry_selected",
+    "related_entry_auto_played",
+    "playkit-related",
+    "kaltura-related-grid",
+    "SidePanelsManager related",
+    "related entries not showing",
+    "related entries not loading",
+    "auto continue not working",
+    "countdown not appearing"
+  ],
+  "errorPatterns": [
+    "failed to get related entries by playlist id",
+    "failed to get related entries by entry list",
+    "failed to get related entries by context",
+    "no related entries found",
+    "no source configured",
+    "loadMedia failed (in related context)"
+  ],
+  "configurationOptions": {
+    "autoContinue": "boolean - Enable auto-continue to next entry (default: true)",
+    "autoContinueTime": "number - Seconds to wait before auto-continue (default: 5)",
+    "showOnPlaybackPaused": "boolean - Show grid when paused (default: false)",
+    "playlistId": "string - Fetch related by playlist ID",
+    "entryList": "MediaInfo[] - Fetch related by entry IDs",
+    "sourcesList": "Sources[] - Manual entries without API fetch",
+    "useContext": "boolean - Fetch by context API (default: true)",
+    "entriesByContextLimit": "number - Max context entries (default: 12)",
+    "position": "string - Side panel position: top/down/left/right (default: right)",
+    "expandMode": "string - Panel mode: over/alongside (default: alongside)"
+  }
+}
