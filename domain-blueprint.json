@@ -1,7 +1,6 @@
 {
   "repositoryName": "playkit-js-related",
   "packageName": "@playkit-js/related",
-  "version": "0.1.39",
   "coreResponsibility": "A PlayKit JS player plugin that displays related video entries in a grid/list UI, enabling end-of-playback recommendations, auto-continue functionality, and contextual content discovery within the Kaltura Player ecosystem.",
   "domainAndLogicOwnership": {
     "featureOwnership": [
