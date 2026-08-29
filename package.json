@@ -42,6 +42,7 @@
     "eslint-plugin-jsdoc": "^44.2.3",
     "eslint-plugin-prettier": "5.0.0",
     "humanize-duration": "^3.27.1",
+    "lefthook": "^1.10.3",
     "prettier": "3",
     "sass": "^1.44.0",
     "sass-loader": "^12.3.0",

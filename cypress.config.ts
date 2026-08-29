@@ -7,6 +7,15 @@ export default defineConfig({
   fileServerFolder: 'cypress/public',
   e2e: {
     supportFile: false,
-    watchForFileChanges: false
+    watchForFileChanges: false,
+    setupNodeEvents(on) {
+      on('task', {
+        log(message) {
+          console.log(message);
+
+          return null;
+        }
+      });
+    }
   }
 });
